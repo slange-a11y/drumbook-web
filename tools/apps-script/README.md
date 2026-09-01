@@ -8,6 +8,34 @@ gemacht hast.
 
 Dauer: etwa zehn Minuten.
 
+## Wichtig: das Firmenkonto benutzen
+
+Tabelle und Skript gehören in den **Google Workspace von TE Printline**, nicht
+in ein privates Google-Konto. Nur dort gilt das *Cloud Data Processing
+Addendum* — der Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO, auf den
+sich die Datenschutzerklärung beruft. Legst du die Tabelle versehentlich im
+Privatkonto an, stimmt der Text auf der Website nicht mehr.
+
+Achte beim Anlegen also auf die Kontoauswahl oben rechts.
+
+Das ändert **nichts am Impressum**: Anbieter der Website bleibt Silvio Lange
+als Privatperson, so wie die App unter der privaten Apple-ID läuft. Der
+Workspace ist nur das Werkzeug, mit dem die Eintragungen entgegengenommen
+werden — Drumbook wird dadurch kein Produkt der GmbH.
+
+### Wenn eure Edition es hergibt: Speicherort Europa
+
+Google Sheets fällt unter die **Data Regions**. Steht in der
+Admin-Konsole unter *Unternehmensprofil ▸ Datenregionen* als Ort **Europa**,
+liegen die Adressen aus der Tabelle im ruhenden Zustand in der EU.
+
+Zwei Einschränkungen: Die Einstellung gibt es nur in den Enterprise-Stufen
+(nicht in Business Starter/Standard/Plus), und **Apps Script selbst ist nicht
+vollständig regionalisiert** — die Verarbeitung im Skript kann also weiterhin
+außerhalb laufen. Deshalb bleibt der Absatz zum Drittlandtransfer in der
+Datenschutzerklärung stehen. Wenn es die Einstellung bei euch gibt, ist sie
+trotzdem mitgenommen.
+
 ## 1. Tabelle anlegen
 
 Auf <https://sheets.new> eine neue Tabelle anlegen und sinnvoll benennen,
@@ -91,21 +119,11 @@ auf eine feste Version. Nach jeder Änderung: **Bereitstellen ▸ Bereitstellung
 verwalten ▸ Stift ▸ Version: Neue Version ▸ Bereitstellen.** Die Adresse
 bleibt dabei gleich.
 
-**Keine Mails.** Ein privates Google-Konto darf 100 Empfänger am Tag
-anschreiben, ein Workspace-Konto 1.500. Beim Selbsttest zählen zwei
-Empfänger pro Durchlauf.
+**Keine Mails.** Ein Workspace-Konto darf 1.500 Empfänger am Tag anschreiben
+(ein privates nur 100). Beim Selbsttest zählen zwei Empfänger pro Durchlauf.
+`MailApp.getRemainingDailyQuota()` sagt, wie viele heute noch frei sind.
 
 **Spam in der Tabelle.** Das Formular hat ein für Menschen unsichtbares Feld
 („Honigtopf"). Füllt ein Bot es aus, antwortet das Skript freundlich, trägt
 aber nichts ein. Kommt trotzdem Müll durch, ist der nächste Schritt ein
 Zeitfenster je IP oder ein Rätsel ohne Google — sag Bescheid.
-
-## Der wunde Punkt
-
-Mit einem **privaten** Google-Konto gibt es **keinen Vertrag zur
-Auftragsverarbeitung** nach Art. 28 DSGVO — den bekommst du nur über Google
-Workspace. Die Adressen deiner Interessenten liegen dann bei einem
-Dienstleister, mit dem du diesen Vertrag nicht hast. In der
-Datenschutzerklärung steht ein entsprechend markierter Hinweis. Wenn du das
-nicht willst: Platzhalter einfach stehen lassen, dann bleibt der
-`mailto:`-Weg aktiv, bei dem kein Dritter etwas speichert.

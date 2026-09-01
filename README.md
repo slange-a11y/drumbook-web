@@ -48,9 +48,9 @@ Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
 
 - **Anschrift im Impressum** und in der Datenschutzerklärung eintragen
   (die Stellen sind mit `[…]` markiert und auf der Seite sichtbar).
-- **Entscheiden, welches Google-Konto** das Formular betreibt: bei einem
-  privaten Konto gibt es keinen AV-Vertrag nach Art. 28 DSGVO. In der
-  Datenschutzerklärung steht dazu ein markierter Hinweis.
+- **Das Formular scharfschalten**, sobald die Web-App im TE-Printline-Workspace
+  bereitsteht (dort gilt der AV-Vertrag; entschieden am 01.09.2026). Anbieter
+  der Website bleibt davon unberührt Silvio Lange als Privatperson.
 - Bildschirmfotos erneuern, wenn sich die App sichtbar ändert.
 
 ## Bildschirmfotos neu erzeugen
