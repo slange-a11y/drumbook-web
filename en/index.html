@@ -81,9 +81,13 @@
       </div>
       <div class="hero__media">
         <div class="phone phone--hero">
-          <img src="../assets/shots/07-session.png"
-               alt="A practice session running in Drumbook: exercise 1 of 3, Double Stroke Roll, a countdown for the exercise, the time left for the whole session, the metronome at 96 BPM and the running order below."
-               width="800" height="1739" fetchpriority="high">
+          <video class="phone__film"
+                 poster="../assets/video/session-poster.jpg"
+                 width="800" height="1739"
+                 muted loop playsinline preload="metadata"
+                 aria-label="A practice session running in Drumbook: exercise 2 of 3, left-foot independence. The countdown is running, the metronome beats 72 BPM, and at the switch the app shows the break and what comes next.">
+            <source src="../assets/video/session.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -167,30 +171,7 @@
         </div>
       </div>
     </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>The practice list writes itself</h3>
-        <p>
-          Tell Drumbook how many minutes you have — the generator does the
-          rest. It pulls in what has been left alone too long, makes sure the
-          same topic doesn't come round three times, and lets the important
-          things through first.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Neglect counts.</b> Anything untouched for a fortnight moves up on its own.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>What the teacher set</b> doesn't drop off the end when time is tight.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Nothing is fixed:</b> shift the minutes, throw exercises out, split the time evenly — or have it drawn up again.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="../assets/shots/06-planer.png" alt="Preparing a session: a 30-minute budget, all 30 allocated, with the running order of three exercises and their minutes below." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <div class="feature">
+<div class="feature">
       <div class="feature__text">
         <p class="beat" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -215,8 +196,7 @@
         </div>
       </div>
     </div>
-
-    <div class="feature">
+<div class="feature">
       <div class="feature__text">
         <h3>What your teacher said is still there next week</h3>
         <p>
@@ -237,69 +217,46 @@
       </div>
     </div>
 
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Proof that it's going somewhere</h3>
-        <p>
-          Every session lands in the history. After a few weeks you can see in
-          black and white how much you practised, where the time went, and
-          where the tempo actually rose.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>The last 14 days</b> as a chart — the gaps are obvious at a glance.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Time by category:</b> six hours of rudiments against twenty minutes of independence tells you what next week is for.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>A weekly goal and days in a row</b> on the home screen — without badges and without guilt.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="../assets/shots/03-verlauf.png" alt="The history with a bar chart of the last 14 days, and below it time by category: rudiments 8 hours 17 minutes, independence, groove and fills." width="800" height="1739" loading="lazy">
+      <h3 class="more__head">What else is in there</h3>
+      <div class="more">
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="../assets/shots/06-planer.png" alt="Preparing a session: a 30-minute budget, all 30 allocated, with the running order of three exercises and their minutes below." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>The practice list writes itself</h3>
+            <p>Tell Drumbook how many minutes you have — the generator does the rest. It pulls in what has been left alone too long, makes sure the same topic doesn't come round three times, and lets the important things through first.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="../assets/shots/03-verlauf.png" alt="The history with a bar chart of the last 14 days, and below it time by category: rudiments 8 hours 17 minutes, independence, groove and fills." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Proof that it's going somewhere</h3>
+            <p>Every session lands in the history. After a few weeks you can see in black and white how much you practised, where the time went, and where the tempo actually rose.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="../assets/shots/08-musik.png" alt="A song in the library: “Come Together” at 82 of 82 BPM, with a Music section below showing the linked track “Come Together — The Beatles” from Apple Music." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Play along with the original</h3>
+            <p>A song is only really there once it holds up against the record. Attach the actual track to an exercise or a song — from your own library, the Apple Music titles in it included. Playing through a setlist, you start it from inside Drumbook.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="../assets/shots/02-bibliothek.png" alt="The library sorted by category: rudiments with five exercises, each with its state, when it was last practised and a tempo bar." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Your exercises, in order</h3>
+            <p>The library holds it all together: what the exercise is for, the tempo you're aiming at, where you stand, when it last came up. Songs are kept apart — they shouldn't flood the practice list.</p>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Play along with the original</h3>
-        <p>
-          A song is only really there once it holds up against the record.
-          Attach the actual track to an exercise or a song — from your own
-          library, the Apple Music titles in it included. Playing through a
-          setlist, you start it from inside Drumbook.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Drumbook drives the Music app</b> rather than playing the track itself. That is why it keeps going when you leave the app.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Click or record — never both.</b> Start the song and the metronome stops. Only one thing sets the tempo.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Title and artist stay readable</b> even if the track later disappears from your library.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="../assets/shots/08-musik.png" alt="A song in the library: “Come Together” at 82 of 82 BPM, with a Music section below showing the linked track “Come Together — The Beatles” from Apple Music." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Your exercises, in order</h3>
-        <p>
-          The library holds it all together: what the exercise is for, the
-          tempo you're aiming at, where you stand, when it last came up. Songs
-          are kept apart — they shouldn't flood the practice list.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Target and current tempo</b> with a bar: 112 of 140 BPM says more than "getting there".</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>New, in progress, solid, routine, warm-up</b> — the state helps decide how often an exercise comes round.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Your own notes</b> on every exercise — the thing you wanted to tell yourself last time.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="../assets/shots/02-bibliothek.png" alt="The library sorted by category: rudiments with five exercises, each with its state, when it was last practised and a tempo bar." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
+    
   </div>
 </section>
 

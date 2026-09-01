@@ -26,6 +26,7 @@
         '.problems > .problem',
         '.feature',
         '.grid > .card',
+        '.more > .more__card',
         '.privacy',
         '.teacher__split',
         '.teacher__grid > .teacher__card',
@@ -45,7 +46,7 @@
         });
     }, {
         // Etwas früher auslösen, damit nichts erst mitten im Bild aufgeht.
-        rootMargin: '0px 0px -12% 0px',
+        rootMargin: '0px 0px -4% 0px',
         threshold: 0.08
     });
 
@@ -64,6 +65,30 @@
             beobachtet.push(el);
         });
     });
+
+    // Der Hero zeigt eine laufende Session. Das Abspielen steht bewusst hier
+    // und nicht als autoplay im Markup: wer weniger Bewegung eingestellt hat,
+    // ist oben schon ausgestiegen und sieht das Standbild — so wie jemand
+    // ganz ohne JavaScript.
+    var film = document.querySelector('.phone--hero video');
+    if (film) {
+        film.muted = true;              // manche Browser wollen das als Eigenschaft
+        var anlaufen = function () {
+            var p = film.play();
+            if (p && p.catch) p.catch(function () {});
+        };
+        anlaufen();
+        // Kommt der erste Versuch zu frueh, weil noch nichts geladen ist,
+        // scheitert er still. Dann eben, sobald genug da ist — sonst bliebe
+        // das Standbild fuer immer stehen.
+        film.addEventListener('canplay', anlaufen, { once: true });
+        // Ausserhalb des Bildes anhalten. Spart Akku, und sehen kann es niemand.
+        new IntersectionObserver(function (eintraege) {
+            eintraege.forEach(function (e) {
+                if (e.isIntersecting) { film.play(); } else { film.pause(); }
+            });
+        }, { threshold: 0.15 }).observe(film);
+    }
 
     // Sicherheitsgurt. Sollte der Beobachter aus irgendeinem Grund nicht
     // auslösen — ein Browser, der sich anders verhält als erwartet, eine

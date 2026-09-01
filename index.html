@@ -83,9 +83,13 @@
       </div>
       <div class="hero__media">
         <div class="phone phone--hero">
-          <img src="assets/shots/07-session.png"
-               alt="Laufende Übesession in Drumbook: Übung 1 von 3, Double Stroke Roll, Countdown der Übung, Restzeit der ganzen Session, Metronom bei 96 BPM und der Ablauf darunter."
-               width="800" height="1739" fetchpriority="high">
+          <video class="phone__film"
+                 poster="assets/video/session-poster.jpg"
+                 width="800" height="1739"
+                 muted loop playsinline preload="metadata"
+                 aria-label="Eine laufende Übesession in Drumbook: Übung 2 von 3, Unabhängigkeit linker Fuß. Der Countdown läuft, das Metronom schlägt 72 BPM, und beim Wechsel zeigt die App die Pause und was als Nächstes drankommt.">
+            <source src="assets/video/session.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -168,30 +172,7 @@
         </div>
       </div>
     </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Die Übeliste stellt sich selbst zusammen</h3>
-        <p>
-          Sag Drumbook, wie viele Minuten du hast — den Rest macht der
-          Generator. Er zieht heran, was zu lange liegen geblieben ist, achtet
-          darauf, dass nicht dreimal dasselbe Thema drankommt, und lässt
-          Wichtiges zuerst durch.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Vernachlässigung zählt.</b> Was seit zwei Wochen nicht dran war, rückt von selbst nach vorn.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Was der Lehrer aufgegeben hat,</b> fällt auch bei knapper Zeit nicht hinten runter.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Alles bleibt änderbar:</b> Minuten schieben, Übungen rauswerfen, gleichmäßig aufteilen — oder neu würfeln lassen.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="assets/shots/06-planer.png" alt="Session vorbereiten: Zeitbudget von 30 Minuten, davon 30 verplant, darunter der Ablauf mit drei Übungen und ihren Minuten sowie Knöpfe zum Neuzusammenstellen." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <div class="feature">
+<div class="feature">
       <div class="feature__text">
         <p class="beat" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -217,8 +198,7 @@
         </div>
       </div>
     </div>
-
-    <div class="feature">
+<div class="feature">
       <div class="feature__text">
         <h3>Was der Lehrer sagt, ist nächste Woche noch da</h3>
         <p>
@@ -239,69 +219,46 @@
       </div>
     </div>
 
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Der Beweis, dass es vorangeht</h3>
-        <p>
-          Jede Session landet im Verlauf. Nach ein paar Wochen siehst du
-          schwarz auf weiß, wie viel du geübt hast, wohin die Zeit geflossen
-          ist und wo das Tempo tatsächlich gestiegen ist.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Die letzten 14 Tage</b> als Diagramm — die Lücken sieht man sofort.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Zeit nach Kategorie:</b> wer sechs Stunden Rudiments und zwanzig Minuten Independence hat, weiß, woran das nächste Mal gearbeitet wird.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Wochenziel und Tage in Folge</b> auf dem Startbildschirm — ohne Abzeichen und ohne schlechtes Gewissen.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="assets/shots/03-verlauf.png" alt="Der Verlauf mit Balkendiagramm der letzten 14 Tage, darunter die Zeit nach Kategorie: Rudiments 8 Stunden 17 Minuten, Independence, Groove und Fills." width="800" height="1739" loading="lazy">
+      <h3 class="more__head">Was sonst noch drin ist</h3>
+      <div class="more">
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="assets/shots/06-planer.png" alt="Session vorbereiten: Zeitbudget von 30 Minuten, davon 30 verplant, darunter der Ablauf mit drei Übungen und ihren Minuten sowie Knöpfe zum Neuzusammenstellen." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Die Übeliste stellt sich selbst zusammen</h3>
+            <p>Sag Drumbook, wie viele Minuten du hast — den Rest macht der Generator. Er zieht heran, was zu lange liegen geblieben ist, achtet darauf, dass nicht dreimal dasselbe Thema drankommt, und lässt Wichtiges zuerst durch.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="assets/shots/03-verlauf.png" alt="Der Verlauf mit Balkendiagramm der letzten 14 Tage, darunter die Zeit nach Kategorie: Rudiments 8 Stunden 17 Minuten, Independence, Groove und Fills." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Der Beweis, dass es vorangeht</h3>
+            <p>Jede Session landet im Verlauf. Nach ein paar Wochen siehst du schwarz auf weiß, wie viel du geübt hast, wohin die Zeit geflossen ist und wo das Tempo tatsächlich gestiegen ist.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="assets/shots/08-musik.png" alt="Ein Song in der Bibliothek: „Come Together“ mit 82 von 82 BPM, darunter der Abschnitt Musik mit dem verknüpften Titel „Come Together — The Beatles“ aus Apple Music." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Zum Original mitspielen</h3>
+            <p>Ein Song sitzt erst, wenn er zur Aufnahme sitzt. Häng den echten Titel an eine Übung oder einen Song — aus deiner Mediathek, die Apple-Music-Titel darin inbegriffen. Beim Durchspielen einer Setlist startest du ihn dann aus Drumbook heraus.</p>
+          </div>
+        </div>
+        <div class="more__card">
+          <div class="phone phone--mini">
+            <img src="assets/shots/02-bibliothek.png" alt="Die Bibliothek nach Kategorien sortiert: Rudiments mit fünf Übungen, jeweils mit Zustand, letztem Übedatum und Tempo-Balken." width="800" height="1739" loading="lazy">
+          </div>
+          <div class="more__text">
+            <h3>Deine Übungen, sortiert</h3>
+            <p>Die Bibliothek hält alles zusammen: was die Übung soll, welches Tempo das Ziel ist, wo du gerade stehst, wann sie zuletzt dran war. Songs laufen getrennt mit — sie sollen die Übeliste nicht fluten.</p>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Zum Original mitspielen</h3>
-        <p>
-          Ein Song sitzt erst, wenn er zur Aufnahme sitzt. Häng den echten
-          Titel an eine Übung oder einen Song — aus deiner Mediathek, die
-          Apple-Music-Titel darin inbegriffen. Beim Durchspielen einer Setlist
-          startest du ihn dann aus Drumbook heraus.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Drumbook steuert die Musik-App,</b> statt selbst abzuspielen. Deshalb läuft der Titel weiter, wenn du die App verlässt.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Klick oder Aufnahme — nie beides.</b> Startest du den Song, hört das Metronom auf. Nur eines gibt das Tempo vor.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Titel und Interpret bleiben lesbar,</b> auch wenn der Song später aus der Mediathek verschwindet.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="assets/shots/08-musik.png" alt="Ein Song in der Bibliothek: „Come Together“ mit 82 von 82 BPM, darunter der Abschnitt Musik mit dem verknüpften Titel „Come Together — The Beatles“ aus Apple Music." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature__text">
-        <h3>Deine Übungen, sortiert</h3>
-        <p>
-          Die Bibliothek hält alles zusammen: was die Übung soll, welches
-          Tempo das Ziel ist, wo du gerade stehst, wann sie zuletzt dran war.
-          Songs laufen getrennt mit — sie sollen die Übeliste nicht fluten.
-        </p>
-        <ul class="points">
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Ziel- und Ist-Tempo</b> mit Balken: 112 von 140 BPM sagt mehr als „geht so".</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Neu, in Arbeit, sitzt, Routine, Aufwärmen</b> — der Zustand steuert mit, wie oft eine Übung drankommt.</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Eigene Notizen</b> zu jeder Übung — das, was du dir selbst beim letzten Mal sagen wolltest.</span></li>
-        </ul>
-      </div>
-      <div class="feature__media">
-        <div class="phone">
-          <img src="assets/shots/02-bibliothek.png" alt="Die Bibliothek nach Kategorien sortiert: Rudiments mit fünf Übungen, jeweils mit Zustand, letztem Übedatum und Tempo-Balken." width="800" height="1739" loading="lazy">
-        </div>
-      </div>
-    </div>
+    
   </div>
 </section>
 

@@ -299,7 +299,8 @@ h1 {
         0 26px 60px rgba(0, 0, 0, 0.62),
         0 0 0 1px rgba(255, 255, 255, 0.045) inset;
 }
-.phone img {
+.phone img,
+.phone video {
     border-radius: 36px;
     width: 100%;
     height: auto;
@@ -469,6 +470,66 @@ h3 {
     }
     .feature:nth-child(even) .feature__media { order: 0; }
     .feature__text { max-width: none; }
+}
+
+/* Nur noch drei grosse Bloecke — also duerfen die Geraete groesser werden. */
+.feature .phone { max-width: 380px; }
+
+/* ---------- Die vier kompakten Funktionen ---------- */
+
+.more__head {
+    margin: 78px 0 24px;
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+    letter-spacing: -0.01em;
+}
+.more {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.more__card {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 24px;
+    align-items: center;
+    background: var(--bg-raised);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-md);
+    padding: 24px 26px;
+}
+.more__card h3 { font-size: 1.09rem; margin-bottom: 9px; }
+.more__card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+}
+
+/* Rahmen und Ecken schrumpfen mit, sonst wirkt das Telefon wie ein Spielzeug. */
+.phone--mini {
+    max-width: 132px;
+    border-radius: 20px;
+    padding: 4px;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.5),
+        0 10px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.045) inset;
+}
+.phone--mini img { border-radius: 17px; }
+
+@media (max-width: 900px) { .more { grid-template-columns: 1fr; } }
+
+/* Auf schmalen Bildschirmen bleibt neben dem Telefon zu wenig fuer den Text
+   uebrig — rund 25 Zeichen je Zeile. Dann lieber untereinander. */
+@media (max-width: 560px) {
+    .more__card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 22px 24px;
+    }
+    .phone--mini { max-width: 118px; margin: 0; }
 }
 
 /* ---------- Raster kleinerer Funktionen ---------- */
@@ -1032,8 +1093,8 @@ h3 {
 .js-anim .reveal {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.62s cubic-bezier(0.22, 0.9, 0.3, 1),
-                transform 0.62s cubic-bezier(0.22, 0.9, 0.3, 1);
+    transition: opacity 0.38s cubic-bezier(0.22, 0.9, 0.3, 1),
+                transform 0.38s cubic-bezier(0.22, 0.9, 0.3, 1);
     will-change: opacity, transform;
 }
 .js-anim .reveal.sichtbar {
@@ -1043,10 +1104,10 @@ h3 {
 }
 
 /* Karten heben sich beim Überfahren leicht an. */
-.card, .problem, .teacher__card, .status__col {
+.card, .problem, .teacher__card, .status__col, .more__card {
     transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
 }
-.card:hover, .problem:hover, .teacher__card:hover {
+.card:hover, .problem:hover, .teacher__card:hover, .more__card:hover {
     transform: translateY(-3px);
     border-color: var(--line);
     background: #17171c;
@@ -1068,5 +1129,5 @@ h3 {
     .beat span, .eyebrow::before, .phone--hero { animation: none; }
     .beat span:not(.beat__bpm) { opacity: 0.6; }
     .js-anim .reveal { opacity: 1; transform: none; transition: none; }
-    .card:hover, .problem:hover, .teacher__card:hover { transform: none; }
+    .card:hover, .problem:hover, .teacher__card:hover, .more__card:hover { transform: none; }
 }
