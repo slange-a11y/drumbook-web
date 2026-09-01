@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drumbook — Das Übetagebuch fürs Schlagzeug</title>
+<meta name="description" content="Drumbook plant deine Übesession, hält das Tempo und merkt sich, was der Lehrer gesagt hat. Übetagebuch fürs Schlagzeug für iPhone und iPad — alle Daten bleiben auf deinem Gerät.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="canonical" href="https://slange-a11y.github.io/drumbook-web/">
+<link rel="alternate" hreflang="de" href="https://slange-a11y.github.io/drumbook-web/">
+<link rel="alternate" hreflang="en" href="https://slange-a11y.github.io/drumbook-web/en/">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Drumbook — Das Übetagebuch fürs Schlagzeug">
+<meta property="og:description" content="Üben mit Plan statt nach Gefühl. Ablaufplan mit Uhr, sample-genaues Metronom, alles vom Lehrer an einem Ort.">
+<meta property="og:image" content="https://slange-a11y.github.io/drumbook-web/assets/icon-512.png">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="index.html">
+      <img src="assets/icon-180.png" alt="" width="30" height="30">
+      Drumbook
+    </a>
+    <nav class="nav__links" aria-label="Abschnitte">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#daten">Deine Daten</a>
+      <a href="#stand">Stand</a>
+      <a href="#fragen">Fragen</a>
+    </nav>
+    <p class="lang">
+      <a href="index.html" aria-current="page" hreflang="de">DE</a>
+      <span aria-hidden="true">/</span>
+      <a href="en/" hreflang="en">EN</a>
+    </p>
+    <a class="btn btn--primary btn--sm" href="#bescheid">Bescheid geben</a>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">Für iPhone und iPad</p>
+        <h1>Üben mit Plan statt nach&nbsp;Gefühl.</h1>
+        <p class="hero__sub">
+          Drumbook ist das Übetagebuch fürs Schlagzeug. Es stellt die heutige
+          Übeliste zusammen, hält mit zwei Uhren die Zeit, gibt das Tempo vor
+          und merkt sich, was der Lehrer gesagt hat. Damit am Ende der Woche
+          nicht nur ein Gefühl steht, sondern ein Verlauf.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#bescheid">
+            Bescheid geben, wenn&#39;s losgeht
+          </a>
+          <a class="btn btn--ghost" href="#funktionen">Ansehen, was drin ist</a>
+        </div>
+        <ul class="trust">
+          <li>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5 3 3.6v4.1c0 3 2.1 5.8 5 6.8 2.9-1 5-3.8 5-6.8V3.6L8 1.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m5.9 7.9 1.5 1.5 2.8-2.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Alles bleibt auf dem Gerät
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.3" stroke="currentColor" stroke-width="1.4"/><path d="M5.6 8.1l1.7 1.7 3.2-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Kein Konto, keine Anmeldung
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.4 13.6 13.6 2.4M4.6 4.6a3 3 0 1 0 4.3 4.3M8 8a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Kein Tracking, keine Werbung
+          </li>
+        </ul>
+      </div>
+      <div class="hero__media">
+        <div class="phone phone--hero">
+          <img src="assets/shots/07-session.png"
+               alt="Laufende Übesession in Drumbook: Übung 1 von 3, Double Stroke Roll, Countdown der Übung, Restzeit der ganzen Session, Metronom bei 96 BPM und der Ablauf darunter."
+               width="800" height="1739" fetchpriority="high">
+        </div>
+      </div>
+    </div>
+
+    <p class="notice">
+      <strong>Ehrlich gesagt:</strong> Drumbook gibt es noch nicht zu laden.
+      Die App läuft täglich auf einem echten iPhone, aber sie ist weder im App
+      Store noch in TestFlight. Diese Seite zeigt den Stand von heute — und
+      sammelt die Adressen von allen, die Bescheid bekommen wollen, wenn es
+      losgeht.
+    </p>
+  </div>
+</section>
+
+<!-- ============ Warum ============ -->
+<section class="band band--sunken">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Warum überhaupt</p>
+      <h2>Eine Stunde Üben ist nicht eine Stunde Fortschritt.</h2>
+      <p class="lede">
+        Wer ohne Plan ans Set geht, spielt am Ende das, was ohnehin schon
+        sitzt. Die drei Dinge, an denen es meistens hakt:
+      </p>
+    </div>
+    <div class="problems">
+      <div class="problem">
+        <p class="problem__q">„Was übe ich heute?"</p>
+        <p>
+          Die Antwort kommt aus dem Bauch — und der wählt bevorzugt das
+          Angenehme. Die Übung, die schwerfällt, rutscht wochenlang durch.
+        </p>
+      </div>
+      <div class="problem">
+        <p class="problem__q">„Was hat der Lehrer nochmal gesagt?"</p>
+        <p>
+          Der eine entscheidende Satz aus der Stunde ist am Mittwoch weg. Und
+          die Frage, die man stellen wollte, fällt einem erst auf der
+          Heimfahrt wieder ein.
+        </p>
+      </div>
+      <div class="problem">
+        <p class="problem__q">„Werde ich eigentlich besser?"</p>
+        <p>
+          Fortschritt am Schlagzeug ist langsam und von innen kaum zu hören.
+          Ohne Zahlen bleibt nur ein Gefühl — und das trügt in beide
+          Richtungen.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Funktionen groß ============ -->
+<section class="band" id="funktionen">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Was Drumbook macht</p>
+      <h2>Sechs Dinge, die eine Übesession besser machen.</h2>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Die Uhr denkt mit</h3>
+        <p>
+          Eine Session ist kein Wecker, sondern ein Ablaufplan. Du legst fest,
+          wie lange du insgesamt Zeit hast; jede Übung bekommt ihre eigene
+          Soll-Zeit. Zwei Countdowns laufen gleichzeitig: einer für die Übung,
+          einer für den ganzen Abend.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Automatischer Wechsel</b> mit kurzer Pause, Ton und spürbarem Signal — du musst das Handy nicht anfassen.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Überziehen erlaubt.</b> Wer bei einer Übung länger bleibt, nimmt den anderen nichts weg — die Restzeit rechnet ehrlich.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Danach kurz bewerten:</b> erreichtes Tempo und ein Urteil je Übung, eins für den ganzen Abend.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/07-session.png" alt="Der Session-Bildschirm mit großem Countdown, Fortschrittsbalken, Metronom-Leiste und dem Ablauf der drei geplanten Übungen." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Die Übeliste stellt sich selbst zusammen</h3>
+        <p>
+          Sag Drumbook, wie viele Minuten du hast — den Rest macht der
+          Generator. Er zieht heran, was zu lange liegen geblieben ist, achtet
+          darauf, dass nicht dreimal dasselbe Thema drankommt, und lässt
+          Wichtiges zuerst durch.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Vernachlässigung zählt.</b> Was seit zwei Wochen nicht dran war, rückt von selbst nach vorn.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Was der Lehrer aufgegeben hat,</b> fällt auch bei knapper Zeit nicht hinten runter.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Alles bleibt änderbar:</b> Minuten schieben, Übungen rauswerfen, gleichmäßig aufteilen — oder neu würfeln lassen.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/06-planer.png" alt="Session vorbereiten: Zeitbudget von 30 Minuten, davon 30 verplant, darunter der Ablauf mit drei Übungen und ihren Minuten sowie Knöpfe zum Neuzusammenstellen." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Ein Klick, der nicht eiert</h3>
+        <p>
+          Das Metronom rechnet jeden Schlag im Voraus in den Ton hinein statt
+          sich auf einen Timer zu verlassen. Deshalb bleibt es auch nach zehn
+          Minuten dort, wo es sein soll. Und jede Übung merkt sich ihre eigene
+          Einstellung.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Jeder Schlag einzeln:</b> betont, normal oder stumm. Unterteilungen bis zur Sextole.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Tempo tippen,</b> Tempo automatisch steigern, nach einer festen Zahl Takte aufhören.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Stille Takte</b> fürs Timing: der Klick setzt aus, du spielst weiter — und hörst beim Wiedereinsetzen, ob du noch drauf bist.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Läuft bei gesperrtem Bildschirm weiter</b> und lässt sich von dort bedienen.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/05-metronom.png" alt="Das Metronom bei 100 BPM mit vier Schlaglichtern, Start-Knopf, Tempo tippen, Einstellungen für Schläge pro Takt, Unterteilung, Tempo-Automatik und stille Takte." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Was der Lehrer sagt, ist nächste Woche noch da</h3>
+        <p>
+          Zu jeder Stunde hältst du fest, worum es ging und wie der Lehrer es
+          eingeschätzt hat. Die aufgegebenen Übungen wandern direkt in die
+          Bibliothek — und der Generator weiß, dass sie Vorrang haben.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Fragen sammeln,</b> sobald sie beim Üben auftauchen. In der nächsten Stunde stehen sie oben auf dem Bildschirm.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Notenblätter dazu:</b> abfotografiert, eingescannt oder als PDF — samt Sprachnotizen aus der Stunde.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Ein Bericht als PDF</b> zeigt dem Lehrer, was seit der letzten Stunde tatsächlich passiert ist.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/04-unterricht.png" alt="Der Unterrichts-Bildschirm: zwei offene Fragen an den Lehrer, darunter drei Unterrichtsstunden mit Datum, Bewertung, Zusammenfassung und der Zahl aufgegebener Übungen." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Der Beweis, dass es vorangeht</h3>
+        <p>
+          Jede Session landet im Verlauf. Nach ein paar Wochen siehst du
+          schwarz auf weiß, wie viel du geübt hast, wohin die Zeit geflossen
+          ist und wo das Tempo tatsächlich gestiegen ist.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Die letzten 14 Tage</b> als Diagramm — die Lücken sieht man sofort.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Zeit nach Kategorie:</b> wer sechs Stunden Rudiments und zwanzig Minuten Independence hat, weiß, woran das nächste Mal gearbeitet wird.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Wochenziel und Tage in Folge</b> auf dem Startbildschirm — ohne Abzeichen und ohne schlechtes Gewissen.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/03-verlauf.png" alt="Der Verlauf mit Balkendiagramm der letzten 14 Tage, darunter die Zeit nach Kategorie: Rudiments 8 Stunden 17 Minuten, Independence, Groove und Fills." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__text">
+        <h3>Deine Übungen, sortiert</h3>
+        <p>
+          Die Bibliothek hält alles zusammen: was die Übung soll, welches
+          Tempo das Ziel ist, wo du gerade stehst, wann sie zuletzt dran war.
+          Songs laufen getrennt mit — sie sollen die Übeliste nicht fluten.
+        </p>
+        <ul class="points">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Ziel- und Ist-Tempo</b> mit Balken: 112 von 140 BPM sagt mehr als „geht so".</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Neu, in Arbeit, sitzt, Routine, Aufwärmen</b> — der Zustand steuert mit, wie oft eine Übung drankommt.</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Eigene Notizen</b> zu jeder Übung — das, was du dir selbst beim letzten Mal sagen wolltest.</span></li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone">
+          <img src="assets/shots/02-bibliothek.png" alt="Die Bibliothek nach Kategorien sortiert: Rudiments mit fünf Übungen, jeweils mit Zustand, letztem Übedatum und Tempo-Balken." width="800" height="1739" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Kleineres Raster ============ -->
+<section class="band band--sunken">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Und außerdem</p>
+      <h2>Der Kleinkram, der im Alltag den Unterschied macht.</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2.5" width="14" height="15" rx="2.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 7h7M6.5 10h7M6.5 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Material an der Übung</h3>
+        <p>
+          Notenblätter scannen oder abfotografieren, PDFs importieren,
+          Sprachnotizen aufnehmen, Links hinterlegen. Beim Üben liegt alles
+          eine Berührung entfernt, zoombar auf dem ganzen Bildschirm.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3a4.6 4.6 0 0 0-4.6 4.6c0 3.4-1.4 4.5-1.4 4.5h12s-1.4-1.1-1.4-4.5A4.6 4.6 0 0 0 10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.6 15a1.6 1.6 0 0 0 2.8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Erinnerungen, die passen</h3>
+        <p>
+          Täglich zur festen Uhrzeit — oder erst dann, wenn du eine selbst
+          gewählte Zahl von Tagen nicht am Set warst. Kein Dauerfeuer.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 15.5V5.2l8-1.5v10.1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="5.4" cy="15.6" r="1.9" stroke="currentColor" stroke-width="1.5"/><circle cx="13.4" cy="13.8" r="1.9" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Setlists für die Probe</h3>
+        <p>
+          Songs in der Reihenfolge des Abends, jeder mit seinem Tempo.
+          Entweder groß durchspielen ohne Uhr — oder als Übesession mit allem
+          Drum und Dran.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 13V3.5M10 3.5 6.8 6.8M10 3.5l3.2 3.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 12.5v3a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Export und Sicherung</h3>
+        <p>
+          Ein Bericht als PDF für den Lehrer. Und eine vollständige Sicherung
+          als Datei, die sich auch wieder einlesen lässt — mit Anhängen, ohne
+          dass dabei etwas gelöscht wird.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="15" cy="5" r="2.2" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="10" r="2.2" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="15" r="2.2" stroke="currentColor" stroke-width="1.5"/><path d="m7 8.9 6-2.8M7 11.1l6 2.8" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Eine Übung weitergeben</h3>
+        <p>
+          Eine Übung samt Beschreibung und Einstellungen als Datei
+          verschicken. Der andere liest sie ein — ganz ohne Konto, Server
+          oder Einladung.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8.1 7.8A2 2 0 0 1 11.9 8.5c0 1.4-2 1.6-2 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9.9" cy="14" r="0.85" fill="currentColor"/></svg>
+        </div>
+        <h3>Hilfe, wo du gerade bist</h3>
+        <p>
+          Auf jedem Bildschirm sitzt ein Fragezeichen. Dahinter steht nicht
+          irgendein Handbuch, sondern die Erklärung genau zu dem, was gerade
+          vor dir liegt.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Daten ============ -->
+<section class="band" id="daten">
+  <div class="wrap">
+    <div class="privacy">
+      <div>
+        <p class="kicker">Deine Daten</p>
+        <h2>Bleibt alles hier.</h2>
+        <p class="lede">
+          Drumbook ist eine App ohne Rückkanal. Sie hat keine Anmeldung, kein
+          Konto und keine Serververbindung — nicht als Einstellung, sondern
+          weil so etwas schlicht nicht eingebaut ist. Was du übst, geht
+          niemanden etwas an.
+        </p>
+      </div>
+      <ul class="privacy__list">
+        <li>
+          <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2 4 4.6v5.1c0 3.7 2.6 7.1 6 8.3 3.4-1.2 6-4.6 6-8.3V4.6L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span><b>Auf dem Gerät gespeichert</b>Übungen, Sessions, Notizen und Notenblätter liegen in der App auf deinem iPhone — nicht in einer Wolke.</span>
+        </li>
+        <li>
+          <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 15.5 15.5 3M6 5.8a3.6 3.6 0 1 0 5.2 5M10 10a3.6 3.6 0 0 0 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span><b>Nichts wird gemessen</b>Keine Analyse-Werkzeuge, keine Absturzberichte an Dritte, keine Werbekennung. Die App zählt nicht mit, wie du sie benutzt.</span>
+        </li>
+        <li>
+          <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3.2" y="8.4" width="13.6" height="8.4" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6.6 8.4V6.2a3.4 3.4 0 0 1 6.8 0v2.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span><b>Kein Konto nötig</b>Kein Passwort, keine E-Mail-Adresse, keine Anmeldung über andere Dienste. Installieren und loslegen.</span>
+        </li>
+        <li>
+          <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5v9M10 11.5 6.9 8.4M10 11.5l3.1-3.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.6 12v3.4a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span><b>Du kommst jederzeit raus</b>Die vollständige Sicherung ist eine offene Datei, die du selbst besitzt. Kein Datenschatz, den jemand für sich behält.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Stand ============ -->
+<section class="band band--sunken" id="stand">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Stand der Dinge</p>
+      <h2>Was fertig ist — und was nicht.</h2>
+      <p class="lede">
+        Drumbook ist ein Projekt aus dem Proberaum, kein Produkt einer Firma.
+        Deshalb steht hier ehrlich, wo es gerade steht.
+      </p>
+    </div>
+    <div class="status">
+      <div class="status__col status--done">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.3 8.2 1.9 1.9 3.5-3.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Läuft und wird benutzt
+        </h3>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Bibliothek, Sessions mit Ablaufplan und doppelter Uhr</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Metronom, auch bei gesperrtem Bildschirm</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Unterricht, Fragen an den Lehrer, Verlauf mit Diagramm</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Material, Erinnerungen, Setlists, Übelisten-Generator</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Bericht als PDF, Sicherung mit Wiederherstellung</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Läuft auf iPhone und iPad, ausgeliefert auf Deutsch</li>
+        </ul>
+      </div>
+      <div class="status__col status--open">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.6V8l2.2 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Steht noch aus
+        </h3>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Der Weg in den App Store — bis dahin gibt es die App nicht zu laden</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Eine Testfassung für andere, über TestFlight</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Die englische Fassung ist vorbereitet, aber noch nicht übersetzt</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Auf dem iPad läuft alles, aber die Ansicht ist noch nicht fürs große Format gebaut</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Ein Abgleich zwischen mehreren Geräten — später, wenn überhaupt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Fragen ============ -->
+<section class="band" id="fragen">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Fragen</p>
+      <h2>Was Leute wissen wollen.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Kann ich Drumbook schon benutzen?</summary>
+        <p>
+          Noch nicht. Die App läuft täglich auf einem iPhone, aber sie ist
+          weder im App Store noch über TestFlight zu bekommen. Wenn du deine
+          Adresse hinterlässt, bekommst du eine Nachricht, sobald sich das
+          ändert — und sonst keine.
+        </p>
+      </details>
+      <details>
+        <summary>Was wird das kosten?</summary>
+        <p>
+          Das steht noch nicht fest. Fest steht nur, was es nicht wird: kein
+          Abonnement für Dinge, die auf dem eigenen Gerät passieren, und keine
+          Werbung.
+        </p>
+      </details>
+      <details>
+        <summary>Gibt es das für Android?</summary>
+        <p>
+          Nein, und das ist auch nicht geplant. Drumbook ist von Grund auf für
+          iPhone und iPad gebaut — die Genauigkeit des Metronoms hängt direkt
+          an dieser Audio-Technik.
+        </p>
+      </details>
+      <details>
+        <summary>Brauche ich dafür einen Schlagzeuglehrer?</summary>
+        <p>
+          Nein. Der Unterrichts-Teil ist ein Angebot, keine Bedingung. Wer
+          allein übt, benutzt Bibliothek, Sessions, Metronom und Verlauf
+          genauso — der Bereich bleibt dann einfach leer.
+        </p>
+      </details>
+      <details>
+        <summary>Was passiert mit meinen Daten, wenn das Handy kaputtgeht?</summary>
+        <p>
+          Dafür gibt es die Sicherung: eine einzelne Datei mit allem, auch den
+          Notenblättern und Sprachnotizen. Die legst du dort ab, wo du sonst
+          auch sicherst, und liest sie auf dem neuen Gerät wieder ein. Beim
+          Einlesen wird zusammengeführt, nicht überschrieben.
+        </p>
+      </details>
+      <details>
+        <summary>Kann mein Lehrer die App auch benutzen?</summary>
+        <p>
+          Es gibt keinen gemeinsamen Zugang für Lehrer und Schüler — das wäre
+          eine ganz andere App. Was es gibt: den Bericht als PDF, den du dem
+          Lehrer schickst, und einzelne Übungen, die sich als Datei
+          weitergeben lassen.
+        </p>
+      </details>
+      <details>
+        <summary>Übertönt das Metronom überhaupt ein Schlagzeug?</summary>
+        <p>
+          Über den Lautsprecher eines Telefons: nein, jedenfalls nicht
+          zuverlässig. Am Set gehören Kopfhörer dazu. Drumbook weiß das — wenn
+          die Kopfhörer währenddessen abgezogen werden, hält es an, statt
+          plötzlich über den Lautsprecher zu klicken.
+        </p>
+      </details>
+      <details>
+        <summary>Wer steckt dahinter?</summary>
+        <p>
+          Eine Person, die selbst Schlagzeug lernt und die App zuerst für sich
+          gebaut hat. Jede Funktion ist entstanden, weil beim Üben etwas
+          gefehlt hat — nicht, weil sie in einem Vergleich gut aussieht.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Abschluss ============ -->
+<section class="final" id="bescheid">
+  <div class="wrap final__in">
+    <img src="assets/icon-512.png" alt="" width="78" height="78">
+    <h2>Bescheid bekommen, wenn&#39;s losgeht.</h2>
+    <p>
+      Eine kurze Mail genügt. Du hörst genau dann wieder etwas, wenn Drumbook
+      zum Ausprobieren bereitsteht — keine Neuigkeiten, kein Rundbrief,
+      nichts dazwischen.
+    </p>
+    <a class="btn btn--primary"
+       href="mailto:s.lange@te-printline.de?subject=Drumbook%3A%20Bescheid%20geben&amp;body=Hallo%2C%0A%0Aich%20m%C3%B6chte%20Bescheid%20bekommen%2C%20sobald%20Drumbook%20zum%20Ausprobieren%20bereitsteht.%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+      Mail schreiben
+    </a>
+    <p class="note">
+      Öffnet dein Mailprogramm mit fertigem Text. Deine Adresse wird nur dafür
+      benutzt, dir diese eine Nachricht zu schicken — und danach gelöscht.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p style="margin:0">Drumbook — ein Übetagebuch fürs Schlagzeug.</p>
+    <nav class="foot__links" aria-label="Rechtliches">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="en/" hreflang="en">English</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
