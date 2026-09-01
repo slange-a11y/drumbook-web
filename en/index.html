@@ -513,16 +513,62 @@
     <img src="../assets/icon-512.png" alt="" width="78" height="78">
     <h2>Hear about it when it's ready.</h2>
     <p>
-      A short email is all it takes. You'll hear from me exactly once —
-      when Drumbook is ready to try. No newsletter, nothing in between.
+      You'll hear from me exactly once — when Drumbook is ready to try.
+      No newsletter, nothing in between.
     </p>
-    <a class="btn btn--primary"
-       href="mailto:s.lange@te-printline.de?subject=Drumbook%3A%20notify%20me&amp;body=Hello%2C%0A%0Aplease%20let%20me%20know%20when%20Drumbook%20is%20ready%20to%20try.%0A%0AThanks%2C%0A">
-      Write an email
-    </a>
+    <!-- The form only appears once data-endpoint below holds the address of
+         the Apps Script web app. Until then the email route stays. -->
+    <form class="form form--js" data-endpoint="HIER_DIE_EXEC_ADRESSE_EINTRAGEN" novalidate>
+      <div class="form__row">
+        <label for="f-email">Email address</label>
+        <input type="email" id="f-email" name="email" required
+               autocomplete="email" inputmode="email"
+               placeholder="you@example.com">
+      </div>
+      <div class="form__row">
+        <label for="f-name">Name <span class="opt">— if you like</span></label>
+        <input type="text" id="f-name" name="name" autocomplete="name"
+               placeholder="What should I call you?">
+      </div>
+      <div class="form__row">
+        <label for="f-nachricht">Message <span class="opt">— if you like</span></label>
+        <textarea id="f-nachricht" name="nachricht"
+                  placeholder="Do you play yourself? Is something missing? I read every line."></textarea>
+      </div>
+
+      <div class="form__pot" aria-hidden="true">
+        <label for="f-website">Please leave this field empty</label>
+        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form__consent">
+        <input type="checkbox" id="f-einwilligung" name="einwilligung" value="yes">
+        <label for="f-einwilligung">
+          My address may be stored in order to notify me once. Details in the
+          <a href="legal.html">privacy notice</a>.
+        </label>
+      </div>
+
+      <button class="btn btn--primary" type="submit">Put me on the list</button>
+      <p class="form__status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="form__ohne-js">
+      <a class="btn btn--primary"
+         href="mailto:s.lange@te-printline.de?subject=Drumbook%3A%20notify%20me&amp;body=Hello%2C%0A%0Aplease%20let%20me%20know%20when%20Drumbook%20is%20ready%20to%20try.%0A%0AThanks%2C%0A">
+        Write an email
+      </a>
+      <p class="note">
+        Opens your email app with the text ready. If that doesn't work for you,
+        just write to
+        <a href="mailto:s.lange@te-printline.de">s.lange@te-printline.de</a>
+        yourself.
+      </p>
+    </div>
+
     <p class="note">
-      Opens your email app with the text ready. Your address is used only to
-      send you that one message — and deleted afterwards.
+      Your address is used only to send you that one message — and deleted
+      afterwards.
     </p>
   </div>
 </section>
@@ -538,6 +584,8 @@
     </nav>
   </div>
 </footer>
+
+<script src="../assets/form.js" defer></script>
 
 </body>
 </html>

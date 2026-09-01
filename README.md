@@ -13,27 +13,45 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
     en/index.html       Startseite (Englisch)
     en/legal.html       Imprint & privacy (Englisch, Übersetzung)
     assets/style.css    Das gesamte Aussehen — ein einziges Stylesheet
+    assets/form.js      Das Formular für die Warteliste (das einzige Skript)
     assets/shots/       Bildschirmfotos aus dem Simulator
+    tools/apps-script/  Der Empfang für das Formular + Einrichtungsanleitung
     .nojekyll           Sagt GitHub Pages: einfach ausliefern, nicht bauen
 
-Reines HTML und CSS. Kein Framework, kein Build-Schritt, kein JavaScript,
-keine externen Schriften — was die Seite lädt, liegt in diesem Repo. Damit
-stimmt auch die Aussage in der Datenschutzerklärung, dass nichts von fremden
-Servern nachgeladen wird.
+Reines HTML und CSS plus ein kleines Skript fürs Formular. Kein Framework,
+kein Build-Schritt, keine externen Schriften — was die Seite lädt, liegt in
+diesem Repo. Damit stimmt auch die Aussage in der Datenschutzerklärung, dass
+beim Aufruf nichts von fremden Servern nachgeladen wird; zu Google geht erst
+etwas, wenn jemand das Formular tatsächlich abschickt.
 
 ## Ändern
 
 Datei bearbeiten, committen, pushen. GitHub Pages liefert die neue Fassung
 nach etwa einer Minute aus.
 
+## Das Formular
+
+Die Warteliste läuft über eine Google-Apps-Script-Web-App, die in eine
+Tabelle schreibt und dir eine Mail schickt. **Sie ist noch nicht
+scharfgeschaltet:** solange in `index.html` und `en/index.html` der
+Platzhalter `HIER_DIE_EXEC_ADRESSE_EINTRAGEN` steht, bleibt das Formular
+unsichtbar und die Seite zeigt weiterhin den Mail-Knopf. Es ist also nichts
+kaputt, wenn du es dabei belässt.
+
+Anleitung: [`tools/apps-script/README.md`](tools/apps-script/README.md).
+
+Die Logik des Skripts lässt sich ohne Google prüfen — die Google-Dienste
+werden durch Attrappen ersetzt und die Datei in JavaScriptCore ausgeführt.
+Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
+
 ## Noch zu erledigen
 
 - **Anschrift im Impressum** und in der Datenschutzerklärung eintragen
   (die Stellen sind mit `[…]` markiert und auf der Seite sichtbar).
+- **Entscheiden, welches Google-Konto** das Formular betreibt: bei einem
+  privaten Konto gibt es keinen AV-Vertrag nach Art. 28 DSGVO. In der
+  Datenschutzerklärung steht dazu ein markierter Hinweis.
 - Bildschirmfotos erneuern, wenn sich die App sichtbar ändert.
-- Wenn die Warteliste per `mailto:` zu mühsam wird: ein Formular
-  (z. B. Formspree) einsetzen — dann muss der Abschnitt „Kontaktaufnahme"
-  in der Datenschutzerklärung angepasst werden.
 
 ## Bildschirmfotos neu erzeugen
 

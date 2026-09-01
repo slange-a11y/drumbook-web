@@ -520,17 +520,62 @@
     <img src="assets/icon-512.png" alt="" width="78" height="78">
     <h2>Bescheid bekommen, wenn&#39;s losgeht.</h2>
     <p>
-      Eine kurze Mail genügt. Du hörst genau dann wieder etwas, wenn Drumbook
-      zum Ausprobieren bereitsteht — keine Neuigkeiten, kein Rundbrief,
-      nichts dazwischen.
+      Du hörst genau dann wieder etwas, wenn Drumbook zum Ausprobieren
+      bereitsteht — keine Neuigkeiten, kein Rundbrief, nichts dazwischen.
     </p>
-    <a class="btn btn--primary"
-       href="mailto:s.lange@te-printline.de?subject=Drumbook%3A%20Bescheid%20geben&amp;body=Hallo%2C%0A%0Aich%20m%C3%B6chte%20Bescheid%20bekommen%2C%20sobald%20Drumbook%20zum%20Ausprobieren%20bereitsteht.%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
-      Mail schreiben
-    </a>
+    <!-- Das Formular erscheint erst, wenn unten in data-endpoint die Adresse
+         der Apps-Script-Web-App steht. Bis dahin bleibt der Mailweg stehen. -->
+    <form class="form form--js" data-endpoint="HIER_DIE_EXEC_ADRESSE_EINTRAGEN" novalidate>
+      <div class="form__row">
+        <label for="f-email">E-Mail-Adresse</label>
+        <input type="email" id="f-email" name="email" required
+               autocomplete="email" inputmode="email"
+               placeholder="du@beispiel.de">
+      </div>
+      <div class="form__row">
+        <label for="f-name">Name <span class="opt">— wenn du magst</span></label>
+        <input type="text" id="f-name" name="name" autocomplete="name"
+               placeholder="Wie soll ich dich ansprechen?">
+      </div>
+      <div class="form__row">
+        <label for="f-nachricht">Nachricht <span class="opt">— wenn du magst</span></label>
+        <textarea id="f-nachricht" name="nachricht"
+                  placeholder="Spielst du selbst? Fehlt dir etwas? Ich lese jede Zeile."></textarea>
+      </div>
+
+      <div class="form__pot" aria-hidden="true">
+        <label for="f-website">Dieses Feld bitte leer lassen</label>
+        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form__consent">
+        <input type="checkbox" id="f-einwilligung" name="einwilligung" value="ja">
+        <label for="f-einwilligung">
+          Meine Adresse darf gespeichert werden, um mich einmalig zu
+          benachrichtigen. Näheres im
+          <a href="datenschutz.html">Datenschutz</a>.
+        </label>
+      </div>
+
+      <button class="btn btn--primary" type="submit">Auf die Liste setzen</button>
+      <p class="form__status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="form__ohne-js">
+      <a class="btn btn--primary"
+         href="mailto:s.lange@te-printline.de?subject=Drumbook%3A%20Bescheid%20geben&amp;body=Hallo%2C%0A%0Aich%20m%C3%B6chte%20Bescheid%20bekommen%2C%20sobald%20Drumbook%20zum%20Ausprobieren%20bereitsteht.%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+        Mail schreiben
+      </a>
+      <p class="note">
+        Öffnet dein Mailprogramm mit fertigem Text. Geht das bei dir nicht,
+        schreib einfach von Hand an
+        <a href="mailto:s.lange@te-printline.de">s.lange@te-printline.de</a>.
+      </p>
+    </div>
+
     <p class="note">
-      Öffnet dein Mailprogramm mit fertigem Text. Deine Adresse wird nur dafür
-      benutzt, dir diese eine Nachricht zu schicken — und danach gelöscht.
+      Deine Adresse wird nur dafür benutzt, dir diese eine Nachricht zu
+      schicken — und danach gelöscht.
     </p>
   </div>
 </section>
@@ -547,6 +592,8 @@
     </nav>
   </div>
 </footer>
+
+<script src="assets/form.js" defer></script>
 
 </body>
 </html>

@@ -736,3 +736,133 @@ h3 {
     .hero__cta .btn { width: 100%; }
     .foot__links { margin-left: 0; gap: 16px; }
 }
+
+/* ---------- Formular für die Warteliste ---------- */
+
+.form {
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form__row {
+    display: grid;
+    gap: 7px;
+    margin-bottom: 16px;
+}
+
+.form label {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.008em;
+}
+.form label .opt {
+    font-weight: 400;
+    color: var(--ink-faint);
+}
+
+.form input[type="email"],
+.form input[type="text"],
+.form textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;               /* unter 16px zoomt iOS beim Antippen hinein */
+    color: var(--ink);
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+.form textarea {
+    min-height: 104px;
+    resize: vertical;
+    line-height: 1.55;
+}
+.form input::placeholder,
+.form textarea::placeholder { color: var(--ink-faint); }
+
+.form input:hover,
+.form textarea:hover { border-color: var(--ink-faint); }
+.form input:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+}
+.form input[aria-invalid="true"] { border-color: #f87171; }
+
+/* Der Honigtopf: für Menschen unsichtbar, für Bots verlockend.
+   Nicht display:none — manche Bots überspringen genau das. */
+.form__pot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.form__consent {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    margin: 4px 0 20px;
+}
+.form__consent input[type="checkbox"] {
+    flex: none;
+    width: 19px; height: 19px;
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+.form__consent label {
+    font-weight: 400;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    cursor: pointer;
+}
+
+.form button { width: 100%; }
+.form button[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+    transform: none;
+}
+
+/* Rückmeldung nach dem Absenden */
+.form__status {
+    margin: 18px 0 0;
+    padding: 15px 18px;
+    border-radius: var(--r-sm);
+    font-size: 15.5px;
+    line-height: 1.58;
+    display: none;
+}
+.form__status[data-state] { display: block; }
+.form__status[data-state="ok"] {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.32);
+    color: #86efac;
+}
+.form__status[data-state="fehler"] {
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.32);
+    color: #fca5a5;
+}
+.form__status[data-state="ok"] strong { color: #bbf7d0; }
+.form__status a { color: inherit; text-decoration: underline; }
+
+/* Ist das Formular abgeschickt, verschwindet es hinter der Bestätigung. */
+.form[data-fertig] .form__row,
+.form[data-fertig] .form__consent,
+.form[data-fertig] button { display: none; }
+
+/* Das Formular erscheint erst, wenn form.js einen gültigen Endpunkt
+   vorgefunden hat. Ohne JavaScript — oder solange die Adresse der Web-App
+   noch nicht eingetragen ist — bleibt es beim Mailweg, der immer geht. */
+.form--js { display: none; }
+.formular-bereit .form--js { display: block; }
+.formular-bereit .form__ohne-js { display: none; }
