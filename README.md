@@ -32,11 +32,14 @@ nach etwa einer Minute aus.
 ## Das Formular
 
 Die Warteliste läuft über eine Google-Apps-Script-Web-App, die in eine
-Tabelle schreibt und dir eine Mail schickt. **Sie ist noch nicht
-scharfgeschaltet:** solange in `index.html` und `en/index.html` der
-Platzhalter `HIER_DIE_EXEC_ADRESSE_EINTRAGEN` steht, bleibt das Formular
-unsichtbar und die Seite zeigt weiterhin den Mail-Knopf. Es ist also nichts
-kaputt, wenn du es dabei belässt.
+Tabelle schreibt und dir eine Mail schickt. **Steht und ist getestet**
+(01.09.2026): Projekt „Drumbook — Warteliste" im TE-Printline-Workspace,
+Version 1, Zugriff „Jeder". Die Eintragungen landen im Blatt `Warteliste`
+derselben Tabelle.
+
+Das Formular erscheint nur, solange in `data-endpoint` eine gültige Adresse
+steht. Wird sie entfernt, fällt die Seite von selbst auf den Mail-Knopf
+zurück.
 
 Anleitung: [`tools/apps-script/README.md`](tools/apps-script/README.md).
 
@@ -46,11 +49,7 @@ Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
 
 ## Noch zu erledigen
 
-- **Anschrift im Impressum** und in der Datenschutzerklärung eintragen
-  (die Stellen sind mit `[…]` markiert und auf der Seite sichtbar).
-- **Das Formular scharfschalten**, sobald die Web-App im TE-Printline-Workspace
-  bereitsteht (dort gilt der AV-Vertrag; entschieden am 01.09.2026). Anbieter
-  der Website bleibt davon unberührt Silvio Lange als Privatperson.
+- Die zwei Testzeilen im Blatt `Warteliste` löschen, wenn sie stören.
 - Bildschirmfotos erneuern, wenn sich die App sichtbar ändert.
 
 ## Bildschirmfotos neu erzeugen

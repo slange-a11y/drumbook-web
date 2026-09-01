@@ -1,12 +1,16 @@
 # Das Formular scharfschalten
 
-Das Formular auf der Website ist fertig, aber **noch unsichtbar**. Es
-erscheint erst, wenn in `index.html` und `en/index.html` die Adresse deiner
-Apps-Script-Web-App eingetragen ist. Bis dahin sieht der Besucher den
-Mail-Knopf wie bisher — es ist also nichts kaputt, solange du das hier nicht
-gemacht hast.
+> **Erledigt am 01.09.2026.** Die Web-App läuft im TE-Printline-Workspace
+> (Projekt „Drumbook — Warteliste", Version 1, Zugriff: Jeder), die Adresse
+> steht in beiden Startseiten, und der Weg Website → Skript → Tabelle ist
+> durchgetestet. Diese Anleitung bleibt für den Fall stehen, dass etwas neu
+> aufgesetzt oder nachvollzogen werden muss.
 
-Dauer: etwa zehn Minuten.
+Das Formular erscheint nur, wenn in `index.html` und `en/index.html` in
+`data-endpoint` eine gültige Adresse steht. Fehlt sie, zeigt die Seite
+stattdessen den Mail-Knopf — kaputt ist dann nichts.
+
+Dauer beim ersten Mal: etwa zehn Minuten.
 
 ## Wichtig: das Firmenkonto benutzen
 
