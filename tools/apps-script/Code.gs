@@ -17,7 +17,7 @@
 // ---------------------------------------------------------------------------
 
 /** Wohin die Benachrichtigung geht. */
-var EMPFAENGER = 's.lange@te-printline.de';
+var EMPFAENGER = 'herr.silvio.lange@googlemail.com';
 
 /** Kurze Empfangsbestätigung an den Absender schicken? */
 var BESTAETIGUNG_SENDEN = true;
