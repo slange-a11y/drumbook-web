@@ -19,6 +19,7 @@ und das fiel nur dadurch auf:
 
 Zwei Festlegungen, die nicht zufällig sind: Der QR-Code sitzt **immer auf
 hellem Grund**, auch auf der dunklen Fassung — ein invertierter Code wird
-längst nicht von jeder Kamera erkannt. Und die Website-Adresse steht bewusst
-**nicht** drauf, solange drumbook.de nicht auflöst; eine tote Adresse auf
-gedrucktem Papier ist schlimmer als gar keine.
+längst nicht von jeder Kamera erkannt. Und die Website-Adresse steht in der
+Kopfzeile, nicht im Fuß: dort kostet sie keine Höhe. Der Zettel war vorher
+schon 7 pt in den Seitenrand gelaufen — zwei Abstände sind dafür geschrumpft,
+der gemeldete untere Rand liegt jetzt bei 36,6 pt.

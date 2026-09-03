@@ -81,21 +81,26 @@ func zeichne(_ p: Palette, in ctx: CGContext) {
     }
     schreib(attr("Drumbook", font(19, .bold), p.ink, sperrung: -0.2),
             x: RAND + 46, y: y - 3, breite: 220)
-    schreib(attr("ÜBETAGEBUCH FÜRS SCHLAGZEUG", font(8, .semibold), p.accent, sperrung: 1.3),
-            x: RAND + 46, y: y - 28, breite: 260)
+    let kopfzeile = attr("ÜBETAGEBUCH FÜRS SCHLAGZEUG · DRUMBOOK.DE",
+                         font(8, .semibold), p.accent, sperrung: 1.3)
+    let kopfhoehe = schreib(kopfzeile, x: RAND + 46, y: y - 28, breite: 300)
+    if kopfhoehe > 14 {   // eine Zeile ist ~10 pt; mehr hiesse: laeuft in die Wortmarke
+        FileHandle.standardError.write(
+            "  \(p.name): ACHTUNG Kopfzeile bricht um (\(kopfhoehe) pt)\n".data(using: .utf8)!)
+    }
     y -= 54
 
     // --- Aufhaenger
     y -= schreib(attr("Eine Stunde geübt. Und wieder nur das gespielt, was du kannst.",
                       font(25, .bold), p.ink, zeilen: 1.05, sperrung: -0.6),
                  x: RAND, y: y, breite: b)
-    y -= 13
+    y -= 9
 
     y -= schreib(attr("Drumbook plant deine Übesession, hält das Tempo und merkt sich, "
                     + "was im Unterricht gesagt wurde.",
                       font(12, .regular), p.muted, zeilen: 1.3),
                  x: RAND, y: y, breite: b)
-    y -= 13
+    y -= 9
 
     // --- Drei Punkte, je eine Zeile Erklaerung
     let punkte = [

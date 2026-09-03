@@ -2,7 +2,7 @@
 
 Die Website zur iOS-App **Drumbook** — ein Übetagebuch fürs Schlagzeug.
 
-Öffentlich erreichbar unter <https://slange-a11y.github.io/drumbook-web/>.
+Öffentlich erreichbar unter <https://drumbook.de/>.
 Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumbook`.
 
 ## Aufbau
