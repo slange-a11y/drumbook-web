@@ -17,7 +17,7 @@
 // ---------------------------------------------------------------------------
 
 /** Wohin die Benachrichtigung geht. */
-var EMPFAENGER = 'herr.silvio.lange@googlemail.com';
+var EMPFAENGER = 'silvio@drumbook.de';
 
 /** Kurze Empfangsbestätigung an den Absender schicken? */
 var BESTAETIGUNG_SENDEN = true;

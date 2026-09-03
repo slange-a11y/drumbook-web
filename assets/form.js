@@ -38,7 +38,7 @@
             email:   'Bitte trag eine E-Mail-Adresse ein, an die ich schreiben kann.',
             haken:   'Ohne den Haken darf ich deine Adresse nicht speichern.',
             fehler:  'Das hat gerade nicht geklappt. Schreib mir stattdessen an ' +
-                     '<a href="mailto:s.lange@te-printline.de">s.lange@te-printline.de</a>.',
+                     '<a href="mailto:silvio@drumbook.de">silvio@drumbook.de</a>.',
             danke:   'Danke — du stehst auf der Liste.',
             zusatz:  'Du hörst wieder von mir, wenn Drumbook zum Ausprobieren bereitsteht.'
         },
@@ -48,7 +48,7 @@
             email:   'Please enter an email address I can write to.',
             haken:   'Without the tick I am not allowed to store your address.',
             fehler:  'That did not work just now. Write to ' +
-                     '<a href="mailto:s.lange@te-printline.de">s.lange@te-printline.de</a> instead.',
+                     '<a href="mailto:silvio@drumbook.de">silvio@drumbook.de</a> instead.',
             danke:   'Thanks — you are on the list.',
             zusatz:  'You will hear from me when Drumbook is ready to try.'
         }

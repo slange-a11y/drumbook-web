@@ -54,7 +54,7 @@ Ordner hineinkopieren und speichern.
 
 Oben im Skript stehen vier Einstellungen. Prüfen:
 
-    var EMPFAENGER = 'herr.silvio.lange@googlemail.com';   // wohin die Nachricht geht
+    var EMPFAENGER = 'silvio@drumbook.de';   // wohin die Nachricht geht
     var BESTAETIGUNG_SENDEN = true;               // Empfangsbestätigung an den Absender
     var ABSENDERNAME = 'Drumbook';
     var BLATT = 'Warteliste';
