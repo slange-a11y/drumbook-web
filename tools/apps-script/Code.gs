@@ -10,6 +10,13 @@
  * EMPFAENGER eintragen, dann Bereitstellen ▸ Neue Bereitstellung ▸
  * Web-App, „Ausführen als: Ich", „Zugriff: Jeder". Die /exec-Adresse
  * kommt in index.html und en/index.html in das Feld data-endpoint.
+ *
+ * ÄNDERN ist etwas anderes als EINRICHTEN: „Neue Bereitstellung" legt
+ * eine zweite Bereitstellung mit einer NEUEN /exec-Adresse an — die auf
+ * der Website eingetragene zeigt dann weiter auf den alten Code. Wer
+ * bestehenden Code austauschen will, nimmt Bereitstellen ▸
+ * Bereitstellungen verwalten ▸ Stift ▸ Version: „Neue Version" ▸
+ * Bereitstellen. Dann bleibt die Adresse dieselbe.
  */
 
 // ---------------------------------------------------------------------------

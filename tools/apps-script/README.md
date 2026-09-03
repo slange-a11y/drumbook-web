@@ -79,6 +79,23 @@ Beim ersten Mal fragt Google nach Berechtigungen. Die Warnung „Diese App ist
 nicht verifiziert" ist normal für eigene Skripte — über **Erweitert ▸ Zu
 … wechseln (unsicher)** bestätigen. Es ist dein eigener Code.
 
+### Später etwas am Code ändern — nicht „Neue Bereitstellung"
+
+Das ist die Falle, und sie fällt erst auf, wenn das Formular schon läuft:
+**„Neue Bereitstellung" legt eine zweite Bereitstellung mit einer neuen
+/exec-Adresse an.** Die alte bleibt aktiv, und weil in `data-endpoint` auf
+der Website die alte Adresse steht, landen Eintragungen weiter beim alten
+Code — es sieht aus, als hätte die Änderung nichts bewirkt.
+
+Richtig ist: **Bereitstellen ▸ Bereitstellungen verwalten ▸** Stift ▸ bei
+*Version* **„Neue Version"** wählen ▸ **Bereitstellen**. Die
+Bereitstellungs-ID und damit die /exec-Adresse bleiben dieselben, und die
+Website muss nicht angefasst werden. So ist am 03.09.2026 Version 2 (neue
+Empfängeradresse) live gegangen.
+
+Der Code muss vorher gespeichert sein (⌘S) — bereitgestellt wird der
+gespeicherte Stand, nicht der im Editor sichtbare.
+
 Am Ende bekommst du eine Adresse dieser Form:
 
     https://script.google.com/macros/s/AKfycb…/exec
