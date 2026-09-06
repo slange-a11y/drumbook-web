@@ -26,6 +26,7 @@
         '.problems > .problem',
         '.feature',
         '.grid > .card',
+        '.flash > .flash__item',
         '.more > .more__card',
         '.privacy',
         '.teacher__split',

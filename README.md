@@ -8,9 +8,11 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
 ## Aufbau
 
     index.html          Startseite (Deutsch)
+    neuigkeiten.html    Neuigkeiten (Deutsch)
     impressum.html      Impressum
     datenschutz.html    Datenschutzerklärung
     en/index.html       Startseite (Englisch)
+    en/news.html        Neuigkeiten (Englisch)
     en/legal.html       Imprint & privacy (Englisch, Übersetzung)
     assets/style.css    Das gesamte Aussehen — ein einziges Stylesheet
     assets/form.js      Das Formular für die Warteliste (das einzige Skript)
@@ -28,6 +30,29 @@ etwas, wenn jemand das Formular tatsächlich abschickt.
 
 Datei bearbeiten, committen, pushen. GitHub Pages liefert die neue Fassung
 nach etwa einer Minute aus.
+
+## Neuigkeiten pflegen
+
+Ein Eintrag je Build, neueste zuerst. Die Vorlage steht schon in der Datei —
+`<article class="news__entry">` kopieren, Datum, Schlagwort, Überschrift und
+Text austauschen.
+
+Die Rohfassung steht im App-Repo unter `Tools/testhinweise/<build>.de.md` und
+`.en.md`: dieselbe Sache in beiden Sprachen, im selben Ton. Daraus wird der
+Eintrag gekürzt — **auf das, was der Nutzer davon hat, nicht darauf, wie es
+gebaut ist.** Die Testhinweise erklären das Innenleben; die Website tut das
+bewusst nicht.
+
+Vier Stellen gehören zusammen und dürfen nicht auseinanderlaufen:
+
+1. `neuigkeiten.html` — der vollständige Eintrag.
+2. `en/news.html` — derselbe Eintrag auf Englisch.
+3. `index.html`, Abschnitt `#neues` — die drei jüngsten als kurze Karte.
+4. `en/index.html`, Abschnitt `#news` — dasselbe auf Englisch.
+
+Wandert etwas aus „Steht noch aus" nach „Läuft und wird benutzt", gehört es in
+beiden Sprachen umgehängt — und wenn es den Datenschutz berührt (wie der
+Abgleich über iCloud), auch in `datenschutz.html` und `en/legal.html`.
 
 ## Das Formular
 
