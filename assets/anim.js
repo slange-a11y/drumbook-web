@@ -102,6 +102,62 @@
         });
     }, 4000);
 
+    // Der Strich unter der Kopfzeile zeigt, wo man im Stück steht.
+    var spur = document.querySelector('.nav__spur i');
+    if (spur) {
+        var laeuftGerade = false;
+        var messen = function () {
+            var hoehe = document.documentElement.scrollHeight - window.innerHeight;
+            var anteil = hoehe > 0 ? (window.scrollY / hoehe) : 0;
+            spur.style.width = Math.max(0, Math.min(1, anteil)) * 100 + '%';
+            laeuftGerade = false;
+        };
+        window.addEventListener('scroll', function () {
+            if (laeuftGerade) return;
+            laeuftGerade = true;
+            window.requestAnimationFrame(messen);
+        }, { passive: true });
+        messen();
+    }
+
+    // Der Zeiger über dem Notenband läuft nur, solange das Bild zu sehen ist —
+    // eine Animation, die im Hintergrund weiterläuft, kostet Akku und zeigt
+    // niemandem etwas.
+    var band = document.querySelector('.phone--band');
+    if (band) {
+        new IntersectionObserver(function (eintraege) {
+            eintraege.forEach(function (e) {
+                band.classList.toggle('laeuft', e.isIntersecting);
+            });
+        }, { threshold: 0.3 }).observe(band);
+    }
+
+    // Die Uhr aus der Session läuft wirklich — aber nur im Blickfeld, und sie
+    // fängt von vorn an, statt bei null stehenzubleiben.
+    var uhr = document.querySelector('[data-uhr]');
+    if (uhr) {
+        var start = parseInt(uhr.getAttribute('data-uhr'), 10) || 888;
+        var rest = start;
+        var takt = null;
+        var zeigen = function () {
+            var m = Math.floor(rest / 60), s = rest % 60;
+            uhr.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        };
+        new IntersectionObserver(function (eintraege) {
+            eintraege.forEach(function (e) {
+                if (e.isIntersecting && !takt) {
+                    takt = window.setInterval(function () {
+                        rest = rest > 0 ? rest - 1 : start;
+                        zeigen();
+                    }, 1000);
+                } else if (!e.isIntersecting && takt) {
+                    window.clearInterval(takt);
+                    takt = null;
+                }
+            });
+        }, { threshold: 0.4 }).observe(uhr);
+    }
+
     // Kommt jemand über den Zurück-Knopf zurück, ist der Zustand oft
     // eingefroren. Dann sofort alles aufdecken.
     window.addEventListener('pageshow', function (e) {

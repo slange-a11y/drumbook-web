@@ -50,6 +50,7 @@
     </p>
     <a class="btn btn--primary btn--sm" href="#notify">Notify me</a>
   </div>
+  <div class="nav__spur" aria-hidden="true"><i></i></div>
 </header>
 
 <main id="main">
@@ -183,26 +184,32 @@
         </p>
       </div>
       <div class="feature__media">
-        <div class="phone">
-          <img src="../assets/shots/en/10-notenband.png" alt="The ribbon: thirteen staves of a score stacked as one continuous strand, with section names and bar numbers intact, and a switch at the top between ribbon and printed page." width="368" height="800" loading="lazy">
+        <div class="phone phone--band">
+          <img src="../assets/shots/en/10-notenband.jpg" alt="The ribbon: thirteen staves of a score stacked as one continuous strand, with section names and bar numbers intact, and a switch at the top between ribbon and printed page." width="700" height="1522" loading="lazy">
+          <span class="zeiger" aria-hidden="true"></span>
         </div>
       </div>
     </div>
 
     <figure class="wide-shot">
       <div class="tablet">
-        <img src="../assets/shots/en/11-notenband-ipad.png" alt="The same ribbon on an iPad held sideways: six staves across the full width, the stave being played right now outlined in colour, and the running click along the bottom." width="1200" height="900" loading="lazy">
+        <img src="../assets/shots/en/11-notenband-ipad.jpg" alt="The same ribbon on an iPad held sideways: five staves across the full width, the song title and its place in the setlist above, the linked track and the tempo of 82 BPM below." width="1300" height="896" loading="lazy">
       </div>
       <figcaption>
         The same score on an iPad held sideways — the way the device sits on a
         music stand. A stave here becomes a good two times the size it has on
-        paper. The outline marks the stave you are on; it moves along with the
-        click.
+        paper. Along the bottom the track from your own library plays, with the
+        tempo beside it; once the click runs, the outline moves from stave to
+        stave with it.
       </figcaption>
     </figure>
 
     <div class="feature">
       <div class="feature__text">
+        <p class="uhr" aria-hidden="true">
+          <span class="uhr__zeit" data-uhr="888">14:48</span>
+          <span class="uhr__was">Exercise 2 of 3</span>
+        </p>
         <h3>The clock thinks along</h3>
         <p>
           A session isn't an alarm, it's a running order. You set how long you
@@ -217,13 +224,21 @@
       </div>
       <div class="feature__media">
         <div class="phone">
-          <img src="../assets/shots/en/07-session.png" alt="The session screen with a large countdown, progress bar, metronome strip and the running order of three planned exercises." width="800" height="1739" loading="lazy">
+          <img src="../assets/shots/en/07-session.jpg" alt="The session screen in portrait: a large countdown above the running exercise, a progress bar, the metronome strip at 80 BPM and the running order of three planned exercises below." width="700" height="1522" loading="lazy">
         </div>
       </div>
     </div>
 <div class="feature">
       <div class="feature__text">
         <p class="beat" aria-hidden="true">
+          <svg class="pendel" viewBox="0 0 34 42" fill="none" aria-hidden="true">
+            <path d="M11 4h12l7 33H4L11 4Z" fill="rgba(249,129,44,0.10)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M5 30h24" stroke="currentColor" stroke-width="1.1" opacity="0.45"/>
+            <g class="pendel__arm">
+              <path d="M17 37V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <rect x="12.5" y="16" width="9" height="5" rx="1.2" fill="currentColor"/>
+            </g>
+          </svg>
           <span></span><span></span><span></span><span></span>
           <span class="beat__bpm">100 BPM</span>
         </p>
@@ -242,7 +257,7 @@
       </div>
       <div class="feature__media">
         <div class="phone">
-          <img src="../assets/shots/en/05-metronom.png" alt="The metronome at 100 BPM with four beat lights, a start button, tap tempo, and settings for beats per bar, subdivision, automatic tempo and silent bars." width="800" height="1739" loading="lazy">
+          <img src="../assets/shots/en/05-metronom.jpg" alt="The metronome at 100 BPM with four beat lights, a start button, tap tempo, and settings for beats per bar, subdivision, automatic tempo and silent bars." width="700" height="1522" loading="lazy">
         </div>
       </div>
     </div>
@@ -262,7 +277,7 @@
       </div>
       <div class="feature__media">
         <div class="phone">
-          <img src="../assets/shots/en/04-unterricht.png" alt="The lessons screen: two open questions for the teacher, and below them three lessons with date, rating, summary and the number of exercises set." width="800" height="1739" loading="lazy">
+          <img src="../assets/shots/en/04-unterricht.jpg" alt="The lessons screen: two open questions for the teacher, and below them three lessons with date, rating, summary and the number of exercises set." width="700" height="1522" loading="lazy">
         </div>
       </div>
     </div>
@@ -271,7 +286,7 @@
       <div class="more">
         <div class="more__card">
           <div class="phone phone--mini">
-            <img src="../assets/shots/en/06-planer.png" alt="Preparing a session: a 30-minute budget, all 30 allocated, with the running order of three exercises and their minutes below." width="800" height="1739" loading="lazy">
+            <img src="../assets/shots/en/06-planer.jpg" alt="Preparing a session: a 30-minute budget, all 30 allocated, with the running order of three exercises and their minutes below." width="700" height="1522" loading="lazy">
           </div>
           <div class="more__text">
             <h3>The practice list writes itself</h3>
@@ -280,7 +295,7 @@
         </div>
         <div class="more__card">
           <div class="phone phone--mini">
-            <img src="../assets/shots/en/03-verlauf.png" alt="The history with a bar chart of the last 14 days, and below it time by category: rudiments 8 hours 17 minutes, independence, groove and fills." width="800" height="1739" loading="lazy">
+            <img src="../assets/shots/en/03-verlauf.jpg" alt="The history with a bar chart of the last 14 days, and below it time by category: rudiments 2 hours 6 minutes, songs 1 hour 22 minutes, groove, independence and fills." width="700" height="1522" loading="lazy">
           </div>
           <div class="more__text">
             <h3>Proof that it's going somewhere</h3>
@@ -289,7 +304,7 @@
         </div>
         <div class="more__card">
           <div class="phone phone--mini">
-            <img src="../assets/shots/en/08-musik.png" alt="A song in the library: “Come Together” at 82 of 82 BPM, with a Music section below showing the linked track “Come Together — The Beatles” from Apple Music." width="800" height="1739" loading="lazy">
+            <img src="../assets/shots/en/08-musik.jpg" alt="A song in the library: “Come Together” at 82 of 82 BPM, with a Music section below showing the linked track “Come Together — The Beatles” from Apple Music." width="700" height="1522" loading="lazy">
           </div>
           <div class="more__text">
             <h3>Play along with the original</h3>
@@ -298,7 +313,7 @@
         </div>
         <div class="more__card">
           <div class="phone phone--mini">
-            <img src="../assets/shots/en/02-bibliothek.png" alt="The library sorted by category: rudiments with five exercises, each with its state, when it was last practised and a tempo bar." width="800" height="1739" loading="lazy">
+            <img src="../assets/shots/en/02-bibliothek.jpg" alt="The library sorted by category: rudiments with five exercises, each with its state, when it was last practised and a tempo bar." width="700" height="1522" loading="lazy">
           </div>
           <div class="more__text">
             <h3>Your exercises, in order</h3>
@@ -399,6 +414,63 @@
   </div>
 </section>
 
+<!-- ============ Devices ============ -->
+<section class="band devices-band" id="devices">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker">Upright, sideways, iPhone, iPad</p>
+      <h2>The same journal — whichever way you hold it.</h2>
+      <p class="lede">
+        At the kit a device sits differently than it does on the sofa: propped
+        on a music stand, flat beside the hi-hat, sideways on your knee. So
+        every screen is built for both orientations — and on iPad it is not
+        simply bigger, it is laid out differently.
+      </p>
+    </div>
+
+    <div class="devices">
+      <figure>
+        <img src="../assets/shots/en/13-ipad-noten-hoch.jpg"
+             alt="An iPad upright on a music stand: the whole score as one ribbon from top to bottom, with the linked track and the tempo below."
+             width="820" height="1189" loading="lazy">
+        <figcaption>
+          <b>iPad, upright.</b> A whole piece on one screen — thirteen staves
+          without turning a single page. This is how it stands on the music
+          stand when you play a piece from start to finish.
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/shots/en/14-ipad-hoch.jpg"
+             alt="Drumbook on an iPad in portrait: the tabs across the top, then the week's practice time, “Start practising”, the suggested practice list and the open questions for the teacher."
+             width="820" height="1189" loading="lazy">
+        <figcaption>
+          <b>More room, less scrolling.</b> On iPad the tabs sit at the top
+          rather than the bottom, and the week's time, the practice list and
+          your questions for the teacher are all visible at once — on iPhone
+          they come one after another.
+        </figcaption>
+      </figure>
+      <figure class="quer">
+        <img src="../assets/shots/en/12-session-quer.jpg"
+             alt="A running session on an iPhone in landscape: countdown, pause and next on the left, metronome and running order on the right."
+             width="1100" height="506" loading="lazy">
+        <figcaption>
+          <b>iPhone, sideways.</b> While you practise, the clock with pause and
+          next sits on the left, the metronome and the running order on the
+          right — both visible at once, no scrolling. Exactly how the phone
+          lies at the kit.
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="devices__note">
+      And it makes no difference which device you start on: iPhone and iPad
+      keep in step through your own iCloud — exercises, sessions, sheet music,
+      and since recently your settings too.
+    </p>
+  </div>
+</section>
+
 <!-- ============ Data ============ -->
 <section class="band" id="data">
   <div class="wrap">
@@ -452,9 +524,9 @@
     <div class="teacher__split">
       <div class="teacher__media">
         <div class="phone">
-          <img src="../assets/shots/en/09-bericht.png"
-               alt="The PDF report: a header with the period covered, 21 sessions and 13 hours 7 minutes of practice, then a table of every exercise with category, state, tempo and when it was last practised, followed by the journal with each session."
-               width="800" height="1739" loading="lazy">
+          <img src="../assets/shots/en/09-bericht.jpg"
+               alt="The PDF report: a header with the period covered, nine sessions and 5 hours 19 minutes of practice, then a table of every exercise with category, state, tempo and when it was last practised, followed by the journal with each session."
+               width="700" height="1522" loading="lazy">
         </div>
       </div>
 

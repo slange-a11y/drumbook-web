@@ -79,10 +79,32 @@ Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
 
 ## Bildschirmfotos neu erzeugen
 
-Die Bilder stammen aus dem iPhone-Simulator mit erfundenen, aber plausiblen
-Übedaten — nicht aus der echten Datenbank. Vorgehen: App für den Simulator
-bauen, `Library/Application Support/default.store` im App-Container mit einem
-kleinen Swift-Programm füllen, Statusleiste über
-`xcrun simctl status_bar … --time 9:41` festsetzen, dann mit
-`xcrun simctl io <udid> screenshot` aufnehmen und auf 800 px Breite
-verkleinern.
+Die Bilder stammen aus dem Simulator mit erfundenen, aber plausiblen Übedaten —
+nicht aus der echten Datenbank. Der Datensatz liegt **im App-Repo** und ist
+wiederholbar:
+
+    Tools/demo-daten.sh <blatt.pdf>            # deutsch
+    SPRACHE=en Tools/demo-daten.sh <blatt.pdf> # englisch
+
+Vorgehen:
+
+1. App für den Simulator bauen und installieren
+   (`xcodebuild … -sdk iphonesimulator`, dann `xcrun simctl install`).
+2. `Tools/demo-daten.sh` füllt den Speicher und setzt Lehrername, Wochenziel
+   und Standard-Session. Für Englisch zusätzlich die **Gerätesprache**
+   umstellen, sonst steht auf dem iPad das deutsche Datum in der Statusleiste:
+   `xcrun simctl spawn <udid> defaults write "Apple Global Domain" AppleLanguages -array "en-GB"`,
+   dasselbe mit `AppleLocale`, danach Gerät neu starten.
+3. Statusleiste festsetzen:
+   `xcrun simctl status_bar <udid> override --time 9:41 --batteryState charged --batteryLevel 100 --wifiBars 3`
+4. Aufnehmen mit `xcrun simctl io <udid> screenshot`.
+5. **Querformat:** `simctl` kann nicht drehen. Über das Menü der Simulator-App
+   (`Device ▸ Rotate Left`) drehen — vorher das richtige Fenster nach vorn
+   holen, sonst dreht sich das andere Gerät. Die Aufnahme kommt weiterhin im
+   Hochformat-Rahmen an und muss nachträglich gedreht werden (`sips -r 270`).
+6. Verkleinern und als JPEG sichern (Qualität 84):
+   iPhone hoch 700 px, iPhone quer 1100 px, iPad hoch 820 px, iPad quer 1300 px.
+
+Der Satz besteht aus vierzehn Bildern je Sprache: zehn iPhone-Hochformat, eines
+iPhone-Querformat, zwei iPad-Hochformat, eines iPad-Querformat.
+
