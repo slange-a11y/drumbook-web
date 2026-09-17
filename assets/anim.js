@@ -31,7 +31,7 @@
         '.privacy',
         '.teacher__split',
         '.teacher__grid > .teacher__card',
-        '.teacher__note',
+        '.anmerkung',
         '.status > .status__col',
         '.faq',
         '.final__in'
@@ -101,6 +101,57 @@
             if (!el.classList.contains('sichtbar')) el.classList.add('sichtbar');
         });
     }, 4000);
+
+    // Tiefe unter den Bühnen — nur für Browser, welche die Scroll-Zeitachse
+    // von CSS noch nicht kennen (Firefox, Safari vor 26). Alle anderen
+    // bekommen sie im Stylesheet, und dort läuft sie im Compositor: ruhiger,
+    // als ein Scroll-Listener je sein kann. Deshalb steht hier nur der
+    // Nachbau, nicht der Regelfall.
+    var kenntZeitachse = window.CSS && CSS.supports &&
+                         CSS.supports('animation-timeline', 'view()');
+    var fotos = document.querySelectorAll('.buehne__foto');
+
+    if (!kenntZeitachse && fotos.length) {
+        var imBild = [];
+        var tiefe = window.innerWidth < 620 ? 38 : 58;
+
+        var buehnenBeobachter = new IntersectionObserver(function (eintraege) {
+            eintraege.forEach(function (e) {
+                var i = imBild.indexOf(e.target);
+                if (e.isIntersecting && i === -1) imBild.push(e.target);
+                if (!e.isIntersecting && i !== -1) imBild.splice(i, 1);
+            });
+            if (imBild.length) stellen();
+        });
+        Array.prototype.forEach.call(fotos, function (f) {
+            buehnenBeobachter.observe(f);
+        });
+
+        var stelltGerade = false;
+        var stellen = function () {
+            var fenster = window.innerHeight;
+            imBild.forEach(function (f) {
+                var r = f.getBoundingClientRect();
+                // -1 = Bühne steht unten am Rand, +1 = oben hinaus.
+                var lauf = (fenster / 2 - (r.top + r.height / 2)) /
+                           ((fenster + r.height) / 2);
+                lauf = Math.max(-1, Math.min(1, lauf));
+                f.style.transform = 'translate3d(0,' + (lauf * tiefe).toFixed(1) + 'px,0)';
+            });
+            stelltGerade = false;
+        };
+
+        window.addEventListener('scroll', function () {
+            if (stelltGerade || !imBild.length) return;
+            stelltGerade = true;
+            window.requestAnimationFrame(stellen);
+        }, { passive: true });
+        window.addEventListener('resize', function () {
+            tiefe = window.innerWidth < 620 ? 38 : 58;
+            stellen();
+        }, { passive: true });
+        stellen();
+    }
 
     // Der Strich unter der Kopfzeile zeigt, wo man im Stück steht.
     var spur = document.querySelector('.nav__spur i');

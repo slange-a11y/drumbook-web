@@ -789,19 +789,8 @@ h3 {
     text-align: center;
     padding: 108px 0;
     position: relative;
-    overflow: hidden;
+    overflow: clip;   /* wie bei .buehne: hidden würde die Zeitachse anhalten */
 }
-.final::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: radial-gradient(ellipse 720px 380px at 50% 100%,
-                rgba(249, 129, 44, 0.14) 0%, transparent 72%);
-    pointer-events: none;
-}
-.final__in { position: relative; z-index: 2; }
-.final { isolation: isolate; }
 .final img {
     width: 78px; height: 78px;
     border-radius: 18px;
@@ -823,92 +812,180 @@ h3 {
     max-width: 30em;
 }
 
-/* ---------- Stimmungsbaender ----------
-   Ein Foto ueber die volle Breite zwischen zwei Abschnitten. Kein Text
-   darauf, nur Atem: die Seite zeigt sonst fast nur Bildschirme, und das
-   Instrument selbst kommt darin nicht vor. Unten und oben laeuft das Bild
-   in den Seitengrund aus, damit es als Uebergang wirkt und nicht als
-   eingeklebte Kachel. */
+/* ---------- Buehnen ----------
+   Ein Foto ist hier nie eine Kachel zwischen zwei Abschnitten, sondern der
+   Grund, auf dem ein Abschnitt steht - so wie im Hero. Der Inhalt liegt
+   darauf, das Bild laeuft beim Scrollen langsamer mit als die Seite und
+   bekommt dadurch Tiefe.
 
-.streifen {
+   Die Bewegung macht die Scroll-Zeitachse von CSS (animation-timeline: view(),
+   Safari ab 26, Chrome ab 115). Sie laeuft im Compositor und damit so
+   ruhig wie das Scrollen selbst; ein Scroll-Listener in JavaScript kaeme nie
+   an diese Ruhe heran. Wo der Browser sie nicht kennt, springt eine schlanke
+   Fassung in anim.js ein. Und wo jemand weniger Bewegung eingestellt hat,
+   steht das Bild einfach still: es ist dann ein ruhiges Hintergrundbild,
+   kein kaputter Effekt.
+
+   Bewusst NICHT background-attachment: fixed. Das ist der alte Weg, auf
+   iOS springt er, und die Bildausschnitte stimmen dort nicht. */
+
+.buehne {
     position: relative;
-    height: clamp(230px, 34vw, 420px);
-    overflow: hidden;
+    isolation: isolate;
+    /* clip, nicht hidden: hidden macht die Bühne selbst zu einem
+       Scroll-Container, und die Scroll-Zeitachse misst dann gegen einen
+       Kasten, in dem sich nie etwas bewegt. Das Bild stünde still. */
+    overflow: clip;
     background: var(--bg-sunken);
 }
-.streifen img {
+.buehne > .wrap { position: relative; z-index: 2; }
+
+.buehne__foto {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -68px;
+    bottom: -68px;
+    z-index: 0;
+    pointer-events: none;
+}
+.buehne__foto img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: 50% 42%;
 }
-.streifen::after {
+
+/* Der Schleier. Oben und unten laeuft er in den Seitengrund aus, damit die
+   Buehne nicht als Kasten endet, sondern als Uebergang. In der Mitte deckt
+   er so weit, dass jeder Text darauf sicher liest. */
+.buehne::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(to bottom,
-                var(--bg) 0%, rgba(10, 10, 12, 0.30) 22%,
-                rgba(10, 10, 12, 0.34) 52%, rgba(10, 10, 12, 0.86) 84%,
-                rgba(10, 10, 12, 0.97) 100%);
     pointer-events: none;
-}
-.streifen__wort {
-    position: absolute;
-    z-index: 2;
-    left: 0; right: 0; bottom: 26px;
-    margin: 0 auto;
-    max-width: var(--wide);
-    padding: 0 28px;
-    font-size: 14.5px;
-    line-height: 1.5;
-    color: var(--ink-muted);
-    text-shadow: 0 1px 14px rgba(10, 10, 12, 0.9);
-}
-.streifen__wort b { color: var(--ink); font-weight: 650; }
-
-/* Auf den Landeseiten sitzt das Bild direkt unter der Navigation und
-   fuehrt in die Ueberschrift hinein: oben kein Verlauf, unten schon. */
-.streifen--kopf {
-    height: clamp(200px, 30vw, 340px);
-    margin-top: -1px;
-}
-.streifen--kopf::after {
-    background: linear-gradient(to bottom,
-                rgba(10, 10, 12, 0.62) 0%, rgba(10, 10, 12, 0.22) 38%,
-                rgba(10, 10, 12, 0.55) 78%, var(--bg) 100%);
-}
-.streifen--kopf img { object-position: 50% 38%; }
-
-@media (max-width: 620px) {
-    .streifen { height: 260px; }
-    .streifen--kopf { height: 190px; }
-    .streifen__wort { bottom: 18px; padding: 0 20px; font-size: 13.5px; }
+    background:
+        linear-gradient(to bottom,
+            var(--bg) 0%, rgba(10, 10, 12, 0.78) 15%,
+            rgba(10, 10, 12, 0.62) 50%,
+            rgba(10, 10, 12, 0.80) 85%, var(--bg) 100%),
+        radial-gradient(ellipse 120% 78% at 50% 50%,
+            rgba(10, 10, 12, 0.45) 0%, rgba(10, 10, 12, 0.05) 100%);
 }
 
-/* Der Schlussaufruf bekommt dasselbe Foto als Grund: hier steht der
-   Knopf, hier darf es waermer werden. */
+/* Der Text auf der Bühne steht auf einem Bild, nicht auf einer Fläche. Ein
+   Schatten in der Grundfarbe hält ihn auch über einer hellen Stelle lesbar,
+   ohne dass der Schleier das Motiv zudecken muss. */
+.buehne .head h2,
+.buehne .head .kicker,
+.buehne .head .lede,
+.buehne .lp__head { text-shadow: 0 1px 22px rgba(10, 10, 12, 0.95); }
+.buehne .card,
+.buehne .problem { box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42); }
 
-.final__foto {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
+/* Die Bewegung. 116 px Weg auf der ganzen Durchfahrt, verteilt auf die
+   136 px Ueberstand oben und unten - es entsteht also nie eine Luecke. */
+@keyframes buehne-tiefe {
+    from { transform: translate3d(0, -58px, 0); }
+    to   { transform: translate3d(0,  58px, 0); }
 }
-.final__foto img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 62% 32%;
+
+@supports (animation-timeline: view()) {
+    @media not (prefers-reduced-motion: reduce) {
+        .buehne__foto {
+            animation: buehne-tiefe linear both;
+            animation-timeline: view();
+            animation-range: cover 0% cover 100%;
+            will-change: transform;
+        }
+    }
 }
-.final__foto::after {
+
+/* Auf den Landeseiten traegt die Buehne die Ueberschrift und sitzt direkt
+   unter der Navigation: oben durchsichtiger, damit das Motiv zu sehen ist. */
+.buehne--kopf { background: var(--bg); }
+.buehne--kopf::after {
+    background:
+        linear-gradient(to bottom,
+            rgba(10, 10, 12, 0.72) 0%, rgba(10, 10, 12, 0.58) 26%,
+            rgba(10, 10, 12, 0.80) 68%, var(--bg) 100%),
+        linear-gradient(to right,
+            rgba(10, 10, 12, 0.72) 0%, rgba(10, 10, 12, 0.30) 58%,
+            rgba(10, 10, 12, 0.20) 100%);
+}
+.lp--buehne { padding-top: 0; }
+.buehne--kopf .wrap { padding-block: 40px 52px; }
+.buehne--kopf + .wrap { padding-top: 40px; }
+.buehne--kopf .lp__head { margin-bottom: 0; }
+
+/* Der Schlussaufruf ist dieselbe Buehne, nur waermer: dort steht der Knopf. */
+.final { isolation: isolate; }
+.final__in { position: relative; z-index: 3; }
+/* Der Ausschnitt sitzt auf den Bühnenlichtern, nicht auf dem Gesicht: über
+   einem Porträt ist Fließtext nie ruhig zu lesen. Dazu Tiefenunschärfe, wie
+   sie ein lichtstarkes Objektiv erzeugt - das Motiv bleibt Atmosphäre und
+   tritt nicht in Konkurrenz zur Schrift. Skaliert, damit der Weichzeichner
+   keine hellen Ränder stehen lässt. */
+.final .buehne__foto img {
+    object-position: 26% 14%;
+    filter: blur(3px);
+    transform: scale(1.06);
+}
+
+/* Hier steht ein ganzes Formular auf dem Bild. Das Motiv trägt deshalb nur
+   die Überschrift und läuft nach unten ins Schwarz aus: oben Atmosphäre,
+   unten ein ruhiger Grund zum Tippen. */
+.final .buehne__foto::after {
     content: "";
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(to bottom, var(--bg) 0%, rgba(10, 10, 12, 0.82) 30%,
-                        rgba(10, 10, 12, 0.93) 62%, var(--bg) 100%);
+        linear-gradient(to bottom,
+            var(--bg) 0%, rgba(10, 10, 12, 0.52) 14%,
+            rgba(10, 10, 12, 0.70) 38%,
+            rgba(10, 10, 12, 0.93) 62%, var(--bg) 82%),
+        radial-gradient(ellipse 90% 60% at 50% 30%,
+            rgba(10, 10, 12, 0.34) 0%, rgba(10, 10, 12, 0.02) 100%);
+}
+.final h2, .final > .wrap > p { text-shadow: 0 1px 22px rgba(10, 10, 12, 0.95); }
+.final::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse 720px 380px at 50% 100%,
+                rgba(249, 129, 44, 0.16) 0%, transparent 72%);
+}
+
+@media (max-width: 620px) {
+    /* Auf dem Handy wird ein Abschnitt schnell doppelt so hoch wie breit.
+       Ein Querformat-Motiv würde darin zu einem schmalen Streifen gezerrt,
+       auf dem nichts mehr zu erkennen ist. Deshalb trägt das Bild hier nur
+       den Kopf des Abschnitts und läuft darunter in den Grund aus: das
+       Motiv bleibt ein Motiv, und der Text steht ruhig. */
+    .buehne__foto {
+        top: -34px;
+        bottom: auto;
+        height: 460px;
+    }
+    .buehne::after {
+        background:
+            linear-gradient(to bottom,
+                var(--bg) 0%, rgba(10, 10, 12, 0.66) 12%,
+                rgba(10, 10, 12, 0.74) 36%,
+                rgba(10, 10, 12, 0.95) 56%, var(--bg) 68%);
+    }
+    .final .buehne__foto { height: 420px; }
+    .final .buehne__foto::after {
+        background:
+            linear-gradient(to bottom,
+                var(--bg) 0%, rgba(10, 10, 12, 0.52) 16%,
+                rgba(10, 10, 12, 0.76) 46%,
+                rgba(10, 10, 12, 0.96) 72%, var(--bg) 88%);
+    }
+    .buehne--kopf .wrap { padding-block: 30px 40px; }
 }
 
 /* ---------- Fußzeile ---------- */

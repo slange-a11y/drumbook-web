@@ -68,6 +68,32 @@ Besucher):
 
     grep -rn "$(printf '\342\200\224')" --include="*.html" .
 
+## Bilder auf der Seite
+
+Ein Foto ist nie eine Kachel zwischen zwei Abschnitten, sondern der Grund,
+auf dem ein Abschnitt steht (`.buehne`). Der Inhalt liegt darauf, das Bild
+läuft beim Scrollen langsamer mit. Die Bewegung macht die Scroll-Zeitachse
+von CSS (`animation-timeline: view()`); wo ein Browser sie nicht kennt,
+springt eine schlanke Fassung in `anim.js` ein, und wer weniger Bewegung
+eingestellt hat, sieht ein ruhiges Standbild.
+
+Drei Dinge, die dabei teuer gelernt wurden:
+
+1. **`overflow: clip`, nicht `hidden`.** `hidden` macht den Abschnitt selbst
+   zu einem Scroll-Container; die Zeitachse misst dann gegen einen Kasten, in
+   dem sich nie etwas bewegt, und das Bild steht still.
+2. **Kein Gesicht hinter Fließtext.** Der Schlussaufruf trägt ein ganzes
+   Formular, deshalb sitzt der Ausschnitt dort auf den Bühnenlichtern und das
+   Bild bekommt Tiefenunschärfe. Über einem Porträt liest sich kein Absatz.
+3. **Auf dem Handy trägt das Bild nur den Kopf des Abschnitts.** Ein Abschnitt
+   wird dort schnell doppelt so hoch wie breit; ein Querformat-Motiv würde
+   darin zu einem Streifen gezerrt, auf dem nichts zu erkennen ist.
+
+Die Dateien liegen in `assets/foto/` als 1800er und 900er Fassung. Neue Bilder
+so aufbereiten: `sips -Z 1800 -s format jpeg -s formatOptions 68`. Zuschnitt
+macht `object-fit: cover` im Stylesheet, nicht `sips` (dessen `--cropOffset`
+schneidet aus der Mitte).
+
 **Aufzählungen von dem, was es nicht gibt, sparsam.** „Kein Konto, kein
 Passwort, kein Server" sitzt einmal. Dreimal hintereinander klingt es gebaut.
 
