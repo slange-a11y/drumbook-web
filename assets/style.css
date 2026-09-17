@@ -836,7 +836,14 @@ h3 {
        Scroll-Container, und die Scroll-Zeitachse misst dann gegen einen
        Kasten, in dem sich nie etwas bewegt. Das Bild stünde still. */
     overflow: clip;
-    background: var(--bg-sunken);
+    background: var(--bg);
+
+    /* Wie weit das Motiv in den Abschnitt hineinreicht. Ein Abschnitt kann
+       1900 px hoch werden; ein Querformat darüber zu strecken ergibt einen
+       Streifen, auf dem nichts mehr zu erkennen ist. Das Bild trägt deshalb
+       immer den Kopf und läuft danach in den Grund aus - unabhängig davon,
+       wie lang der Abschnitt darunter noch wird. */
+    --bild: 620px;
 }
 .buehne > .wrap { position: relative; z-index: 2; }
 
@@ -844,8 +851,10 @@ h3 {
     position: absolute;
     left: 0;
     right: 0;
-    top: -68px;
-    bottom: -68px;
+    top: -104px;
+    bottom: auto;
+    /* Reichweite plus Luft für Weg und Zoom, damit nie eine Kante auftaucht. */
+    height: calc(var(--bild) + 300px);
     z-index: 0;
     pointer-events: none;
 }
@@ -867,11 +876,13 @@ h3 {
     pointer-events: none;
     background:
         linear-gradient(to bottom,
-            var(--bg) 0%, rgba(10, 10, 12, 0.78) 15%,
-            rgba(10, 10, 12, 0.62) 50%,
-            rgba(10, 10, 12, 0.80) 85%, var(--bg) 100%),
-        radial-gradient(ellipse 120% 78% at 50% 50%,
-            rgba(10, 10, 12, 0.45) 0%, rgba(10, 10, 12, 0.05) 100%);
+            var(--bg) 0,
+            rgba(10, 10, 12, 0.70) calc(var(--bild) * 0.16),
+            rgba(10, 10, 12, 0.58) calc(var(--bild) * 0.46),
+            rgba(10, 10, 12, 0.86) calc(var(--bild) * 0.84),
+            var(--bg) var(--bild)),
+        radial-gradient(ellipse 110% 70% at 50% 34%,
+            rgba(10, 10, 12, 0.34) 0%, rgba(10, 10, 12, 0.02) 100%);
 }
 
 /* Der Text auf der Bühne steht auf einem Bild, nicht auf einer Fläche. Ein
@@ -884,11 +895,15 @@ h3 {
 .buehne .card,
 .buehne .problem { box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42); }
 
-/* Die Bewegung. 116 px Weg auf der ganzen Durchfahrt, verteilt auf die
-   136 px Ueberstand oben und unten - es entsteht also nie eine Luecke. */
+/* Die Bewegung. Zwei Dinge gleichzeitig, wie bei einer Kamerafahrt: Das
+   Bild zieht 176 px an der Seite vorbei (Ueberstand ist 208 px, es entsteht
+   also nie eine Luecke), und dabei geht die Brennweite langsam zurueck. Der
+   Zoom ist der Unterschied zwischen "eine Ebene verschiebt sich" und "da
+   bewegt sich etwas": 8 Prozent ueber die ganze Durchfahrt, pro Bildschirm
+   also kaum messbar und trotzdem spuerbar. */
 @keyframes buehne-tiefe {
-    from { transform: translate3d(0, -58px, 0); }
-    to   { transform: translate3d(0,  58px, 0); }
+    from { transform: translate3d(0, -88px, 0) scale(1.08); }
+    to   { transform: translate3d(0,  88px, 0) scale(1); }
 }
 
 @supports (animation-timeline: view()) {
@@ -904,15 +919,23 @@ h3 {
 
 /* Auf den Landeseiten traegt die Buehne die Ueberschrift und sitzt direkt
    unter der Navigation: oben durchsichtiger, damit das Motiv zu sehen ist. */
-.buehne--kopf { background: var(--bg); }
+/* Wie weit das Motiv reicht, hängt davon ab, was auf der Bühne steht.
+   Unter einer Überschrift mit Vorspann darf es weit hineinlaufen; wo gleich
+   darunter ein Kartenraster beginnt, muss es vorher enden, sonst sieht man
+   nur noch Fetzen zwischen den Karten. */
+.buehne--knapp { --bild: 400px; }
+.teacher.buehne { --bild: 560px; }
+.buehne--kopf { --bild: 400px; }
 .buehne--kopf::after {
     background:
         linear-gradient(to bottom,
-            rgba(10, 10, 12, 0.72) 0%, rgba(10, 10, 12, 0.58) 26%,
-            rgba(10, 10, 12, 0.80) 68%, var(--bg) 100%),
+            rgba(10, 10, 12, 0.70) 0,
+            rgba(10, 10, 12, 0.54) calc(var(--bild) * 0.28),
+            rgba(10, 10, 12, 0.84) calc(var(--bild) * 0.80),
+            var(--bg) var(--bild)),
         linear-gradient(to right,
-            rgba(10, 10, 12, 0.72) 0%, rgba(10, 10, 12, 0.30) 58%,
-            rgba(10, 10, 12, 0.20) 100%);
+            rgba(10, 10, 12, 0.70) 0%, rgba(10, 10, 12, 0.28) 58%,
+            rgba(10, 10, 12, 0.18) 100%);
 }
 .lp--buehne { padding-top: 0; }
 .buehne--kopf .wrap { padding-block: 40px 52px; }
@@ -935,18 +958,27 @@ h3 {
 
 /* Hier steht ein ganzes Formular auf dem Bild. Das Motiv trägt deshalb nur
    die Überschrift und läuft nach unten ins Schwarz aus: oben Atmosphäre,
-   unten ein ruhiger Grund zum Tippen. */
-.final .buehne__foto::after {
+   unten ein ruhiger Grund zum Tippen.
+
+   Der Schleier sitzt auf dem Abschnitt, nicht auf dem Foto - sonst wanderte
+   er beim Scrollen mit dem Bild mit, und die dunkle Zone liefe dem Text
+   davon. */
+.final { --bild: 520px; }
+.final::before {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
+    pointer-events: none;
     background:
         linear-gradient(to bottom,
-            var(--bg) 0%, rgba(10, 10, 12, 0.52) 14%,
-            rgba(10, 10, 12, 0.70) 38%,
-            rgba(10, 10, 12, 0.93) 62%, var(--bg) 82%),
-        radial-gradient(ellipse 90% 60% at 50% 30%,
-            rgba(10, 10, 12, 0.34) 0%, rgba(10, 10, 12, 0.02) 100%);
+            var(--bg) 0,
+            rgba(10, 10, 12, 0.54) calc(var(--bild) * 0.16),
+            rgba(10, 10, 12, 0.74) calc(var(--bild) * 0.44),
+            rgba(10, 10, 12, 0.94) calc(var(--bild) * 0.78),
+            var(--bg) var(--bild)),
+        radial-gradient(ellipse 90% 60% at 50% 24%,
+            rgba(10, 10, 12, 0.30) 0%, rgba(10, 10, 12, 0.02) 100%);
 }
 .final h2, .final > .wrap > p { text-shadow: 0 1px 22px rgba(10, 10, 12, 0.95); }
 .final::after {
@@ -960,31 +992,12 @@ h3 {
 }
 
 @media (max-width: 620px) {
-    /* Auf dem Handy wird ein Abschnitt schnell doppelt so hoch wie breit.
-       Ein Querformat-Motiv würde darin zu einem schmalen Streifen gezerrt,
-       auf dem nichts mehr zu erkennen ist. Deshalb trägt das Bild hier nur
-       den Kopf des Abschnitts und läuft darunter in den Grund aus: das
-       Motiv bleibt ein Motiv, und der Text steht ruhig. */
-    .buehne__foto {
-        top: -34px;
-        bottom: auto;
-        height: 460px;
-    }
-    .buehne::after {
-        background:
-            linear-gradient(to bottom,
-                var(--bg) 0%, rgba(10, 10, 12, 0.66) 12%,
-                rgba(10, 10, 12, 0.74) 36%,
-                rgba(10, 10, 12, 0.95) 56%, var(--bg) 68%);
-    }
-    .final .buehne__foto { height: 420px; }
-    .final .buehne__foto::after {
-        background:
-            linear-gradient(to bottom,
-                var(--bg) 0%, rgba(10, 10, 12, 0.52) 16%,
-                rgba(10, 10, 12, 0.76) 46%,
-                rgba(10, 10, 12, 0.96) 72%, var(--bg) 88%);
-    }
+    /* Auf dem Handy ist ein Bildschirm schmal: Das Motiv braucht weniger
+       Höhe, sonst deckt es den halben Abschnitt. */
+    .buehne { --bild: 420px; }
+    .buehne--kopf { --bild: 300px; }
+    .final { --bild: 380px; }
+    .buehne__foto { top: -60px; height: calc(var(--bild) + 220px); }
     .buehne--kopf .wrap { padding-block: 30px 40px; }
 }
 

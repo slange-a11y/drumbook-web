@@ -113,7 +113,7 @@
 
     if (!kenntZeitachse && fotos.length) {
         var imBild = [];
-        var tiefe = window.innerWidth < 620 ? 38 : 58;
+        var tiefe = window.innerWidth < 620 ? 56 : 88;
 
         var buehnenBeobachter = new IntersectionObserver(function (eintraege) {
             eintraege.forEach(function (e) {
@@ -136,7 +136,10 @@
                 var lauf = (fenster / 2 - (r.top + r.height / 2)) /
                            ((fenster + r.height) / 2);
                 lauf = Math.max(-1, Math.min(1, lauf));
-                f.style.transform = 'translate3d(0,' + (lauf * tiefe).toFixed(1) + 'px,0)';
+                // Dieselben zwei Bewegungen wie im Stylesheet: Weg und Zoom.
+                var zoom = (1.04 - lauf * 0.04).toFixed(3);
+                f.style.transform = 'translate3d(0,' + (lauf * tiefe).toFixed(1) +
+                                    'px,0) scale(' + zoom + ')';
             });
             stelltGerade = false;
         };
@@ -147,7 +150,7 @@
             window.requestAnimationFrame(stellen);
         }, { passive: true });
         window.addEventListener('resize', function () {
-            tiefe = window.innerWidth < 620 ? 38 : 58;
+            tiefe = window.innerWidth < 620 ? 56 : 88;
             stellen();
         }, { passive: true });
         stellen();

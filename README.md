@@ -89,6 +89,15 @@ Drei Dinge, die dabei teuer gelernt wurden:
    wird dort schnell doppelt so hoch wie breit; ein Querformat-Motiv würde
    darin zu einem Streifen gezerrt, auf dem nichts zu erkennen ist.
 
+**Wie weit ein Motiv reicht, steuert `--bild`** auf der Bühne. Unter einer
+Überschrift mit Vorspann darf es weit hineinlaufen (620 px), wo gleich darunter
+ein Kartenraster beginnt, muss es vorher enden (`.buehne--knapp`, 400 px) —
+sonst sieht man nur noch Fetzen zwischen den Karten. Der Schleier rechnet mit
+derselben Zahl und läuft genau dort in den Seitengrund aus.
+
+**Der Schleier gehört auf den Abschnitt, nicht auf das Foto.** Läge er auf dem
+Foto, wanderte er beim Scrollen mit und die dunkle Zone liefe dem Text davon.
+
 Die Dateien liegen in `assets/foto/` als 1800er und 900er Fassung. Neue Bilder
 so aufbereiten: `sips -Z 1800 -s format jpeg -s formatOptions 68`. Zuschnitt
 macht `object-fit: cover` im Stylesheet, nicht `sips` (dessen `--cropOffset`
