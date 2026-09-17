@@ -10,17 +10,18 @@ import CoreImage
 //   drumbook-zettel-lehrer.pdf     geht an den Lehrer. Der Bericht ist das
 //                                  Bild — das ist das Einzige, was ihn erreicht.
 //
-// Beide zeigen auf eine EIGENE Landeseite, nicht auf die Startseite: Wer vom
-// Papier kommt, will eintragen, nicht lesen. Ein Code, der auf einer langen
-// Startseite landet, verliert laut Auswertungen 40 bis 50 Prozent der Scans.
-//
 // Der QR-Code ist 108 pt = 38 mm. Das ist die Mindestkante fuer einen Code,
 // der aus Armlaenge gescannt wird; der alte Zettel hatte 82 pt = 29 mm.
 // Die Adresse steht zusaetzlich getippt darunter — Code UND Adresse bringen
 // mehr Ruecklauf als die Adresse allein.
 
-let ZIEL_SCHUELER = "https://drumbook.de/start/"
-let ZIEL_LEHRER   = "https://drumbook.de/lehrer/"
+// Beide Codes zeigen auf die Startseite. Eine eigene Landeseite brächte mehr
+// Eintragungen (ein Code, der auf einer Startseite landet, verliert einen
+// großen Teil der Scans), aber sie zeigt eben auch nur einen Ausschnitt —
+// und wer vom Papier kommt, soll sehen, was die App alles kann. Silvios
+// Entscheidung vom 17.09.2026. /start/ und /lehrer/ bleiben bestehen und
+// sind von der Startseite aus erreichbar.
+let ZIEL = "https://drumbook.de/"
 
 let A5   = CGSize(width: 419.53, height: 595.28)   // 148 x 210 mm
 let RAND: CGFloat = 36
@@ -306,11 +307,11 @@ let SCHUELER = Inhalt(
            + "Lehrer bekommt ein PDF statt eines Schulterzuckens."],
     geraetebild: "07-session",
     geraetetext: "Eine laufende Übesession: Countdown, Metronom und Ablauf.",
-    ziel: ZIEL_SCHUELER,
+    ziel: ZIEL,
     ctaTitel: "Scannen und heute noch üben",
-    ctaUnterzeile: "Adresse eintragen, Einladung kommt per Mail. "
-                 + "Vorbereiten musst du nichts.",
-    ctaAdresse: "drumbook.de/start",
+    ctaUnterzeile: "Alles über die App — und die Einladung zur Testrunde "
+                 + "forderst du gleich dort an.",
+    ctaAdresse: "drumbook.de",
     fuss: "Im Test kostenlos, später ein Abo. Kein Konto, keine Werbung — "
         + "alles bleibt auf deinem Gerät.",
     fussAkzent: "Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt. "
@@ -327,11 +328,11 @@ let LEHRER = Inhalt(
              "Kein iPhone nötig, keine Anmeldung, keine Schülerdaten."],
     geraetebild: "09-bericht",
     geraetetext: "Der Bericht: Übesessions mit Datum, Dauer und erreichtem Tempo.",
-    ziel: ZIEL_LEHRER,
-    ctaTitel: "Den Zettel für Ihre Schüler holen",
-    ctaUnterzeile: "Code scannen — dort liegt der Zettel zum Ausdrucken und "
-                 + "alles Weitere.",
-    ctaAdresse: "drumbook.de/lehrer",
+    ziel: ZIEL,
+    ctaTitel: "Ansehen, bevor Sie es weitergeben",
+    ctaUnterzeile: "Alles über Drumbook — samt dem Zettel für Ihre Schüler "
+                 + "zum Ausdrucken.",
+    ctaAdresse: "drumbook.de",
     fuss: "Keine Lehrplattform, kein Klassenbuch, keine Schülerverwaltung — "
         + "Drumbook macht einen Schüler zu einem, der weiß, was er geübt hat.",
     fussAkzent: "Gebaut von Silvio Lange, der selbst Schlagzeugunterricht nimmt. "
