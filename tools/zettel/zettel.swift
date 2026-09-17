@@ -197,8 +197,30 @@ func kopf(y: CGFloat, ueber: Bool, ctx: CGContext) {
             x: RAND + 34, y: y - 21, breite: 220)
 }
 
-// ---------------------------------------------------------------- Schuelerzettel
-func schueler(in ctx: CGContext) {
+// ---------------------------------------------------------------- Der Zettel
+//
+// Beide Zettel sind DIESELBE Seite mit anderem Inhalt: Foto oben, Wortmarke
+// unten links im Bild, ein Geraet halb im Foto, Ueberschrift, Unterzeile,
+// Punkte, QR-Kasten, zwei Fusszeilen. Nur so sieht man ihnen an, dass sie
+// zusammengehoeren — und nur so muss eine Aenderung am Aufbau einmal gemacht
+// werden statt zweimal.
+
+struct Inhalt {
+    let name: String            // Dateiname: drumbook-zettel-<name>.pdf
+    let ueberschrift: String
+    let unterzeile: String
+    let punkte: [String]        // je Punkt EINE Zeile; laengere brechen um
+    let geraetebild: String     // Bildschirmfoto, halb im Foto
+    let geraetetext: String     // Alternativtext, nur zur Dokumentation
+    let ziel: String            // wohin der QR-Code zeigt
+    let ctaTitel: String
+    let ctaUnterzeile: String
+    let ctaAdresse: String
+    let fuss: String
+    let fussAkzent: String
+}
+
+func zeichne(_ i: Inhalt, in ctx: CGContext) {
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: false)
     P.bg.setFill(); CGRect(origin: .zero, size: A5).fill()
@@ -210,20 +232,18 @@ func schueler(in ctx: CGContext) {
     if let cg = bild(FOTO) {
         fuelle(cg, in: fotoRect, ctx: ctx, versatz: -0.55)
     } else {
-        // Platzhalter, damit sich das Layout pruefen laesst.
         hex("1c1c22").setFill(); fotoRect.fill()
         schreib(attr("HIER KOMMT DAS FOTO HIN — tools/zettel/set.jpg fehlt",
                      font(10, .semibold), hex("f9812c"), sperrung: 0.6),
                 x: RAND, y: fotoRect.midY + 8, breite: b)
-        warne("set.jpg fehlt — der Schuelerzettel hat nur einen Platzhalter. NICHT drucken.")
+        warne("set.jpg fehlt — \(i.name) hat nur einen Platzhalter. NICHT drucken.")
     }
-    // Das Foto laeuft unten in den Seitengrund, oben wird es abgedunkelt,
-    // damit die Wortmarke darauf lesbar bleibt.
+    // Das Foto laeuft unten in den Seitengrund aus.
     verlauf(in: CGRect(x: 0, y: fotoRect.minY, width: A5.width, height: 72), ctx: ctx)
     // Die Wortmarke steht unten links im Bild, nicht oben: oben ist das Gesicht.
     kopf(y: fotoRect.minY + 36, ueber: true, ctx: ctx)
 
-    // Ein Telefon, halb im Foto, halb im dunklen Grund. Es kostet keine
+    // Ein Geraet, halb im Foto, halb im dunklen Grund. Es kostet keine
     // Bauhoehe und beweist trotzdem, dass es die App gibt.
     let tw: CGFloat = 70
     let th = tw * 1522 / 700
@@ -235,146 +255,88 @@ func schueler(in ctx: CGContext) {
                         cornerWidth: 11, cornerHeight: 11, transform: nil)
     ctx.addPath(rahmen); ctx.setFillColor(hex("1c1c22").cgColor); ctx.fillPath()
     ctx.restoreGState()
-    if let cg = bild(ORDNER + "/assets/shots/07-session.jpg") {
+    if let cg = bild(ORDNER + "/assets/shots/\(i.geraetebild).jpg") {
         fuelle(cg, in: tr, ctx: ctx, radius: 9)
     } else {
-        warne("Bildschirmfoto fehlt: 07-session.jpg")
+        warne("Bildschirmfoto fehlt: \(i.geraetebild).jpg")
     }
 
     var y = tr.minY - 14
 
-    y -= schreib(attr("Du übst. Aber wirst du besser?",
-                      font(27, .bold), P.ink, zeilen: 1.01, sperrung: -0.7),
+    y -= schreib(attr(i.ueberschrift, font(27, .bold), P.ink,
+                      zeilen: 1.01, sperrung: -0.7),
                  x: RAND, y: y, breite: b)
     y -= 10
 
-    y -= schreib(attr("Drumbook sagt dir, was heute dran ist — und nach vier Wochen "
-                    + "siehst du schwarz auf weiß, dass es vorangeht.",
-                      font(10.2, .regular), P.muted, zeilen: 1.34),
+    y -= schreib(attr(i.unterzeile, font(10.2, .regular), P.muted, zeilen: 1.34),
                  x: RAND, y: y, breite: b)
     y -= 13
 
-    // --- Drei Szenen, keine Funktionsnamen.
-    // Ein Satz statt einer Liste. Auf einem Zettel, der zehn Sekunden bekommt,
-    // schlaegt Reihenfolge Vollstaendigkeit.
-    P.accent.setFill()
-    NSBezierPath(ovalIn: CGRect(x: RAND + 1, y: y - 8.5, width: 3.6, height: 3.6)).fill()
-    y -= schreib(attr("Der Klick läuft weiter, wenn beide Hände am Stock sind. Und dein "
-                    + "Lehrer bekommt ein PDF statt eines Schulterzuckens.",
-                      font(10.2, .semibold), P.ink, zeilen: 1.22),
-                 x: RAND + 13, y: y, breite: b - 13)
-    y -= 9
-
-    y = qrBlock(y: y, ziel: ZIEL_SCHUELER,
-                titel: "Scannen und heute noch üben",
-                unterzeile: "Adresse eintragen, Einladung kommt per Mail. "
-                          + "Vorbereiten musst du nichts.",
-                adresse: "drumbook.de/start",
-                ctx: ctx)
-    y -= 12
-
-    y -= schreib(attr("Im Test kostenlos, später ein Abo. Kein Konto, keine Werbung — "
-                    + "alles bleibt auf deinem Gerät.",
-                      font(8.2, .regular), P.muted, zeilen: 1.26),
-                 x: RAND, y: y, breite: b)
-    y -= 3
-    y -= schreib(attr("Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt. Schreib "
-                    + "mir, was fehlt — oft ist es eine Woche später drin.",
-                      font(8.2, .semibold), P.accent, zeilen: 1.26),
-                 x: RAND, y: y, breite: b)
-
-    melde("schueler", unten: y)
-    NSGraphicsContext.restoreGraphicsState()
-}
-
-// ---------------------------------------------------------------- Lehrerzettel
-func lehrer(in ctx: CGContext) {
-    NSGraphicsContext.saveGraphicsState()
-    NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: false)
-    P.bg.setFill(); CGRect(origin: .zero, size: A5).fill()
-
-    let b = A5.width - RAND * 2
-    var y = A5.height - RAND
-    kopf(y: y, ueber: false, ctx: ctx)
-    y -= 40
-
-    y -= schreib(attr("FÜR SCHLAGZEUGLEHRER", font(7.4, .semibold), P.accent, sperrung: 1.3),
-                 x: RAND, y: y, breite: b)
-    y -= 8
-
-    y -= schreib(attr("Sie üben zu Hause. Sie wissen nur nicht, was.",
-                      font(21.5, .bold), P.ink, zeilen: 1.03, sperrung: -0.5),
-                 x: RAND, y: y, breite: b)
-    y -= 7
-
-    y -= schreib(attr("Die ehrlichste Antwort auf „Und, hast du geübt?“ ist ein "
-                    + "Schulterzucken — nicht weil gelogen wird, sondern weil sich nach "
-                    + "einer Woche niemand erinnert, wie lange.",
-                      font(9.8, .regular), P.muted, zeilen: 1.3),
-                 x: RAND, y: y, breite: b)
-    y -= 10
-
-    // --- Der Bericht ist das Bild. Er ist das Einzige, was den Lehrer erreicht.
-    let bildB: CGFloat = 116
-    let bildH: CGFloat = 148
-    let bildR = CGRect(x: A5.width - RAND - bildB, y: y - bildH, width: bildB, height: bildH)
-    if let cg = bild(ORDNER + "/assets/shots/09-bericht.jpg") {
-        fuelle(cg, in: bildR, ctx: ctx, radius: 8, ausschnittOben: 0.62)
-        hex("26262c").setStroke()
-        let r = NSBezierPath(roundedRect: bildR, xRadius: 8, yRadius: 8)
-        r.lineWidth = 0.8; r.stroke()
-    } else {
-        warne("Bildschirmfoto fehlt: 09-bericht.jpg")
-    }
-    schreib(attr("Vom Schüler erzeugt.",
-                 font(7.4, .regular), P.muted, zeilen: 1.25),
-            x: bildR.minX, y: bildR.minY - 4, breite: bildB)
-
-    // Links daneben: was drinsteht und was es Sie kostet (nichts).
-    let tb = b - bildB - 18
-    var ty = y
-    let punkte = [
-        ("Ein PDF statt eines Schulterzuckens",
-         "Jede Session mit Datum, Dauer und Übung. „96 von 130“ statt Nachfragen."),
-        ("Ihre Ansage überlebt die Woche",
-         "Was Sie aufgeben, bekommt in seiner Übeliste Vorrang."),
-        ("Sie brauchen kein iPhone",
-         "Kein Gerät, keine Installation, kein Konto. Der Schüler bringt den "
-       + "Bericht mit."),
-        ("Keine Schülerdaten bei Ihnen",
-         "Alles bleibt beim Schüler. Sie bekommen ein PDF, sonst nichts."),
-    ]
-    for (fett, rest) in punkte {
+    for punkt in i.punkte {
         P.accent.setFill()
-        NSBezierPath(ovalIn: CGRect(x: RAND + 1, y: ty - 8, width: 3.6, height: 3.6)).fill()
-        ty -= schreib(attr(fett, font(9.6, .semibold), P.ink, zeilen: 1.14),
-                      x: RAND + 12, y: ty, breite: tb - 12)
-        ty -= schreib(attr(rest, font(8.4, .regular), P.muted, zeilen: 1.26),
-                      x: RAND + 12, y: ty - 1, breite: tb - 12)
-        ty -= 4
+        NSBezierPath(ovalIn: CGRect(x: RAND + 1, y: y - 8.5, width: 3.6, height: 3.6)).fill()
+        y -= schreib(attr(punkt, font(10.2, .semibold), P.ink, zeilen: 1.22),
+                     x: RAND + 13, y: y, breite: b - 13)
+        y -= 4
     }
-    y = min(ty, bildR.minY - 13) - 1
+    y -= 2
 
-    y = qrBlock(y: y, ziel: ZIEL_LEHRER,
-                titel: "Den Zettel für Ihre Schüler holen",
-                unterzeile: "Code scannen — dort liegt der Zettel zum Ausdrucken und "
-                          + "alles Weitere.",
-                adresse: "drumbook.de/lehrer",
-                ctx: ctx)
+    y = qrBlock(y: y, ziel: i.ziel, titel: i.ctaTitel,
+                unterzeile: i.ctaUnterzeile, adresse: i.ctaAdresse, ctx: ctx)
     y -= 12
 
-    y -= schreib(attr("Keine Lehrplattform, kein Klassenbuch, keine Schülerverwaltung — "
-                    + "Drumbook macht einen Schüler zu einem, der weiß, was er geübt hat.",
-                      font(8.2, .regular), P.muted, zeilen: 1.26),
+    y -= schreib(attr(i.fuss, font(8.2, .regular), P.muted, zeilen: 1.26),
                  x: RAND, y: y, breite: b)
     y -= 3
-    y -= schreib(attr("Gebaut von Silvio Lange, der selbst Schlagzeug lernt. Noch im Test.",
-                      font(8.2, .semibold), P.accent, zeilen: 1.26),
+    y -= schreib(attr(i.fussAkzent, font(8.2, .semibold), P.accent, zeilen: 1.26),
                  x: RAND, y: y, breite: b)
 
-    melde("lehrer", unten: y)
+    melde(i.name, unten: y)
     NSGraphicsContext.restoreGraphicsState()
 }
+
+// ---------------------------------------------------------------- Die Inhalte
+
+let SCHUELER = Inhalt(
+    name: "schueler",
+    ueberschrift: "Du übst. Aber wirst du besser?",
+    unterzeile: "Drumbook sagt dir, was heute dran ist — und nach vier Wochen "
+              + "siehst du schwarz auf weiß, dass es vorangeht.",
+    punkte: ["Der Klick läuft weiter, wenn beide Hände am Stock sind. Und dein "
+           + "Lehrer bekommt ein PDF statt eines Schulterzuckens."],
+    geraetebild: "07-session",
+    geraetetext: "Eine laufende Übesession: Countdown, Metronom und Ablauf.",
+    ziel: ZIEL_SCHUELER,
+    ctaTitel: "Scannen und heute noch üben",
+    ctaUnterzeile: "Adresse eintragen, Einladung kommt per Mail. "
+                 + "Vorbereiten musst du nichts.",
+    ctaAdresse: "drumbook.de/start",
+    fuss: "Im Test kostenlos, später ein Abo. Kein Konto, keine Werbung — "
+        + "alles bleibt auf deinem Gerät.",
+    fussAkzent: "Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt. "
+              + "Schreib mir, was fehlt — oft ist es eine Woche später drin."
+)
+
+let LEHRER = Inhalt(
+    name: "lehrer",
+    ueberschrift: "Sie üben zu Hause. Sie wissen nur nicht, was.",
+    unterzeile: "Die ehrlichste Antwort auf „Und, hast du geübt?“ ist ein "
+              + "Schulterzucken — weil sich nach einer Woche niemand erinnert.",
+    punkte: ["Ein PDF mit Datum, Dauer und erreichtem Tempo.",
+             "Ihre Ansage bekommt in seiner Übeliste Vorrang.",
+             "Kein iPhone nötig, keine Anmeldung, keine Schülerdaten."],
+    geraetebild: "09-bericht",
+    geraetetext: "Der Bericht: Übesessions mit Datum, Dauer und erreichtem Tempo.",
+    ziel: ZIEL_LEHRER,
+    ctaTitel: "Den Zettel für Ihre Schüler holen",
+    ctaUnterzeile: "Code scannen — dort liegt der Zettel zum Ausdrucken und "
+                 + "alles Weitere.",
+    ctaAdresse: "drumbook.de/lehrer",
+    fuss: "Keine Lehrplattform, kein Klassenbuch, keine Schülerverwaltung — "
+        + "Drumbook macht einen Schüler zu einem, der weiß, was er geübt hat.",
+    fussAkzent: "Gebaut von Silvio Lange, der selbst Schlagzeugunterricht nimmt. "
+              + "Noch im Test."
+)
 
 // ---------------------------------------------------------------- Ausgabe
 func melde(_ name: String, unten y: CGFloat) {
@@ -391,11 +353,11 @@ let ziel = CommandLine.arguments.count > 1 ? CommandLine.arguments[1]
 try? FileManager.default.createDirectory(atPath: ziel,
         withIntermediateDirectories: true)
 
-for (name, zeichne) in [("schueler", schueler), ("lehrer", lehrer)] {
-    let pfad = "\(ziel)/drumbook-zettel-\(name).pdf"
+for inhalt in [SCHUELER, LEHRER] {
+    let pfad = "\(ziel)/drumbook-zettel-\(inhalt.name).pdf"
     var box = CGRect(origin: .zero, size: A5)
     let ctx = CGContext(URL(fileURLWithPath: pfad) as CFURL, mediaBox: &box, nil)!
-    ctx.beginPDFPage(nil); zeichne(ctx); ctx.endPDFPage(); ctx.closePDF()
+    ctx.beginPDFPage(nil); zeichne(inhalt, in: ctx); ctx.endPDFPage(); ctx.closePDF()
     print("geschrieben:", pfad)
 }
 
