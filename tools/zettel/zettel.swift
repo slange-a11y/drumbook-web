@@ -125,10 +125,26 @@ func fuelle(_ cg: CGImage, in r: CGRect, ctx: CGContext,
 
 /// Ein Verlauf von der Seitenfarbe nach durchsichtig — damit das Foto unten
 /// in den Grund laeuft, statt mit einer harten Kante aufzuhoeren.
+///
+/// Zwei Stufen reichen dafuer nicht: Ein linearer Verlauf setzt oben sichtbar
+/// ein, und genau diese Linie sieht man auf dem Papier. Die Stufen unten sind
+/// deshalb einer weichen Kurve nachempfunden — oben passiert lange fast
+/// nichts, unten geht es zuegig ins Schwarz.
 func verlauf(in r: CGRect, ctx: CGContext) {
-    let farben = [P.bg.withAlphaComponent(0).cgColor, P.bg.cgColor] as CFArray
+    // Eine S-Kurve (3t² − 2t³): oben UND unten flach, in der Mitte zuegig.
+    // Das obere flache Ende nimmt die sichtbare Linie, wo der Verlauf einsetzt.
+    //
+    // Und er ist schon bei 86 Prozent fertig, nicht erst am Schluss: Sonst
+    // deckt er an der Unterkante des Fotos erst zu 97 Prozent, und genau diese
+    // drei Prozent Restbild zeichnen einen Strich quer über die Seite. Die
+    // letzten Prozent sind reines Schwarz, darin verschwindet der Bildrand.
+    let stufen: [(CGFloat, CGFloat)] = [(0, 0), (0.14, 0.05), (0.28, 0.19),
+                                        (0.42, 0.40), (0.56, 0.64),
+                                        (0.70, 0.84), (0.80, 0.95),
+                                        (0.86, 1), (1, 1)]
+    let farben = stufen.map { P.bg.withAlphaComponent($0.1).cgColor } as CFArray
     let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
-                       colors: farben, locations: [0, 1])!
+                       colors: farben, locations: stufen.map { $0.0 })!
     ctx.saveGState(); ctx.clip(to: r)
     ctx.drawLinearGradient(g, start: CGPoint(x: 0, y: r.maxY),
                            end: CGPoint(x: 0, y: r.minY), options: [])
@@ -240,7 +256,12 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
         warne("set.jpg fehlt — \(i.name) hat nur einen Platzhalter. NICHT drucken.")
     }
     // Das Foto laeuft unten in den Seitengrund aus.
-    verlauf(in: CGRect(x: 0, y: fotoRect.minY, width: A5.width, height: 72), ctx: ctx)
+    // Drei Punkt tiefer als das Foto: An der Unterkante des gezeichneten
+    // Bildes bleibt eine ein Pixel hohe Naht aus der Kantenglaettung stehen
+    // (gemessen: 19,18,18 statt 10,10,12) — ein feiner heller Strich quer
+    // ueber die Seite. Der voll deckende Teil des Verlaufs liegt darueber.
+    verlauf(in: CGRect(x: 0, y: fotoRect.minY - 3, width: A5.width, height: 107),
+            ctx: ctx)
     // Die Wortmarke steht unten links im Bild, nicht oben: oben ist das Gesicht.
     kopf(y: fotoRect.minY + 36, ueber: true, ctx: ctx)
 
