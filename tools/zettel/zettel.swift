@@ -247,7 +247,7 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
     let fotoRect = CGRect(x: 0, y: A5.height - fotoHoehe, width: A5.width, height: fotoHoehe)
 
     if let cg = bild(FOTO) {
-        fuelle(cg, in: fotoRect, ctx: ctx, versatz: -0.55)
+        fuelle(cg, in: fotoRect, ctx: ctx, versatz: -0.38)
     } else {
         hex("1c1c22").setFill(); fotoRect.fill()
         schreib(attr("HIER KOMMT DAS FOTO HIN — tools/zettel/set.jpg fehlt",
@@ -260,7 +260,7 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
     // Bildes bleibt eine ein Pixel hohe Naht aus der Kantenglaettung stehen
     // (gemessen: 19,18,18 statt 10,10,12) — ein feiner heller Strich quer
     // ueber die Seite. Der voll deckende Teil des Verlaufs liegt darueber.
-    verlauf(in: CGRect(x: 0, y: fotoRect.minY - 3, width: A5.width, height: 107),
+    verlauf(in: CGRect(x: 0, y: fotoRect.minY - 3, width: A5.width, height: 67),
             ctx: ctx)
     // Die Wortmarke steht unten links im Bild, nicht oben: oben ist das Gesicht.
     kopf(y: fotoRect.minY + 36, ueber: true, ctx: ctx)
@@ -292,7 +292,7 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
 
     y -= schreib(attr(i.unterzeile, font(10.2, .regular), P.muted, zeilen: 1.34),
                  x: RAND, y: y, breite: b)
-    y -= 13
+    y -= 10
 
     for punkt in i.punkte {
         P.accent.setFill()
@@ -321,9 +321,12 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
 
 let SCHUELER = Inhalt(
     name: "schueler",
-    ueberschrift: "Du übst. Aber wirst du besser?",
-    unterzeile: "Drumbook sagt dir, was heute dran ist — und nach vier Wochen "
-              + "siehst du schwarz auf weiß, dass es vorangeht.",
+    // Dieselbe Überschrift wie auf drumbook.de: Wer den Code scannt, muss auf
+    // der Seite wiederfinden, was auf dem Papier stand.
+    ueberschrift: "Üben mit Plan statt nach Gefühl.",
+    unterzeile: "Drumbook stellt die heutige Übeliste zusammen, hält das Tempo "
+              + "und merkt sich, was der Lehrer gesagt hat. Damit am Ende der "
+              + "Woche nicht nur ein Gefühl steht, sondern ein Verlauf.",
     punkte: ["Der Klick läuft weiter, wenn beide Hände am Stock sind. Und dein "
            + "Lehrer bekommt ein PDF statt eines Schulterzuckens."],
     geraetebild: "07-session",
