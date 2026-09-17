@@ -252,6 +252,8 @@ h1 {
     margin: 0 0 22px;
 }
 
+.hero__sub { text-shadow: 0 1px 20px rgba(10, 10, 12, 0.92); }
+.trust li { text-shadow: 0 1px 16px rgba(10, 10, 12, 0.9); }
 .hero__sub {
     font-size: clamp(1.09rem, 1.7vw, 1.27rem);
     line-height: 1.55;
@@ -326,6 +328,20 @@ h1 {
     }
     .hero__media { order: 2; }
     .phone--hero { transform: none; max-width: 236px; }
+
+    /* Ab hier steht der Text über der vollen Breite, es gibt also keine
+       Lücke mehr, in die das Gesicht rücken könnte. Das Bild steht wieder
+       gerade, der Ausschnitt zeigt auf sie, und der Schleier wird von oben
+       nach unten dicht: oben, wo nur die Zeile „Für iPhone und iPad" steht,
+       bleibt das Motiv hell. */
+    .hero__foto img { width: 100%; object-position: 46% 12%; }
+    .hero__foto::after {
+        background:
+            linear-gradient(to bottom, rgba(10, 10, 12, 0.30) 0%,
+                            rgba(10, 10, 12, 0.34) 16%,
+                            rgba(10, 10, 12, 0.74) 32%,
+                            rgba(10, 10, 12, 0.90) 50%, var(--bg) 88%);
+    }
 }
 
 /* Tablet-Rahmen — dieselbe Machart wie das Telefon, nur flacher gerundet und
@@ -1792,11 +1808,19 @@ h3 {
     overflow: hidden;
     pointer-events: none;
 }
+/* Das Bild ist breiter als der Hero und links bündig. Der Grund: Es ist ein
+   Querformat in einem noch breiteren Kasten, also wird oben und unten
+   beschnitten und object-position kann waagerecht gar nichts ausrichten. Die
+   Schlagzeugerin säße damit fest bei 47 Prozent der Breite - genau hinter dem
+   Fließtext, und ein Gesicht hinter Text muss man zudecken, damit der Text
+   liest. Breiter gerechnet wandert sie nach rechts, neben den Text und unter
+   das Telefon, und darf dort hell bleiben. */
 .hero__foto img {
-    width: 100%;
+    width: 136%;
+    max-width: none;
     height: 100%;
     object-fit: cover;
-    object-position: 38% 18%;
+    object-position: 0% 22%;
     display: block;
 }
 /* Zwei Schleier: einer von links, damit der Text steht; einer von unten,
@@ -1806,22 +1830,22 @@ h3 {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(to bottom, rgba(10, 10, 12, 0.55) 0%,
-                        rgba(10, 10, 12, 0.14) 26%,
-                        rgba(10, 10, 12, 0.48) 74%,
+        linear-gradient(to bottom, rgba(10, 10, 12, 0.50) 0%,
+                        rgba(10, 10, 12, 0.12) 26%,
+                        rgba(10, 10, 12, 0.42) 74%,
                         var(--bg) 100%),
-        linear-gradient(to right, var(--bg) 0%, rgba(10, 10, 12, 0.94) 52%,
-                        rgba(10, 10, 12, 0.45) 68%, rgba(10, 10, 12, 0.16) 88%,
-                        rgba(10, 10, 12, 0.1) 100%);
+        /* Links deckt er den Text ab, in der Lücke zwischen Text und Telefon
+           gibt er das Gesicht frei. */
+        linear-gradient(to right, var(--bg) 0%,
+                        rgba(10, 10, 12, 0.90) 36%,
+                        rgba(10, 10, 12, 0.66) 50%,
+                        rgba(10, 10, 12, 0.22) 62%,
+                        rgba(10, 10, 12, 0.10) 76%,
+                        rgba(10, 10, 12, 0.06) 100%);
 }
 
 @media (max-width: 900px) {
     /* Auf dem Telefon steht der Text über dem Bild, nicht daneben —
        da muss der Schleier flächig decken. */
-    .hero__foto img { object-position: 60% 18%; }
-    .hero__foto::after {
-        background:
-            linear-gradient(to bottom, rgba(10, 10, 12, 0.5) 0%,
-                            rgba(10, 10, 12, 0.84) 40%, var(--bg) 86%);
-    }
+
 }

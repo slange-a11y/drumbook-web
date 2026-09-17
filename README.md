@@ -101,6 +101,15 @@ Wo das Gesicht sitzt, ist je Motiv verschieden und steht als
 Werte:** dort wird links und rechts beschnitten statt oben und unten, und das
 Gesicht rutscht sonst aus dem Bild.
 
+**Der Hero ist ein Sonderfall.** Dort ist das Bild breiter als der Kasten
+(`width: 136%`, links bündig). Der Grund: Ein Querformat in einem noch
+breiteren Kasten wird oben und unten beschnitten, und `object-position` kann
+waagerecht dann gar nichts ausrichten — die Schlagzeugerin säße fest bei
+47 Prozent der Breite, genau hinter dem Fließtext. Breiter gerechnet wandert
+sie in die Lücke zwischen Text und Telefon und darf dort hell bleiben.
+Unter 900 px steht der Text über der vollen Breite, es gibt keine Lücke mehr:
+dort steht das Bild wieder gerade und der Schleier wird nach unten dicht.
+
 **Wie weit ein Motiv reicht, steuert `--bild`** auf der Bühne. Unter einer
 Überschrift mit Vorspann darf es weit hineinlaufen (620 px), wo gleich darunter
 ein Kartenraster beginnt, muss es vorher enden (`.buehne--knapp`, 400 px) —
