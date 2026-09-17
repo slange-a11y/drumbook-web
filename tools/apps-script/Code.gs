@@ -35,6 +35,9 @@ var ABSENDERNAME = 'Drumbook';
 /** Blattname in der Tabelle. Wird angelegt, wenn er fehlt. */
 var BLATT = 'Warteliste';
 
+/** Woher eine Eintragung kommen darf. Alles andere wird zu 'seite'. */
+var HERKUENFTE = ['seite', 'zettel-schueler', 'zettel-lehrer'];
+
 /** Obergrenzen, damit niemand die Tabelle vollschreibt. */
 var MAX_LAENGE_NACHRICHT = 2000;
 var MAX_LAENGE_NAME = 120;
@@ -91,10 +94,14 @@ function doPost(e) {
     var name = kuerzen(String(daten.name || '').trim(), MAX_LAENGE_NAME);
     var nachricht = kuerzen(String(daten.nachricht || '').trim(), MAX_LAENGE_NACHRICHT);
     var sprache = daten.sprache === 'en' ? 'en' : 'de';
+    // Woher die Eintragung kam: 'seite', 'zettel-schueler', 'zettel-lehrer'.
+    // Nur bekannte Werte, damit hier nichts Fremdes in die Tabelle wandert.
+    var herkunft = HERKUENFTE.indexOf(String(daten.herkunft || '')) >= 0
+                 ? String(daten.herkunft) : 'seite';
     var zeit = new Date();
 
-    eintragen(zeit, email, name, nachricht, sprache);
-    benachrichtigen(zeit, email, name, nachricht, sprache);
+    eintragen(zeit, email, name, nachricht, sprache, herkunft);
+    benachrichtigen(zeit, email, name, nachricht, sprache, herkunft);
 
     if (BESTAETIGUNG_SENDEN) {
       bestaetigen(email, name, sprache);
@@ -130,14 +137,14 @@ function kuerzen(wert, max) {
 }
 
 /** Schreibt eine Zeile in die Tabelle und legt sie beim ersten Mal an. */
-function eintragen(zeit, email, name, nachricht, sprache) {
+function eintragen(zeit, email, name, nachricht, sprache, herkunft) {
   var tabelle = SpreadsheetApp.getActiveSpreadsheet();
   var blatt = tabelle.getSheetByName(BLATT);
 
   if (!blatt) {
     blatt = tabelle.insertSheet(BLATT);
-    blatt.appendRow(['Zeitpunkt', 'E-Mail', 'Name', 'Nachricht', 'Sprache', 'Benachrichtigt am']);
-    blatt.getRange(1, 1, 1, 6).setFontWeight('bold');
+    blatt.appendRow(['Zeitpunkt', 'E-Mail', 'Name', 'Nachricht', 'Sprache', 'Herkunft', 'Benachrichtigt am']);
+    blatt.getRange(1, 1, 1, 7).setFontWeight('bold');
     blatt.setFrozenRows(1);
     blatt.setColumnWidth(1, 150);
     blatt.setColumnWidth(2, 230);
@@ -146,17 +153,19 @@ function eintragen(zeit, email, name, nachricht, sprache) {
 
   // Doppelte Eintragungen derselben Adresse überschreiben nichts, sondern
   // bekommen eine eigene Zeile — der Zeitpunkt sagt dann, was zuerst kam.
-  blatt.appendRow([zeit, email, name, nachricht, sprache, '']);
+  blatt.appendRow([zeit, email, name, nachricht, sprache, herkunft, '']);
 }
 
 /** Die Nachricht an dich. */
-function benachrichtigen(zeit, email, name, nachricht, sprache) {
+function benachrichtigen(zeit, email, name, nachricht, sprache, herkunft) {
   var zeile = [
     'Neue Eintragung in die Drumbook-Warteliste.',
     '',
     'Adresse:   ' + email,
     'Name:      ' + (name || '—'),
     'Sprache:   ' + (sprache === 'en' ? 'Englisch' : 'Deutsch'),
+    'Herkunft:  ' + ({ 'zettel-schueler': 'Zettel (Schüler)',
+                       'zettel-lehrer':   'Zettel (Lehrer)' }[herkunft] || 'Website'),
     'Zeitpunkt: ' + Utilities.formatDate(zeit, Session.getScriptTimeZone(), 'dd.MM.yyyy HH:mm'),
     ''
   ];

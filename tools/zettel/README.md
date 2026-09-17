@@ -1,25 +1,79 @@
-# Zettel mit QR-Code
+# Die zwei Zettel
 
-Erzeugt zwei A5-Seiten als PDF, die auf **drumbook.de** zeigen:
-`drumbook-zettel-dunkel.pdf` (auffällig, für wenige Exemplare oder als Aushang)
-und `drumbook-zettel-hell.pdf` (billig zu vervielfältigen, für den Stapel).
+Erzeugt zwei A5-Seiten als PDF nach `assets/zettel/` — von dort lädt die
+Website sie herunter, `lehrer/index.html` verlinkt den Schülerzettel:
 
-    swiftc -O zettel.swift -o zettel && ./zettel .
+    drumbook-zettel-schueler.pdf   für den Schüler, der ihn vom Lehrer bekommt
+    drumbook-zettel-lehrer.pdf     für den Lehrer, bevor er ihn weitergibt
 
-Beim Lauf meldet das Programm, wo der untere Rand liegt — bleibt der Wert unter
-dem Seitenrand von 36 pt, läuft der Inhalt aus der Seite. Genau das ist beim
-ersten Versuch passiert, ohne dass man es der Datei angesehen hätte.
+    swiftc -O zettel.swift -o zettel && ./zettel
 
-`lies-qr.swift` liest den QR-Code aus der fertigen Seite zurück. **Immer laufen
-lassen, bevor gedruckt wird** — beim ersten Versuch war der Code abgeschnitten,
-und das fiel nur dadurch auf:
+Ohne Argument schreibt das Programm nach `assets/zettel/`; ein Pfad als erstes
+Argument legt es woandershin.
 
-    sips -s format png --resampleWidth 900 drumbook-zettel-hell.pdf --out p.png
+## Das Foto
+
+Der Schülerzettel braucht `set.jpg` in **diesem Ordner**. Fehlt es, wird ein
+Platzhalter gezeichnet und das Programm endet mit einer Warnung und Rückgabewert
+2 — so kommt kein Platzhalter aus Versehen in den Druck.
+
+Zurzeit: Adobe Stock **279300910** („Woman playing drums during music band
+rehearsal"), lizenziert über TE-Printline, Original 6000 × 4000 px. Für den
+Zettel auf 2400 px verkleinert — A5 in voller Breite braucht bei 300 dpi rund
+1750 px, und das Original bläht die PDF auf knapp 9 MB auf:
+
+    sips -s format jpeg -s formatOptions 88 --resampleWidth 2400 \
+         ~/Desktop/AdobeStock_279300910.jpeg --out set.jpg
+
+**`set.jpg` steht in `.gitignore` und darf dort bleiben.** Dieses Repo ist
+öffentlich; die Standardlizenz deckt das fertige Werbemittel ab, nicht die
+Weitergabe der Bilddatei selbst. Das fertige PDF ist in Ordnung, die Bilddatei
+im Repo wäre es nicht.
+
+Rückfalloption, falls das Bild zu sehr nach Bandfoto aussieht: Adobe Stock
+**134631852** („Old Red Drums", rotes Sparkle-Set, ohne Menschen).
+
+**Keine KI-Bilder.** Der erste Durchgang lief mehrfach auf KI-Motive: sie sehen
+gut aus und sind an den Händen kaputt — Stöcke ohne Spitze, Stöcke, die in der
+Faust enden oder darin die Farbe wechseln, Finger ohne Daumen. Auf einem Zettel,
+den ein Schlagzeuglehrer in der Hand hält, bevor er ihn weitergibt, ist das die
+teuerste Stelle zum Sparen. In der Suche links unter „Generative KI" auf
+**„Generative KI ausschließen"** stellen, oder in der Adresse
+`filters[gentech]=exclude` mitgeben.
+
+## Vor dem Druck
+
+Das Programm meldet je Zettel, wo der untere Rand liegt, und **bricht mit
+Warnungen ab**, wenn Inhalt in den Seitenrand läuft. Genau das ist beim Umbau
+drei Mal passiert, ohne dass man es der Datei angesehen hätte.
+
+Danach den QR-Code aus der fertigen Seite zurücklesen — **immer**, beim ersten
+Versuch war er einmal abgeschnitten, und nur das ist aufgefallen:
+
+    sips -s format png --resampleWidth 900 ../../assets/zettel/drumbook-zettel-schueler.pdf --out p.png
     swiftc -O lies-qr.swift -o lies-qr && ./lies-qr p.png
 
-Zwei Festlegungen, die nicht zufällig sind: Der QR-Code sitzt **immer auf
-hellem Grund**, auch auf der dunklen Fassung — ein invertierter Code wird
-längst nicht von jeder Kamera erkannt. Und die Website-Adresse steht in der
-Kopfzeile, nicht im Fuß: dort kostet sie keine Höhe. Der Zettel war vorher
-schon 7 pt in den Seitenrand gelaufen — zwei Abstände sind dafür geschrumpft,
-der gemeldete untere Rand liegt jetzt bei 36,6 pt.
+Erwartet: `https://drumbook.de/start/` bzw. `https://drumbook.de/lehrer/`.
+
+## Festlegungen, die nicht zufällig sind
+
+- **Der QR-Code sitzt immer schwarz auf weiß**, auch auf der dunklen Seite. Ein
+  eingefärbter oder invertierter Code wird längst nicht von jeder Kamera
+  erkannt. Kantenlänge 100 pt = 35 mm; aus Armlänge gescannt gilt 25 mm als
+  Untergrenze, der alte Zettel hatte 29 mm.
+- **Die Codes zeigen auf eigene Landeseiten**, nicht auf die Startseite:
+  `/start/` und `/lehrer/`. Wer vom Papier kommt, will eintragen, nicht lesen —
+  ein Code, der auf einer langen Startseite landet, verliert einen großen Teil
+  der Scans, bevor überhaupt etwas eingetragen ist. Die Adresse steht zusätzlich
+  getippt darunter: Code **und** Adresse bringen mehr Rücklauf als die Adresse
+  allein.
+- **Die Wortmarke steht unten links im Foto**, nicht oben. Oben ist das Gesicht;
+  ein dunkler Balken darüber lag genau quer darin.
+- **Der QR-Kasten wächst mit dem Text.** Feste Höhe war ein Fehler: Auf dem
+  Lehrerzettel lief die Adresse unten aus dem weißen Kasten heraus und stand
+  dunkelorange auf schwarzem Grund.
+- **Der Zettel nennt den Preis.** „Im Test kostenlos, später ein Abo" — wer das
+  erst nach der Einladung erfährt, fühlt sich überrumpelt, und beim Lehrer wiegt
+  das doppelt.
+- **Kein Lehrername.** „Von deinem Lehrer empfohlen" trägt auch ohne Rückfrage
+  und passt, wenn später andere Lehrer verteilen.

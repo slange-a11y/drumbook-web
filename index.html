@@ -38,7 +38,7 @@
     <nav class="nav__links" aria-label="Abschnitte">
       <a href="#funktionen">Funktionen</a>
       <a href="#daten">Deine Daten</a>
-      <a href="#lehrer">Für Lehrer</a>
+      <a href="lehrer/">Für Lehrer</a>
       <a href="#stand">Stand</a>
       <a href="neuigkeiten.html">Neues</a>
       <a href="#fragen">Fragen</a>
@@ -57,6 +57,13 @@
 
 <!-- ============ Hero ============ -->
 <section class="hero">
+  <div class="hero__foto" aria-hidden="true">
+    <img src="assets/foto/set-1800.jpg"
+         srcset="assets/foto/set-900.jpg 900w, assets/foto/set-1800.jpg 1800w"
+         sizes="100vw" width="1800" height="1200" fetchpriority="high"
+         alt="">
+  </div>
+
   <div class="wrap hero__in">
     <div class="hero__grid">
       <div>
@@ -575,12 +582,13 @@
       </div>
       <div class="teacher__card">
         <div class="teacher__num" aria-hidden="true">3</div>
-        <h3>Sie müssen gar nichts tun</h3>
+        <h3>Sie brauchen nicht einmal ein iPhone</h3>
         <p>
-          Kein Konto, keine Einrichtung, keine Lehrer-Fassung, keine Schulung.
-          Sie empfehlen die App — den Rest macht der Schüler. Wenn Sie mögen,
-          schicken Sie ihm <strong>eine Übung als Datei</strong>; er liest sie
-          mit einem Tipp ein, mit Beschreibung und Tempo.
+          Kein Gerät, kein Konto, keine Einrichtung, keine Lehrer-Fassung, keine
+          Schulung. Drumbook läuft auf dem Gerät des Schülers — den Bericht
+          bekommen Sie so, wie es Ihnen passt: <strong>ausgedruckt auf Papier
+          oder per Mail</strong>. Wenn Sie mögen, schicken Sie ihm
+          <strong>eine Übung als Datei</strong>; er liest sie mit einem Tipp ein.
         </p>
       </div>
       <div class="teacher__card">
@@ -603,6 +611,10 @@
       eine ganz andere App. Drumbook macht einen Schüler zu einem, der weiß,
       was er geübt hat.
     </p>
+
+    <p class="teacher__note" style="margin-top:14px">
+      <a class="btn btn--ghost" href="lehrer/">Alles für Lehrer auf einer Seite</a>
+    </p>
   </div>
 </section>
 
@@ -619,31 +631,32 @@
     </div>
     <div class="flash">
       <article class="flash__item">
-        <p class="flash__date">6. September 2026</p>
-        <h3>Das Notenblatt kommt mit ans Set.</h3>
+        <p class="flash__date">17. September 2026</p>
+        <h3>Der erste Blick sagt, worum es geht.</h3>
         <p>
-          Ein Notensymbol in der Metronomleiste, ein Tipp, und das Blatt füllt
-          den Bildschirm — mit Uhr, Pause und Metronom darunter. Sogar
-          abfotografierte Seiten aus dem Übungsbuch werden gelesen. Dazu
-          Querformat beim Üben und größere Knöpfe am Metronom.
+          Der erste Bildschirm erklärt in einem Satz, was Drumbook ist, und
+          fragt genau eines: Hast du Unterricht? Wer noch keine Übung hat, nimmt
+          sechs zum Anfangen — Paradiddle, Achtel-Groove, Fill. Vorbereiten
+          musst du nichts.
         </p>
       </article>
       <article class="flash__item">
-        <p class="flash__date">5. September 2026</p>
-        <h3>iPhone und iPad kennen denselben Stand.</h3>
+        <p class="flash__date">16. September 2026</p>
+        <h3>Seiten aus dem Übungsbuch sitzen sauber im Band.</h3>
         <p>
-          Was du abends am iPad planst, steht am nächsten Tag am Set auf dem
-          iPhone. Ohne Konto, ohne Anmeldung — es läuft über deine eigene
-          iCloud, und ich komme nicht daran.
+          Wiederholungszeichen bleiben dran, der HiHat-Kreis an seiner Zeile,
+          zwei Spalten kommen nicht durcheinander. Dazu: das Tempo über dem
+          Blatt wird gemerkt, und die App sagt selbst, wenn der Geräteabgleich
+          hängt.
         </p>
       </article>
       <article class="flash__item">
-        <p class="flash__date">3. September 2026</p>
-        <h3>Das Notenband läuft von selbst mit.</h3>
+        <p class="flash__date">15. September 2026</p>
+        <h3>Ins Notenblatt schreiben, mit dem Stift.</h3>
         <p>
-          Einmal am Tisch durchtippen, danach rollt das Blatt beim Klick von
-          allein weiter — Wiederholungen und Sprünge eingeschlossen. Und weil
-          es in Schlägen zählt statt in Sekunden, stimmt es bei jedem Tempo.
+          Kreise, Pfeile, Abschnittsnamen und Achtung-Zeichen — mit dem Apple
+          Pencil oder dem Finger. Was auf der gedruckten Seite steht, steht im
+          Notenband an derselben Stelle.
         </p>
       </article>
     </div>
@@ -677,12 +690,15 @@
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Material, Erinnerungen, Setlists, Übelisten-Generator</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Das Notenband: die Zeilen aus dem PDF, über die volle Breite untereinander</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Einmal zum Klick durchtippen — danach läuft das Band beim Spielen mit</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Notizen im Notenblatt: Striche, Abschnitte und Achtung-Zeichen — mit dem Apple Pencil oder dem Finger</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Bericht als PDF, Sicherung mit Wiederherstellung</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Titel aus der Mediathek verknüpfen und beim Üben abspielen</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Läuft auf iPhone und iPad, hoch und quer, auf Deutsch und auf Englisch</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Abgleich zwischen iPhone und iPad über deine eigene iCloud — ohne Konto, ohne Anmeldung</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Das Notenblatt mitten in der Session — auch als Foto aus dem Übungsbuch</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Die erste Testfassung über TestFlight, seit dem 2. September</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Ein geführter erster Start — mit sechs Übungen zum Anfangen, falls noch keine da sind</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.4 3 3 6-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Die Testrunde läuft, seit dem 17. September auch außerhalb des engsten Kreises</li>
         </ul>
       </div>
       <div class="status__col status--open">
@@ -692,10 +708,10 @@
         </h3>
         <ul>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Der Weg in den App Store — bis dahin gibt es die App nur über TestFlight</li>
-          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Die Testrunde läuft — wer sich einträgt, bekommt eine Einladung per Mail</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Warum der Abgleich zwischen zwei Geräten gelegentlich stehenbleibt — die App sagt es inzwischen selbst, gefunden ist die Ursache nicht</li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Rückmeldungen von Schlagzeugern, die nicht ich sind — daran hängt gerade das meiste</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Dass das Notenband auch <b>ohne</b> Klick mitläuft — mit Klick tut es das seit dem 3. September</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Auf dem iPad das geteilte Fenster neben einer anderen App</li>
-          <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Die Fassung für Android — sie kommt, aber nach iPhone und iPad</li>
           <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>Der Apple-Music-Katalog und Spotify — bisher geht nur, was in deiner Mediathek steht</li>
         </ul>
       </div>
@@ -740,9 +756,11 @@
         </p>
       </details>
       <details>
-        <summary>Läuft Drumbook auf dem iPad?</summary>
+        <summary>Auf welchen Geräten läuft Drumbook?</summary>
         <p>
-          Ja, vollständig — und nicht als vergrößerte iPhone-App. Auf einem
+          Auf iPhone und iPad, sonst nirgends — eine Android-Fassung ist
+          nicht geplant. Auf dem iPad läuft es vollständig, und nicht als
+          vergrößerte iPhone-App. Auf einem
           iPad Pro 13&quot; ist einmal alles durchgespielt: Übesessions,
           Metronom, Material, der Bericht für den Lehrer, Übungen teilen und
           empfangen. Der Inhalt steht dabei in einer lesbaren Spalte, statt
@@ -763,15 +781,6 @@
         </p>
       </details>
       <details>
-        <summary>Gibt es das für Android?</summary>
-        <p>
-          Ja, geplant ist es. Den Anfang machen iPhone und iPad — dort läuft
-          die App heute täglich. Android kommt danach; ein Datum dafür gibt es
-          noch nicht. Die knifflige Stelle ist das Metronom: Ein Klick, der
-          nicht wandert, ist auf jeder Plattform eigene Arbeit.
-        </p>
-      </details>
-      <details>
         <summary>Brauche ich dafür einen Schlagzeuglehrer?</summary>
         <p>
           Nein. Der Unterrichts-Teil ist ein Angebot, keine Bedingung. Wer
@@ -789,12 +798,14 @@
         </p>
       </details>
       <details>
-        <summary>Kann mein Lehrer die App auch benutzen?</summary>
+        <summary>Muss mein Lehrer die App auch haben?</summary>
         <p>
-          Es gibt keinen gemeinsamen Zugang für Lehrer und Schüler — das wäre
-          eine ganz andere App. Was es gibt: den Bericht als PDF, den du dem
-          Lehrer schickst, und einzelne Übungen, die sich als Datei
-          weitergeben lassen.
+          Nein — und er braucht dafür nicht einmal ein iPhone. Drumbook läuft
+          auf deinem Gerät; dein Lehrer bekommt einen Bericht als PDF, den du
+          ihm ausdruckst oder schickst. Einen gemeinsamen Zugang für Lehrer und
+          Schüler gibt es nicht, das wäre eine ganz andere App. Was es sonst
+          noch gibt: einzelne Übungen, die sich als Datei weitergeben lassen.
+          <a href="lehrer/">Was Drumbook einem Lehrer bringt &rarr;</a>
         </p>
       </details>
       <details>

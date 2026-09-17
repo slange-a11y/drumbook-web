@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mittesten — Drumbook</title>
+<meta name="description" content="Du hast den Zettel in der Hand: Adresse eintragen, Einladung zu Drumbook kommt per Mail. Das Übetagebuch fürs Schlagzeug, kostenlos im Test.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="canonical" href="https://drumbook.de/start/">
+<link rel="alternate" hreflang="de" href="https://drumbook.de/start/">
+<link rel="alternate" hreflang="en" href="https://drumbook.de/en/start/">
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mittesten — Drumbook">
+<meta property="og:description" content="Adresse eintragen, Einladung kommt per Mail. Das Übetagebuch fürs Schlagzeug.">
+<meta property="og:image" content="https://drumbook.de/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://drumbook.de/start/">
+<meta property="og:site_name" content="Drumbook">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://drumbook.de/assets/og-card.jpg">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+/* Nur für die Landeseiten: das Formular steht oben, nicht am Ende einer langen Seite. */
+.lp        { padding: 30px 0 64px; }
+.lp__head  { max-width: 640px; }
+.lp__kick  { color: var(--accent); font-size: 13px; font-weight: 650;
+             letter-spacing: .08em; text-transform: uppercase; margin-bottom: 14px; }
+.lp h1     { font-size: clamp(1.85rem, 5.4vw, 2.75rem); line-height: 1.1;
+             letter-spacing: -.022em; margin-bottom: 14px; text-wrap: balance; }
+.lp__sub   { font-size: 1.06rem; color: var(--ink-muted); margin-bottom: 26px; }
+.lp__form  { background: var(--bg-raised); border: 1px solid var(--line);
+             border-radius: var(--r-lg); padding: 26px 24px; max-width: 640px; }
+.lp__form .form { max-width: none; margin: 0; }
+.lp__form > h2 { font-size: 1.16rem; margin-bottom: 6px; }
+.lp__form > p.note { margin-bottom: 20px; }
+.lp__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+             margin: 44px 0 0; max-width: 640px; }
+.lp__shots figure { margin: 0; }
+.lp__shots img { width: 100%; height: auto; display: block;
+                 border-radius: 13px; border: 1px solid var(--line); }
+.lp__shots figcaption { font-size: 13px; color: var(--ink-faint); margin-top: 9px;
+                        line-height: 1.35; }
+.lp__points { list-style: none; padding: 0; margin: 40px 0 0; max-width: 640px;
+              display: grid; gap: 18px; }
+.lp__points li { display: grid; grid-template-columns: 9px 1fr; gap: 14px; }
+.lp__points i  { width: 7px; height: 7px; border-radius: 50%;
+                 background: var(--accent); margin-top: .58em; }
+.lp__points b  { display: block; font-weight: 650; margin-bottom: 3px; }
+.lp__points span { color: var(--ink-muted); font-size: 15.5px; }
+.lp__honest { margin: 44px 0 0; max-width: 640px; }
+@media (max-width: 560px) {
+  .lp__shots { grid-template-columns: 1fr 1fr; }
+  .lp__shots figure:last-child { display: none; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/icon-180.png" alt="" width="30" height="30">
+      Drumbook
+    </a>
+    <nav class="nav__links" aria-label="Abschnitte">
+      <a href="../index.html">Was drin ist</a>
+      <a href="../neuigkeiten.html">Neues</a>
+      <a href="../index.html#fragen">Fragen</a>
+    </nav>
+    <p class="lang">
+      <a href="index.html" aria-current="page" hreflang="de">DE</a>
+      <span aria-hidden="true">/</span>
+      <a href="../en/start/" hreflang="en">EN</a>
+    </p>
+  </div>
+</header>
+
+<main class="lp" id="inhalt">
+  <div class="wrap">
+
+    <div class="lp__head">
+      <p class="lp__kick">Mittesten</p>
+      <h1>Du übst. Aber wirst du besser?</h1>
+      <p class="lp__sub">
+        Drumbook sagt dir, was heute dran ist, hält das Tempo und merkt sich,
+        was im Unterricht gesagt wurde — und nach vier Wochen siehst du schwarz
+        auf weiß, dass es vorangeht. Gerade wird es getestet: trag deine Adresse
+        ein, und die Einladung kommt per Mail.
+      </p>
+    </div>
+
+    <div class="lp__form">
+      <h2>Einladung anfordern</h2>
+      <p class="note">
+        Du bekommst eine Einladung zu TestFlight — Apples Test-App, kostenlos.
+        Danach schreibe ich dir nur, wenn es etwas Neues zu testen gibt.
+      </p>
+
+      <form class="form form--js" data-endpoint="https://script.google.com/macros/s/AKfycbw_ZzSaw0S7gIh-c6einN0JU_R3GaTFa71MdC_m7PH7CKL6129PjG6TRqX0ewIqt7y_rw/exec" data-herkunft="zettel-schueler" novalidate>
+        <div class="form__row">
+          <label for="f-email">E-Mail-Adresse</label>
+          <input type="email" id="f-email" name="email" required
+                 autocomplete="email" inputmode="email"
+                 placeholder="du@beispiel.de">
+        </div>
+        <div class="form__row">
+          <label for="f-name">Name <span class="opt">— wenn du magst</span></label>
+          <input type="text" id="f-name" name="name" autocomplete="name"
+                 placeholder="Wie soll ich dich ansprechen?">
+        </div>
+        <div class="form__row">
+          <label for="f-nachricht">Nachricht <span class="opt">— wenn du magst</span></label>
+          <textarea id="f-nachricht" name="nachricht"
+                    placeholder="Wie lange spielst du schon? Woran hakt es gerade? Ich lese jede Zeile."></textarea>
+        </div>
+
+        <div class="form__pot" aria-hidden="true">
+          <label for="f-website">Dieses Feld bitte leer lassen</label>
+          <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form__consent">
+          <input type="checkbox" id="f-einwilligung" name="einwilligung" value="ja">
+          <label for="f-einwilligung">
+            Meine Adresse darf gespeichert werden, um mich einmalig zu
+            benachrichtigen. Näheres im
+            <a href="../datenschutz.html">Datenschutz</a>.
+          </label>
+        </div>
+
+        <button class="btn btn--primary" type="submit">Einladung anfordern</button>
+        <p class="form__status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="form__ohne-js">
+        <a class="btn btn--primary"
+           href="mailto:silvio@drumbook.de?subject=Drumbook%3A%20Einladung%20anfordern&amp;body=Hallo%2C%0A%0Aich%20habe%20den%20Zettel%20bekommen%20und%20m%C3%B6chte%20Drumbook%20mittesten.%0A%0AViele%20Gr%C3%BC%C3%9Fe%0A">
+          Mail schreiben
+        </a>
+        <p class="note">
+          Öffnet dein Mailprogramm mit fertigem Text. Geht das bei dir nicht,
+          schreib von Hand an <a href="mailto:silvio@drumbook.de">silvio@drumbook.de</a>.
+        </p>
+      </div>
+
+      <p class="note">
+        Deine Adresse wird nur dafür benutzt, dir diese eine Nachricht zu
+        schicken — und danach gelöscht.
+      </p>
+    </div>
+
+    <div class="lp__shots">
+      <figure>
+        <img src="../assets/shots/01-heute.jpg" width="700" height="1522" loading="lazy"
+             alt="Der Bildschirm „Heute“: Wochenzeit, die heutige Übeliste und offene Fragen an den Lehrer.">
+        <figcaption>Was heute dran ist, steht beim Aufmachen da.</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/shots/07-session.jpg" width="700" height="1522" loading="lazy"
+             alt="Eine laufende Übesession: Countdown für die Übung, Restzeit für den Abend, Metronomleiste.">
+        <figcaption>Zwei Uhren, ein Ablauf — der Wechsel kommt von allein.</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/shots/10-notenband.jpg" width="700" height="1522" loading="lazy"
+             alt="Das Notenband: die Notenzeilen aus einem PDF, über die volle Breite untereinander gesetzt.">
+        <figcaption>Die Noten als Band. Kein Blättern mehr.</figcaption>
+      </figure>
+    </div>
+
+    <ul class="lp__points">
+      <li><i></i><span>
+        <b>Du machst auf und weißt, was dran ist.</b>
+        Sag Drumbook, wie viele Minuten du hast — die Übeliste stellt sich selbst
+        zusammen und zieht heran, was zu lange liegen geblieben ist.
+      </span></li>
+      <li><i></i><span>
+        <b>Der Klick läuft weiter, wenn beide Hände am Stock sind.</b>
+        Auch bei dunklem Bildschirm, und er eiert nicht — jeder Schlag wird
+        vorher in den Ton gerechnet.
+      </span></li>
+      <li><i></i><span>
+        <b>Was der Lehrer gesagt hat, steht beim Üben da.</b>
+        Aufgegebene Übungen wandern in die Bibliothek und bekommen Vorrang. Und
+        er bekommt einen Bericht als PDF statt eines Schulterzuckens.
+      </span></li>
+      <li><i></i><span>
+        <b>Du redest direkt mit dem, der es baut.</b>
+        Rückmeldung geht aus der Test-App heraus — ich lese jede, und oft steht
+        das Ergebnis eine Woche später in der App.
+      </span></li>
+    </ul>
+
+    <p class="notice lp__honest">
+      <strong>Damit du weißt, worauf du dich einlässt:</strong> Drumbook wird
+      später ein Abonnement, voraussichtlich drei bis fünf Euro im Monat. Im
+      Test kostet es nichts, und einen Testzeitraum bekommt später trotzdem
+      jeder. Es gibt kein Konto und keinen Server von mir: Alles bleibt auf
+      deinem Gerät, der Abgleich zwischen iPhone und iPad läuft über deine
+      eigene iCloud. Gebaut wird es von einer Person, die selbst Schlagzeug
+      lernt. <a href="../index.html">Die ganze Seite ansehen &rarr;</a>
+    </p>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p>Drumbook — ein Übetagebuch fürs Schlagzeug.</p>
+    <p class="foot__links">
+      <a href="../impressum.html">Impressum</a>
+      <a href="../datenschutz.html">Datenschutz</a>
+      <a href="../en/start/" hreflang="en">English</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/form.js" defer></script>
+</body>
+</html>

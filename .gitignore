@@ -1,0 +1,9 @@
+# Das lizenzierte Stockfoto für den Zettel. Es gehört NICHT in dieses Repo:
+# drumbook-web ist öffentlich, und die Adobe-Stock-Standardlizenz erlaubt das
+# fertige Werbemittel (die PDF-Datei), nicht die Weitergabe der Bilddatei
+# selbst. Das Original liegt außerhalb des Repos; `tools/zettel/README.md`
+# sagt, wo.
+tools/zettel/set.jpg
+tools/zettel/set-*.jpg
+
+.DS_Store

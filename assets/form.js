@@ -30,6 +30,10 @@
     var knopf = form.querySelector('button[type="submit"]');
     var feldEmail = form.querySelector('[name="email"]');
     var sprache = document.documentElement.lang === 'en' ? 'en' : 'de';
+    // Woher die Eintragung kommt — Startseite, Schuelerzettel, Lehrerzettel.
+    // Das Apps Script traegt sie erst in die Tabelle ein, wenn dort die
+    // Spalte "Herkunft" dazugekommen ist; bis dahin wird das Feld ignoriert.
+    var herkunft = form.getAttribute('data-herkunft') || 'seite';
 
     var texte = {
         de: {
@@ -97,7 +101,8 @@
                 nachricht:    (daten.get('nachricht') || '').toString().trim(),
                 website:      (daten.get('website') || '').toString(),  // Honigtopf
                 einwilligung: true,
-                sprache:      sprache
+                sprache:      sprache,
+                herkunft:     herkunft
             })
         })
         .then(function (antwort) { return antwort.json(); })
