@@ -101,6 +101,20 @@ Wo das Gesicht sitzt, ist je Motiv verschieden und steht als
 Werte:** dort wird links und rechts beschnitten statt oben und unten, und das
 Gesicht rutscht sonst aus dem Bild.
 
+**Im Hero steht kein Telefon mehr.** Es stand rechts und hat sich mit dem
+Motiv um dieselbe Fläche gestritten: Textspalte und Telefonspalte teilen sich
+die Breite ohne Lücke, und wo die Grenze liegt, hängt am Fenster — bei 1280
+stand das Gesicht neben dem Gerät, bei 1870 mitten darin. Die Aufnahme der
+laufenden Session läuft jetzt im Abschnitt „Die Uhr denkt mit", wo sie
+inhaltlich hingehört, und startet erst, wenn man sie sieht.
+
+**Hinter der ganzen Seite liegt ein Raum:** zwei warme Lichtinseln und ein
+Hauch Kaltlicht von unten (`body::before`, fest im Fenster, nicht im
+Dokument — der Inhalt scrollt hindurch), dazu ein feines Korn
+(`body::after`). Beides liegt hinter dem Inhalt und legt sich nie über Text.
+Das ist der Grund, warum die langen Strecken zwischen den Bildern nicht mehr
+tot wirken.
+
 **Der Hero ist ein Sonderfall.** Dort ist das Bild breiter als der Kasten
 (`width: 136%`, links bündig). Der Grund: Ein Querformat in einem noch
 breiteren Kasten wird oben und unten beschnitten, und `object-position` kann

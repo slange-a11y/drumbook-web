@@ -67,28 +67,31 @@
         });
     });
 
-    // Der Hero zeigt eine laufende Session. Das Abspielen steht bewusst hier
-    // und nicht als autoplay im Markup: wer weniger Bewegung eingestellt hat,
-    // ist oben schon ausgestiegen und sieht das Standbild — so wie jemand
-    // ganz ohne JavaScript.
-    var film = document.querySelector('.phone--hero video');
+    // Die Aufnahme einer laufenden Session steht im Abschnitt „Die Uhr denkt
+    // mit". Das Abspielen steht bewusst hier und nicht als autoplay im
+    // Markup: wer weniger Bewegung eingestellt hat, ist oben schon
+    // ausgestiegen und sieht das Standbild — so wie jemand ganz ohne
+    // JavaScript. Und weil die Aufnahme jetzt weit unten auf der Seite
+    // liegt, läuft sie erst an, wenn sie zu sehen ist: Wer nie so weit
+    // scrollt, lädt sie gar nicht erst.
+    var film = document.querySelector('.phone__film');
     if (film) {
         film.muted = true;              // manche Browser wollen das als Eigenschaft
         var anlaufen = function () {
             var p = film.play();
             if (p && p.catch) p.catch(function () {});
         };
-        anlaufen();
-        // Kommt der erste Versuch zu frueh, weil noch nichts geladen ist,
-        // scheitert er still. Dann eben, sobald genug da ist — sonst bliebe
-        // das Standbild fuer immer stehen.
-        film.addEventListener('canplay', anlaufen, { once: true });
-        // Ausserhalb des Bildes anhalten. Spart Akku, und sehen kann es niemand.
         new IntersectionObserver(function (eintraege) {
             eintraege.forEach(function (e) {
-                if (e.isIntersecting) { film.play(); } else { film.pause(); }
+                if (!e.isIntersecting) { film.pause(); return; }
+                anlaufen();
+                // Kommt der Versuch zu frueh, weil noch nichts geladen ist,
+                // scheitert er still. Dann eben, sobald genug da ist.
+                if (film.readyState < 3) {
+                    film.addEventListener('canplay', anlaufen, { once: true });
+                }
             });
-        }, { threshold: 0.15 }).observe(film);
+        }, { threshold: 0.2 }).observe(film);
     }
 
     // Sicherheitsgurt. Sollte der Beobachter aus irgendeinem Grund nicht

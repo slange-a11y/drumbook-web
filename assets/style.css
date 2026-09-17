@@ -199,7 +199,10 @@ a:hover { text-decoration: underline; }
 
 .hero {
     position: relative;
-    padding: 92px 0 40px;
+    padding: 132px 0 56px;
+    min-height: clamp(560px, 64vh, 780px);
+    display: flex;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -221,12 +224,13 @@ a:hover { text-decoration: underline; }
 
 .hero__in { position: relative; z-index: 1; }
 
-.hero__grid {
-    display: grid;
-    grid-template-columns: 1.32fr 0.68fr;
-    gap: 44px;
-    align-items: center;
-}
+/* Eine Spalte statt zwei. Das Telefon stand vorher rechts und hat sich mit
+   dem Motiv um dieselbe Fläche gestritten - und weil die Grenze zwischen den
+   Spalten am Fenster hängt, stand das Gesicht mal daneben und mal mitten
+   darin. Die Aufnahme läuft jetzt weiter unten, im Abschnitt über die
+   Session, wo sie ohnehin hingehört. Hier hat das Foto die rechte Hälfte
+   für sich. */
+.hero__grid { max-width: 620px; }
 
 .eyebrow {
     display: inline-flex;
@@ -329,12 +333,23 @@ h1 {
     .hero__media { order: 2; }
     .phone--hero { transform: none; max-width: 236px; }
 
-    /* Ab hier steht der Text über der vollen Breite, es gibt also keine
-       Lücke mehr, in die das Gesicht rücken könnte. Das Bild steht wieder
-       gerade, der Ausschnitt zeigt auf sie, und der Schleier wird von oben
-       nach unten dicht: oben, wo nur die Zeile „Für iPhone und iPad" steht,
-       bleibt das Motiv hell. */
-    .hero__foto img { width: 100%; object-position: 46% 12%; }
+    /* Schmaler Schirm: Der Text steht über der vollen Breite, es gibt also
+       kein Nebeneinander mehr. Der Hero wird hier über 1200 px hoch, und
+       ein Querformat darin hat keinen senkrechten Überstand - das Gesicht
+       säße damit fest auf 22 Prozent der Höhe, also genau hinter der
+       Überschrift. Deshalb auch hier das Kopfraum-Prinzip: Das Bild hört
+       nach 470 px auf, der Text beginnt darunter. */
+    .hero { padding: 250px 0 44px; min-height: 0; display: block; }
+    .hero__grid { max-width: none; }
+    .hero__foto { inset: 0 0 auto 0; height: 470px; }
+    .hero__foto img { width: 100%; object-position: 54% 50%; }
+    .hero__foto::after {
+        background: linear-gradient(to bottom,
+            rgba(10, 10, 12, 0.30) 0,
+            rgba(10, 10, 12, 0.24) 150px,
+            rgba(10, 10, 12, 0.76) 300px,
+            rgba(10, 10, 12, 0.94) 400px, var(--bg) 470px);
+    }
     .hero__foto::after {
         background:
             linear-gradient(to bottom, rgba(10, 10, 12, 0.30) 0%,
@@ -826,6 +841,60 @@ h3 {
     color: var(--ink-faint);
     margin: 20px auto 0;
     max-width: 30em;
+}
+
+/* ---------- Der Raum hinter der Seite ----------
+   Zwischen den Bildern liegen lange Strecken, auf denen nichts steht als
+   Schwarz. Statt dort weitere Fotos zu stapeln, bekommt die ganze Seite
+   einen Raum: zwei warme Lichtinseln und ein Hauch Kaltlicht von unten, wie
+   auf einer Bühne, in der die Scheinwerfer von der Seite kommen.
+
+   Das Ganze steht FEST im Fenster, nicht im Dokument. Dadurch scrollt der
+   Inhalt durch das Licht hindurch, statt es mitzunehmen - der Effekt kommt
+   also schon vom Scrollen selbst, und die eigene Bewegung darf so langsam
+   sein, dass man sie nicht als Animation liest, sondern als Atem.
+
+   Dazu ein feines Korn. Es nimmt großen dunklen Flächen das Tote und ist
+   der Grund, warum eine schwarze Fläche im Kino nie flach wirkt. Beides
+   liegt HINTER dem Inhalt (z-index -1), legt sich also nie über Text. */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -18vh -12vw;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 44vw 40vh at 14% 20%,
+            rgba(249, 129, 44, 0.115) 0%, transparent 68%),
+        radial-gradient(ellipse 38vw 44vh at 88% 62%,
+            rgba(255, 164, 96, 0.075) 0%, transparent 66%),
+        radial-gradient(ellipse 56vw 36vh at 52% 104%,
+            rgba(96, 150, 156, 0.06) 0%, transparent 70%);
+    will-change: transform;
+    animation: buehnenlicht 64s ease-in-out infinite alternate;
+}
+
+@keyframes buehnenlicht {
+    from { transform: translate3d(-2.5%, -1.5%, 0) scale(1); }
+    to   { transform: translate3d(3%, 2%, 0) scale(1.14); }
+}
+
+/* Das Korn. 160 px Kachel, sehr schwach - man soll es nicht sehen, sondern
+   nur merken, dass die Fläche nicht tot ist. */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23k)' opacity='0.09'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
 }
 
 /* ---------- Buehnen ----------
@@ -1813,14 +1882,15 @@ h3 {
    beschnitten und object-position kann waagerecht gar nichts ausrichten. Die
    Schlagzeugerin säße damit fest bei 47 Prozent der Breite - genau hinter dem
    Fließtext, und ein Gesicht hinter Text muss man zudecken, damit der Text
-   liest. Breiter gerechnet wandert sie nach rechts, neben den Text und unter
-   das Telefon, und darf dort hell bleiben. */
+   liest. Breiter gerechnet steht sie bei 66 Prozent, also rechts vom
+   Textblock, der nie über 620 px hinausgeht. Das gilt auf jeder
+   Fensterbreite, weil beide Zahlen prozentual mitwandern. */
 .hero__foto img {
-    width: 136%;
+    width: 140%;
     max-width: none;
     height: 100%;
     object-fit: cover;
-    object-position: 0% 22%;
+    object-position: 0% 20%;
     display: block;
 }
 /* Zwei Schleier: einer von links, damit der Text steht; einer von unten,
@@ -1834,14 +1904,13 @@ h3 {
                         rgba(10, 10, 12, 0.12) 26%,
                         rgba(10, 10, 12, 0.42) 74%,
                         var(--bg) 100%),
-        /* Links deckt er den Text ab, in der Lücke zwischen Text und Telefon
-           gibt er das Gesicht frei. */
+        /* Links deckt er den Text ab, rechts gibt er die Schlagzeugerin frei. */
         linear-gradient(to right, var(--bg) 0%,
-                        rgba(10, 10, 12, 0.90) 36%,
-                        rgba(10, 10, 12, 0.66) 50%,
-                        rgba(10, 10, 12, 0.22) 62%,
-                        rgba(10, 10, 12, 0.10) 76%,
-                        rgba(10, 10, 12, 0.06) 100%);
+                        rgba(10, 10, 12, 0.92) 30%,
+                        rgba(10, 10, 12, 0.72) 44%,
+                        rgba(10, 10, 12, 0.26) 58%,
+                        rgba(10, 10, 12, 0.08) 74%,
+                        rgba(10, 10, 12, 0.04) 100%);
 }
 
 @media (max-width: 900px) {
