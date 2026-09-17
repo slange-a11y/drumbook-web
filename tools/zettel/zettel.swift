@@ -2,7 +2,11 @@ import AppKit
 import CoreImage
 
 // ---------------------------------------------------------------- Einstellungen
-let LINK = "https://testflight.apple.com/join/xPCHqUJt"
+// Die Website, nicht der TestFlight-Link: Der oeffentliche Link ist seit
+// dem 04.09.2026 abgeschaltet, und die externe Testgruppe hat bewusst
+// keinen. Eingeladen wird per Mail an Adressen, die wir kennen — auf
+// Papier kann also nur die Adresse stehen, die dauerhaft traegt.
+let LINK = "https://drumbook.de"
 let A5   = CGSize(width: 419.53, height: 595.28)   // 148 x 210 mm
 let RAND: CGFloat = 36
 
@@ -143,13 +147,13 @@ func zeichne(_ p: Palette, in ctx: CGContext) {
     qy -= schreib(attr("Mach mit beim Test", font(13.5, .bold), p.panelInk, sperrung: -0.2),
                   x: tx, y: qy, breite: tb)
     qy -= 1
-    qy -= schreib(attr("TestFlight ist Apples eigene Test-App, kostenlos.",
+    qy -= schreib(attr("Ein paar Plätze in der Testrunde sind frei.",
                        font(8.5, .regular), hex("74747e"), zeilen: 1.2),
                   x: tx, y: qy, breite: tb)
     qy -= 8
-    for (i, s) in ["„TestFlight“ aus dem App Store laden.",
-                   "Diesen Code scannen.",
-                   "Drumbook installieren — fertig."].enumerated() {
+    for (i, s) in ["Diesen Code scannen.",
+                   "Adresse hinterlassen.",
+                   "Einladung kommt per Mail."].enumerated() {
         hex("f9812c").setFill()
         NSBezierPath(ovalIn: CGRect(x: tx, y: qy - 12.5, width: 13, height: 13)).fill()
         attr("\(i+1)", font(9, .bold), hex("ffffff"))
@@ -167,7 +171,7 @@ func zeichne(_ p: Palette, in ctx: CGContext) {
                  x: RAND, y: y, breite: b)
     y -= 6
     y -= schreib(attr("Gebaut von Silvio, der beim selben Lehrer übt. "
-               + "Rückmeldung geht direkt aus TestFlight — ich lese jede.",
+               + "Rückmeldung geht direkt aus der Test-App — ich lese jede.",
                  font(9.5, .semibold), p.accent, zeilen: 1.28),
             x: RAND, y: y, breite: b)
 

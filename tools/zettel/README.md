@@ -1,6 +1,6 @@
 # Zettel mit QR-Code
 
-Erzeugt zwei A5-Seiten als PDF, die auf den öffentlichen TestFlight-Link zeigen:
+Erzeugt zwei A5-Seiten als PDF, die auf **drumbook.de** zeigen:
 `drumbook-zettel-dunkel.pdf` (auffällig, für wenige Exemplare oder als Aushang)
 und `drumbook-zettel-hell.pdf` (billig zu vervielfältigen, für den Stapel).
 
