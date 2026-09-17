@@ -963,6 +963,10 @@ body::after {
 .buehne--lachen     .buehne__foto img { object-position: 38% 20%; }
 .buehne--probe      .buehne__foto img { object-position: 50% 18%; }
 .buehne--spielen    .buehne__foto img { object-position: 48% 16%; }
+/* Die zwei Unterrichtsbilder: hier sind es zwei Gesichter, und sie stehen
+   nebeneinander. Der Ausschnitt muss beide fassen, nicht eins davon. */
+.buehne--unterricht .buehne__foto img { object-position: 38% 22%; }
+.buehne--zeigen     .buehne__foto img { object-position: 52% 26%; }
 
 /* Der Schleier. Oben und unten laeuft er in den Seitengrund aus, damit die
    Buehne nicht als Kasten endet, sondern als Uebergang. In der Mitte deckt
@@ -1106,6 +1110,8 @@ body::after {
     .buehne--lachen     .buehne__foto img { object-position: 30% 22%; }
     .buehne--probe      .buehne__foto img { object-position: 46% 20%; }
     .buehne--spielen    .buehne__foto img { object-position: 47% 18%; }
+    .buehne--unterricht .buehne__foto img { object-position: 30% 24%; }
+    .buehne--zeigen     .buehne__foto img { object-position: 54% 26%; }
     .final .buehne__foto img { object-position: 62% 20%; }
 }
 

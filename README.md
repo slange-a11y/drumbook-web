@@ -133,6 +133,13 @@ derselben Zahl und läuft genau dort in den Seitengrund aus.
 **Der Schleier gehört auf den Abschnitt, nicht auf das Foto.** Läge er auf dem
 Foto, wanderte er beim Scrollen mit und die dunkle Zone liefe dem Text davon.
 
+**Acht Motive, jedes an einer Stelle.** Hero (`set`), „Warum überhaupt"
+(`gegenlicht`), „Der Kleinkram" (`lachen`), „Deine Daten" (`probe`), „Für
+Lehrer" (`unterricht` — Schüler am Set, der Lehrer zeigt etwas), „Stand der
+Dinge" (`spielen`), Schlussaufruf (`buehne`); die Lehrer-Seite trägt `zeigen`,
+die Mittesten-Seite `lachen`. Bei den zwei Unterrichtsbildern sind **zwei**
+Gesichter im Bild — der Ausschnitt muss beide fassen, nicht eins davon.
+
 Die Dateien liegen in `assets/foto/` als 1800er und 900er Fassung. Neue Bilder
 so aufbereiten: `sips -Z 1800 -s format jpeg -s formatOptions 68`. Zuschnitt
 macht `object-fit: cover` im Stylesheet, nicht `sips` (dessen `--cropOffset`
