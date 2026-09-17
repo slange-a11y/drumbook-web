@@ -1003,11 +1003,44 @@ h3 {
     line-height: 1.7;
     margin-bottom: 8px;
 }
+/* Zehn Einträge am Stück sind eine Wand. Jeder ist deshalb aufklappbar,
+   der jüngste steht offen. Zu sehen bleibt immer Datum, Schlagwort und
+   Überschrift — danach sucht man, wenn man etwas wiederfinden will. */
 .news__entry {
-    padding: 38px 0;
     border-top: 1px solid var(--line-soft);
 }
-.news__entry:first-of-type { border-top: 0; padding-top: 18px; }
+.news__entry:first-of-type { border-top: 0; }
+
+.news__entry > summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 26px 4px;
+    cursor: pointer;
+    list-style: none;
+}
+.news__entry > summary::-webkit-details-marker { display: none; }
+.news__entry > summary::after {
+    content: "";
+    flex: none;
+    width: 11px; height: 11px;
+    margin-top: 12px;
+    border-right: 2px solid var(--ink-faint);
+    border-bottom: 2px solid var(--ink-faint);
+    transform: rotate(45deg) translate(-3px, -3px);
+    transition: transform 0.2s ease;
+}
+.news__entry[open] > summary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+}
+.news__entry > summary:hover h2 { color: var(--accent); }
+.news__entry[open] > summary h2 { color: var(--accent); }
+.news__entry > summary h2 { margin: 0; transition: color 0.15s ease; }
+.news__kopf { display: block; min-width: 0; }
+.news__text { padding: 0 4px 34px; }
+.news__text > *:first-child { margin-top: 0; }
+
 .news__meta {
     display: flex;
     flex-wrap: wrap;
@@ -1049,18 +1082,26 @@ h3 {
     display: grid;
     gap: 10px;
 }
+/* Der Punkt sitzt absolut, der Text bleibt ein normaler Block.
+   Vorher war das ein Flex-Kasten — und darin wird jedes Stück Text um ein
+   <b> herum zu einer eigenen Spalte. Bei „<b>Ein Satz und eine Frage.</b>
+   Der erste Bildschirm sagt …" stand die Auszeichnung dadurch in einer
+   schmalen Spalte links und der Rest daneben. Betraf alle 32 Listenpunkte
+   der Neuigkeiten. (Die Listen unter .points und .privacy__list haben das
+   Problem nicht: dort steckt der Text schon in einem <span>.) */
 .news__entry li {
-    display: flex;
-    gap: 10px;
+    position: relative;
+    padding-left: 16px;
     color: var(--ink-muted);
     font-size: 16px;
     line-height: 1.62;
 }
 .news__entry li::before {
     content: "";
-    flex: none;
+    position: absolute;
+    left: 0;
+    top: 9px;
     width: 6px; height: 6px;
-    margin-top: 9px;
     border-radius: 50%;
     background: var(--accent);
     opacity: 0.75;
