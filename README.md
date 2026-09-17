@@ -89,6 +89,18 @@ Drei Dinge, die dabei teuer gelernt wurden:
    wird dort schnell doppelt so hoch wie breit; ein Querformat-Motiv würde
    darin zu einem Streifen gezerrt, auf dem nichts zu erkennen ist.
 
+**Das Gesicht ist der Grund, warum das Foto da ist.** Oben in jeder Bühne
+steht deshalb eine Zone, in der nur das Bild steht: kein Text, kaum Schleier
+(`--kopfraum`). Darunter beginnt der Text, und dort wird der Schleier dicht.
+Liegt eine Überschrift auf dem Gesicht und ein Schleier darüber, kann man das
+Foto auch weglassen.
+
+Wo das Gesicht sitzt, ist je Motiv verschieden und steht als
+`object-position` an einer Klasse je Bild (`.buehne--gegenlicht`,
+`.buehne--lachen`, `.buehne--probe`). **Auf schmalen Schirmen gelten eigene
+Werte:** dort wird links und rechts beschnitten statt oben und unten, und das
+Gesicht rutscht sonst aus dem Bild.
+
 **Wie weit ein Motiv reicht, steuert `--bild`** auf der Bühne. Unter einer
 Überschrift mit Vorspann darf es weit hineinlaufen (620 px), wo gleich darunter
 ein Kartenraster beginnt, muss es vorher enden (`.buehne--knapp`, 400 px) —

@@ -843,8 +843,16 @@ h3 {
        Streifen, auf dem nichts mehr zu erkennen ist. Das Bild trägt deshalb
        immer den Kopf und läuft danach in den Grund aus - unabhängig davon,
        wie lang der Abschnitt darunter noch wird. */
-    --bild: 620px;
+    --bild: 700px;
+
+    /* Und darin die Zone, in der nur das Bild steht: kein Text, kaum
+       Schleier. Dort sitzt das Gesicht. Ein Mensch, der einen ansieht, ist
+       der ganze Grund, warum das Foto da ist - liegt eine Überschrift darauf
+       und ein Schleier darüber, kann man es auch weglassen. */
+    --kopfraum: 300px;
 }
+
+.buehne.band { padding-top: var(--kopfraum); }
 .buehne > .wrap { position: relative; z-index: 2; }
 
 .buehne__foto {
@@ -862,8 +870,13 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 42%;
+    /* Der Ausschnitt folgt dem Gesicht, und das sitzt in jedem Motiv
+       woanders. An den Bildern abgelesen, nicht geschätzt. */
+    object-position: 50% 26%;
 }
+.buehne--gegenlicht .buehne__foto img { object-position: 62% 16%; }
+.buehne--lachen     .buehne__foto img { object-position: 38% 20%; }
+.buehne--probe      .buehne__foto img { object-position: 50% 18%; }
 
 /* Der Schleier. Oben und unten laeuft er in den Seitengrund aus, damit die
    Buehne nicht als Kasten endet, sondern als Uebergang. In der Mitte deckt
@@ -874,16 +887,20 @@ h3 {
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background:
-        linear-gradient(to bottom,
-            var(--bg) 0,
-            rgba(10, 10, 12, 0.70) calc(var(--bild) * 0.16),
-            rgba(10, 10, 12, 0.58) calc(var(--bild) * 0.46),
-            rgba(10, 10, 12, 0.86) calc(var(--bild) * 0.84),
-            var(--bg) var(--bild)),
-        radial-gradient(ellipse 110% 70% at 50% 34%,
-            rgba(10, 10, 12, 0.34) 0%, rgba(10, 10, 12, 0.02) 100%);
+    background: linear-gradient(to bottom,
+        rgba(10, 10, 12, 0.62) 0,
+        rgba(10, 10, 12, 0.28) 70px,
+        rgba(10, 10, 12, 0.26) calc(var(--kopfraum) - 110px),
+        rgba(10, 10, 12, 0.76) calc(var(--kopfraum) - 20px),
+        rgba(10, 10, 12, 0.90) calc(var(--kopfraum) + 90px),
+        rgba(10, 10, 12, 0.94) calc(var(--bild) * 0.86),
+        var(--bg) var(--bild));
 }
+
+/* Auf einem Bild trägt Grau nicht. Der Vorspann steht hier eine Stufe
+   heller als auf schwarzem Grund. */
+.buehne .head .lede,
+.buehne .lp__sub { color: #d6d6db; }
 
 /* Der Text auf der Bühne steht auf einem Bild, nicht auf einer Fläche. Ein
    Schatten in der Grundfarbe hält ihn auch über einer hellen Stelle lesbar,
@@ -923,38 +940,30 @@ h3 {
    Unter einer Überschrift mit Vorspann darf es weit hineinlaufen; wo gleich
    darunter ein Kartenraster beginnt, muss es vorher enden, sonst sieht man
    nur noch Fetzen zwischen den Karten. */
-.buehne--knapp { --bild: 400px; }
-.teacher.buehne { --bild: 560px; }
-.buehne--kopf { --bild: 400px; }
+.buehne--knapp { --bild: 560px; --kopfraum: 260px; }
+.teacher.buehne { --bild: 700px; --kopfraum: 300px; }
+.buehne--kopf { --bild: 440px; --kopfraum: 200px; }
 .buehne--kopf::after {
-    background:
-        linear-gradient(to bottom,
-            rgba(10, 10, 12, 0.70) 0,
-            rgba(10, 10, 12, 0.54) calc(var(--bild) * 0.28),
-            rgba(10, 10, 12, 0.84) calc(var(--bild) * 0.80),
-            var(--bg) var(--bild)),
-        linear-gradient(to right,
-            rgba(10, 10, 12, 0.70) 0%, rgba(10, 10, 12, 0.28) 58%,
-            rgba(10, 10, 12, 0.18) 100%);
+    background: linear-gradient(to bottom,
+        rgba(10, 10, 12, 0.56) 0,
+        rgba(10, 10, 12, 0.22) 60px,
+        rgba(10, 10, 12, 0.20) calc(var(--kopfraum) - 60px),
+        rgba(10, 10, 12, 0.84) calc(var(--kopfraum) + 40px),
+        rgba(10, 10, 12, 0.92) calc(var(--bild) * 0.86),
+        var(--bg) var(--bild));
 }
 .lp--buehne { padding-top: 0; }
-.buehne--kopf .wrap { padding-block: 40px 52px; }
+.buehne--kopf .wrap { padding-block: var(--kopfraum) 52px; }
 .buehne--kopf + .wrap { padding-top: 40px; }
 .buehne--kopf .lp__head { margin-bottom: 0; }
 
 /* Der Schlussaufruf ist dieselbe Buehne, nur waermer: dort steht der Knopf. */
 .final { isolation: isolate; }
 .final__in { position: relative; z-index: 3; }
-/* Der Ausschnitt sitzt auf den Bühnenlichtern, nicht auf dem Gesicht: über
-   einem Porträt ist Fließtext nie ruhig zu lesen. Dazu Tiefenunschärfe, wie
-   sie ein lichtstarkes Objektiv erzeugt - das Motiv bleibt Atmosphäre und
-   tritt nicht in Konkurrenz zur Schrift. Skaliert, damit der Weichzeichner
-   keine hellen Ränder stehen lässt. */
-.final .buehne__foto img {
-    object-position: 26% 14%;
-    filter: blur(3px);
-    transform: scale(1.06);
-}
+/* Hier lacht jemand in die Kamera, und genau das soll man sehen. Also kein
+   Weichzeichner mehr: Das Gesicht steht oben im Kopfraum, der Text beginnt
+   darunter. Ein Porträt und ein Absatz teilen sich nie dieselbe Fläche. */
+.final .buehne__foto img { object-position: 58% 16%; }
 
 /* Hier steht ein ganzes Formular auf dem Bild. Das Motiv trägt deshalb nur
    die Überschrift und läuft nach unten ins Schwarz aus: oben Atmosphäre,
@@ -963,22 +972,24 @@ h3 {
    Der Schleier sitzt auf dem Abschnitt, nicht auf dem Foto - sonst wanderte
    er beim Scrollen mit dem Bild mit, und die dunkle Zone liefe dem Text
    davon. */
-.final { --bild: 520px; }
+.final {
+    --bild: 640px;
+    --kopfraum: 260px;
+    padding-top: calc(var(--kopfraum) + 40px);
+}
 .final::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background:
-        linear-gradient(to bottom,
-            var(--bg) 0,
-            rgba(10, 10, 12, 0.54) calc(var(--bild) * 0.16),
-            rgba(10, 10, 12, 0.74) calc(var(--bild) * 0.44),
-            rgba(10, 10, 12, 0.94) calc(var(--bild) * 0.78),
-            var(--bg) var(--bild)),
-        radial-gradient(ellipse 90% 60% at 50% 24%,
-            rgba(10, 10, 12, 0.30) 0%, rgba(10, 10, 12, 0.02) 100%);
+    background: linear-gradient(to bottom,
+        rgba(10, 10, 12, 0.60) 0,
+        rgba(10, 10, 12, 0.26) 80px,
+        rgba(10, 10, 12, 0.24) calc(var(--kopfraum) - 70px),
+        rgba(10, 10, 12, 0.88) calc(var(--kopfraum) + 60px),
+        rgba(10, 10, 12, 0.95) calc(var(--bild) * 0.88),
+        var(--bg) var(--bild));
 }
 .final h2, .final > .wrap > p { text-shadow: 0 1px 22px rgba(10, 10, 12, 0.95); }
 .final::after {
@@ -994,11 +1005,21 @@ h3 {
 @media (max-width: 620px) {
     /* Auf dem Handy ist ein Bildschirm schmal: Das Motiv braucht weniger
        Höhe, sonst deckt es den halben Abschnitt. */
-    .buehne { --bild: 420px; }
-    .buehne--kopf { --bild: 300px; }
-    .final { --bild: 380px; }
+    .buehne { --bild: 520px; --kopfraum: 190px; }
+    .buehne--knapp { --bild: 440px; --kopfraum: 170px; }
+    .teacher.buehne { --bild: 520px; --kopfraum: 190px; }
+    .buehne--kopf { --bild: 360px; --kopfraum: 150px; }
+    .final { --bild: 470px; --kopfraum: 170px; }
     .buehne__foto { top: -60px; height: calc(var(--bild) + 220px); }
-    .buehne--kopf .wrap { padding-block: 30px 40px; }
+
+    /* Auf einem schmalen Schirm wird nicht mehr oben und unten beschnitten,
+       sondern links und rechts - und dabei rutscht das Gesicht schnell aus
+       dem Bild. Die Ausschnitte rücken deshalb dorthin, wo die Person im
+       jeweiligen Motiv wirklich sitzt. */
+    .buehne--gegenlicht .buehne__foto img { object-position: 78% 18%; }
+    .buehne--lachen     .buehne__foto img { object-position: 30% 22%; }
+    .buehne--probe      .buehne__foto img { object-position: 46% 20%; }
+    .final .buehne__foto img { object-position: 62% 20%; }
 }
 
 /* ---------- Fußzeile ---------- */
