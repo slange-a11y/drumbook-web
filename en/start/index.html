@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Join the test — Drumbook</title>
+<title>Join the Drumbook test</title>
 <meta name="description" content="You have the flyer in your hand: leave your address and an invitation to Drumbook comes by email. The practice diary for drummers, free while it is being tested.">
 <meta name="theme-color" content="#0a0a0c">
 <link rel="canonical" href="https://drumbook.de/en/start/">
@@ -12,7 +12,7 @@
 <link rel="icon" href="../../assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../../assets/icon-180.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Join the test — Drumbook">
+<meta property="og:title" content="Join the Drumbook test">
 <meta property="og:description" content="Leave your address and an invitation comes by email. The practice diary for drummers.">
 <meta property="og:image" content="https://drumbook.de/assets/og-card-en.jpg">
 <meta property="og:image:width" content="1200">
@@ -80,8 +80,17 @@
   </div>
 </header>
 
+<div class="streifen streifen--kopf">
+  <img src="../../assets/foto/lachen-1800.jpg"
+       srcset="../../assets/foto/lachen-900.jpg 900w, ../../assets/foto/lachen-1800.jpg 1800w"
+       sizes="100vw" width="1800" height="1200" fetchpriority="high"
+       alt="A drummer at the kit, sticks in hand, laughing.">
+</div>
+
 <main class="lp" id="content">
   <div class="wrap">
+
+    <a class="back" href="../">Back to the home page</a>
 
     <div class="lp__head">
       <p class="lp__kick">Join the test</p>
@@ -97,7 +106,7 @@
     <div class="lp__form">
       <h2>Ask for an invitation</h2>
       <p class="note">
-        You get an invitation to TestFlight — Apple's testing app, free of
+        You get an invitation to TestFlight, Apple's testing app, free of
         charge. After that I only write when there is something new to test.
       </p>
 
@@ -109,12 +118,12 @@
                  placeholder="you@example.com">
         </div>
         <div class="form__row">
-          <label for="f-name">Name <span class="opt">— if you like</span></label>
+          <label for="f-name">Name <span class="opt">(if you like)</span></label>
           <input type="text" id="f-name" name="name" autocomplete="name"
                  placeholder="What should I call you?">
         </div>
         <div class="form__row">
-          <label for="f-nachricht">Message <span class="opt">— if you like</span></label>
+          <label for="f-nachricht">Message <span class="opt">(if you like)</span></label>
           <textarea id="f-nachricht" name="nachricht"
                     placeholder="How long have you been playing? What is getting in the way? I read every line."></textarea>
         </div>
@@ -148,7 +157,7 @@
       </div>
 
       <p class="note">
-        Your address is only used to send you that one message — and deleted
+        Your address is only used to send you that one message, and deleted
         afterwards.
       </p>
     </div>
@@ -162,7 +171,7 @@
       <figure>
         <img src="../../assets/shots/en/07-session.jpg" width="700" height="1522" loading="lazy"
              alt="A running practice session: countdown for the exercise, time left for the evening, metronome bar.">
-        <figcaption>Two clocks, one running order — the switch happens by itself.</figcaption>
+        <figcaption>Two clocks, one running order: the switch happens by itself.</figcaption>
       </figure>
       <figure>
         <img src="../../assets/shots/en/10-notenband.jpg" width="700" height="1522" loading="lazy"
@@ -174,12 +183,12 @@
     <ul class="lp__points">
       <li><i></i><span>
         <b>You open the app and know what is on.</b>
-        Tell Drumbook how many minutes you have — the practice list puts itself
+        Tell Drumbook how many minutes you have. The practice list puts itself
         together and pulls in what has been left too long.
       </span></li>
       <li><i></i><span>
         <b>The click keeps running when both hands hold sticks.</b>
-        Even with the screen locked, and it does not drift — every beat is
+        Even with the screen locked, and it does not drift, because every beat is
         worked into the sound in advance.
       </span></li>
       <li><i></i><span>
@@ -189,27 +198,32 @@
       </span></li>
       <li><i></i><span>
         <b>You talk straight to the person building it.</b>
-        Feedback goes out from the test app — I read every word, and often it is
+        Feedback goes out from the test app. I read every word, and often it is
         in the app a week later.
       </span></li>
     </ul>
 
-    <p class="notice lp__honest">
-      <strong>So you know what you are getting into:</strong> Drumbook will
-      later be a subscription, probably three to five euros a month. While it is
-      being tested it costs nothing, and everyone still gets a trial period
-      later on. There is no account and no server of mine: everything stays on
-      your device, and syncing between iPhone and iPad runs through your own
-      iCloud. It is built by one person who is learning the drums.
-      <a href="../index.html">See the whole site &rarr;</a>
-    </p>
+    <div class="notice lp__honest">
+      <p class="notice__label">So you know what you are getting into</p>
+      <div class="notice__body">
+        <p>
+          Drumbook will later be a subscription, probably three to five euros a
+          month. While it is being tested it costs nothing, and everyone still
+          gets a trial period later on. There is no account and no server of
+          mine: everything stays on your device, and syncing between iPhone and
+          iPad runs through your own iCloud. It is built by one person who is
+          learning the drums.
+          <a href="../index.html">See the whole site &rarr;</a>
+        </p>
+      </div>
+    </div>
 
   </div>
 </main>
 
 <footer class="foot">
   <div class="wrap foot__in">
-    <p>Drumbook — a practice diary for drummers.</p>
+    <p>Drumbook, a practice diary for drummers.</p>
     <p class="foot__links">
       <a href="../legal.html">Imprint &amp; privacy</a>
       <a href="../../start/" hreflang="de">Deutsch</a>
@@ -218,5 +232,6 @@
 </footer>
 
 <script src="../../assets/form.js" defer></script>
+<script src="../../assets/zurueck.js" defer></script>
 </body>
 </html>

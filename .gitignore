@@ -7,3 +7,6 @@ tools/zettel/set.jpg
 tools/zettel/set-*.jpg
 
 .DS_Store
+
+# Die lokale Vorschau (python3 -m http.server), nichts fürs Netz.
+.claude/

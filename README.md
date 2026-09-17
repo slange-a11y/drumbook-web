@@ -1,6 +1,6 @@
 # drumbook-web
 
-Die Website zur iOS-App **Drumbook** — ein Übetagebuch fürs Schlagzeug.
+Die Website zur iOS-App **Drumbook**, einem Übetagebuch fürs Schlagzeug.
 
 Öffentlich erreichbar unter <https://drumbook.de/>.
 Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumbook`.
@@ -14,14 +14,17 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
     en/index.html       Startseite (Englisch)
     en/news.html        Neuigkeiten (Englisch)
     en/legal.html       Imprint & privacy (Englisch, Übersetzung)
-    assets/style.css    Das gesamte Aussehen — ein einziges Stylesheet
-    assets/form.js      Das Formular für die Warteliste (das einzige Skript)
+    assets/style.css    Das gesamte Aussehen, ein einziges Stylesheet
+    assets/form.js      Das Formular für die Warteliste
+    assets/zurueck.js   Benennt den Zurück-Link nach der Seite, von der du kamst
+    assets/anim.js      Der durchlaufende Takt und die Abschnitte beim Scrollen
     assets/shots/       Bildschirmfotos aus dem Simulator
+    assets/foto/        Stimmungsbilder (Adobe Stock, lizenziert)
     tools/apps-script/  Der Empfang für das Formular + Einrichtungsanleitung
     .nojekyll           Sagt GitHub Pages: einfach ausliefern, nicht bauen
 
 Reines HTML und CSS plus ein kleines Skript fürs Formular. Kein Framework,
-kein Build-Schritt, keine externen Schriften — was die Seite lädt, liegt in
+kein Build-Schritt, keine externen Schriften: was die Seite lädt, liegt in
 diesem Repo. Damit stimmt auch die Aussage in der Datenschutzerklärung, dass
 beim Aufruf nichts von fremden Servern nachgeladen wird; zu Google geht erst
 etwas, wenn jemand das Formular tatsächlich abschickt.
@@ -33,32 +36,46 @@ nach etwa einer Minute aus.
 
 ## Neuigkeiten pflegen
 
-Ein Eintrag je Build, neueste zuerst. Die Vorlage steht schon in der Datei —
+Ein Eintrag je Build, neueste zuerst. Die Vorlage steht schon in der Datei:
 `<article class="news__entry">` kopieren, Datum, Schlagwort, Überschrift und
 Text austauschen.
 
 Die Rohfassung steht im App-Repo unter `Tools/testhinweise/<build>.de.md` und
 `.en.md`: dieselbe Sache in beiden Sprachen, im selben Ton. Daraus wird der
-Eintrag gekürzt — **auf das, was der Nutzer davon hat, nicht darauf, wie es
+Eintrag gekürzt, **auf das, was der Nutzer davon hat, nicht darauf, wie es
 gebaut ist.** Die Testhinweise erklären das Innenleben; die Website tut das
 bewusst nicht.
 
 Vier Stellen gehören zusammen und dürfen nicht auseinanderlaufen:
 
-1. `neuigkeiten.html` — der vollständige Eintrag.
-2. `en/news.html` — derselbe Eintrag auf Englisch.
-3. `index.html`, Abschnitt `#neues` — die drei jüngsten als kurze Karte.
-4. `en/index.html`, Abschnitt `#news` — dasselbe auf Englisch.
+1. `neuigkeiten.html`: der vollständige Eintrag.
+2. `en/news.html`: derselbe Eintrag auf Englisch.
+3. `index.html`, Abschnitt `#neues`: die drei jüngsten als kurze Karte.
+4. `en/index.html`, Abschnitt `#news`: dasselbe auf Englisch.
 
 Wandert etwas aus „Steht noch aus" nach „Läuft und wird benutzt", gehört es in
-beiden Sprachen umgehängt — und wenn es den Datenschutz berührt (wie der
+beiden Sprachen umgehängt, und wenn es den Datenschutz berührt (wie der
 Abgleich über iCloud), auch in `datenschutz.html` und `en/legal.html`.
+
+## Zwei Hausregeln für den Text
+
+**Keine langen Gedankenstriche.** Am 17.09.2026 sind 280 davon aus elf Seiten
+verschwunden, weil sie inzwischen als Maschinenschrift gelesen werden. Wo einer
+stehen möchte, gehört ein Komma, ein Doppelpunkt, ein Semikolon oder ein Punkt
+hin. Die Gegenprobe über alle Seiten (findet nichts, wenn alles sauber ist;
+die Anleitungen unter `tools/` sind bewusst ausgenommen, die liest kein
+Besucher):
+
+    grep -rn "$(printf '\342\200\224')" --include="*.html" .
+
+**Aufzählungen von dem, was es nicht gibt, sparsam.** „Kein Konto, kein
+Passwort, kein Server" sitzt einmal. Dreimal hintereinander klingt es gebaut.
 
 ## Das Formular
 
 Die Warteliste läuft über eine Google-Apps-Script-Web-App, die in eine
 Tabelle schreibt und dir eine Mail schickt. **Steht und ist getestet**
-(01.09.2026): Projekt „Drumbook — Warteliste" im TE-Printline-Workspace,
+(01.09.2026): Projekt „Drumbook, Warteliste" im TE-Printline-Workspace,
 Version 1, Zugriff „Jeder". Die Eintragungen landen im Blatt `Warteliste`
 derselben Tabelle.
 
@@ -68,7 +85,7 @@ zurück.
 
 Anleitung: [`tools/apps-script/README.md`](tools/apps-script/README.md).
 
-Die Logik des Skripts lässt sich ohne Google prüfen — die Google-Dienste
+Die Logik des Skripts lässt sich ohne Google prüfen; die Google-Dienste
 werden durch Attrappen ersetzt und die Datei in JavaScriptCore ausgeführt.
 Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
 
@@ -79,7 +96,7 @@ Achtung: Node.js half hier nicht weiter, es lief ohne jede Ausgabe.
 
 ## Bildschirmfotos neu erzeugen
 
-Die Bilder stammen aus dem Simulator mit erfundenen, aber plausiblen Übedaten —
+Die Bilder stammen aus dem Simulator mit erfundenen, aber plausiblen Übedaten,
 nicht aus der echten Datenbank. Der Datensatz liegt **im App-Repo** und ist
 wiederholbar:
 
@@ -99,7 +116,7 @@ Vorgehen:
    `xcrun simctl status_bar <udid> override --time 9:41 --batteryState charged --batteryLevel 100 --wifiBars 3`
 4. Aufnehmen mit `xcrun simctl io <udid> screenshot`.
 5. **Querformat:** `simctl` kann nicht drehen. Über das Menü der Simulator-App
-   (`Device ▸ Rotate Left`) drehen — vorher das richtige Fenster nach vorn
+   (`Device ▸ Rotate Left`) drehen; vorher das richtige Fenster nach vorn
    holen, sonst dreht sich das andere Gerät. Die Aufnahme kommt weiterhin im
    Hochformat-Rahmen an und muss nachträglich gedreht werden (`sips -r 270`).
 6. Verkleinern und als JPEG sichern (Qualität 84):

@@ -377,21 +377,61 @@ h1 {
     .tablet img { border-radius: 12px; }
 }
 
-/* ---------- Ehrlicher Hinweis zum Stand ---------- */
+/* ---------- Ehrlicher Hinweis zum Stand ----------
+   Ein Formblatt, kein Callout: fast scharfe Ecken, ein getonter Kopf mit
+   Etikett darin, und der Rest nuechtern. Bewusst kein farbiger Balken an der
+   linken Kante - den setzt inzwischen jeder Baukasten an jeden zweiten
+   Absatz. Die Farbe steckt stattdessen im Kopf, wo sie etwas benennt. */
 
 .notice {
     margin: 46px auto 0;
     max-width: 780px;
     background: var(--bg-raised);
     border: 1px solid var(--line);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--r-md);
-    padding: 20px 24px;
+    border-radius: 3px;
+    overflow: hidden;
     font-size: 15.5px;
     line-height: 1.62;
     color: var(--ink-muted);
 }
+.notice__label {
+    margin: 0;
+    padding: 9px 21px 8px;
+    background: var(--accent-dim);
+    border-bottom: 1px solid var(--line);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+}
+.notice__body { padding: 18px 21px 19px; }
+.notice__body > :first-child { margin-top: 0; }
+.notice__body > :last-child  { margin-bottom: 0; }
 .notice strong { color: var(--ink); font-weight: 650; }
+
+/* Die leisere Schwester: kein Kasten, nur eine Linie darueber und ein
+   Etikett in Grau. Fuer Anmerkungen, die niemanden anhalten sollen. */
+
+.anmerkung {
+    max-width: 760px;
+    margin: 42px auto 0;
+    border-top: 1px solid var(--line);
+    padding-top: 15px;
+    font-size: 15.5px;
+    line-height: 1.63;
+    color: var(--ink-muted);
+}
+.anmerkung__label {
+    margin: 0 0 9px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+}
+.anmerkung p { margin: 0; }
+.anmerkung strong { color: var(--ink); font-weight: 650; }
 
 /* ---------- Abschnitte ---------- */
 
@@ -755,11 +795,13 @@ h3 {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
     background: radial-gradient(ellipse 720px 380px at 50% 100%,
                 rgba(249, 129, 44, 0.14) 0%, transparent 72%);
     pointer-events: none;
 }
-.final__in { position: relative; }
+.final__in { position: relative; z-index: 2; }
+.final { isolation: isolate; }
 .final img {
     width: 78px; height: 78px;
     border-radius: 18px;
@@ -779,6 +821,94 @@ h3 {
     color: var(--ink-faint);
     margin: 20px auto 0;
     max-width: 30em;
+}
+
+/* ---------- Stimmungsbaender ----------
+   Ein Foto ueber die volle Breite zwischen zwei Abschnitten. Kein Text
+   darauf, nur Atem: die Seite zeigt sonst fast nur Bildschirme, und das
+   Instrument selbst kommt darin nicht vor. Unten und oben laeuft das Bild
+   in den Seitengrund aus, damit es als Uebergang wirkt und nicht als
+   eingeklebte Kachel. */
+
+.streifen {
+    position: relative;
+    height: clamp(230px, 34vw, 420px);
+    overflow: hidden;
+    background: var(--bg-sunken);
+}
+.streifen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+}
+.streifen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom,
+                var(--bg) 0%, rgba(10, 10, 12, 0.30) 22%,
+                rgba(10, 10, 12, 0.34) 52%, rgba(10, 10, 12, 0.86) 84%,
+                rgba(10, 10, 12, 0.97) 100%);
+    pointer-events: none;
+}
+.streifen__wort {
+    position: absolute;
+    z-index: 2;
+    left: 0; right: 0; bottom: 26px;
+    margin: 0 auto;
+    max-width: var(--wide);
+    padding: 0 28px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    text-shadow: 0 1px 14px rgba(10, 10, 12, 0.9);
+}
+.streifen__wort b { color: var(--ink); font-weight: 650; }
+
+/* Auf den Landeseiten sitzt das Bild direkt unter der Navigation und
+   fuehrt in die Ueberschrift hinein: oben kein Verlauf, unten schon. */
+.streifen--kopf {
+    height: clamp(200px, 30vw, 340px);
+    margin-top: -1px;
+}
+.streifen--kopf::after {
+    background: linear-gradient(to bottom,
+                rgba(10, 10, 12, 0.62) 0%, rgba(10, 10, 12, 0.22) 38%,
+                rgba(10, 10, 12, 0.55) 78%, var(--bg) 100%);
+}
+.streifen--kopf img { object-position: 50% 38%; }
+
+@media (max-width: 620px) {
+    .streifen { height: 260px; }
+    .streifen--kopf { height: 190px; }
+    .streifen__wort { bottom: 18px; padding: 0 20px; font-size: 13.5px; }
+}
+
+/* Der Schlussaufruf bekommt dasselbe Foto als Grund: hier steht der
+   Knopf, hier darf es waermer werden. */
+
+.final__foto {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.final__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 32%;
+}
+.final__foto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to bottom, var(--bg) 0%, rgba(10, 10, 12, 0.82) 30%,
+                        rgba(10, 10, 12, 0.93) 62%, var(--bg) 100%);
 }
 
 /* ---------- Fußzeile ---------- */
@@ -1108,15 +1238,13 @@ h3 {
 }
 .news__entry b { color: var(--ink); font-weight: 600; }
 
-/* Der Aufruf, sich eintragen zu lassen — auf der Neuigkeiten-Seite. */
+/* Der Aufruf, sich eintragen zu lassen, auf der Neuigkeiten-Seite.
+   Derselbe Kasten wie .notice, nur mit mehr Luft im Koerper. */
 .news__cta {
     margin-top: 46px;
-    background: var(--bg-raised);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--r-md);
-    padding: 28px 30px;
+    max-width: none;
 }
+.news__cta .notice__body { padding: 26px 26px 28px; }
 .news__cta h2 {
     font-size: 1.24rem;
     margin: 0 0 10px;
@@ -1127,12 +1255,7 @@ h3 {
     line-height: 1.68;
     margin: 0 0 18px;
 }
-.news .back {
-    display: inline-block;
-    margin-bottom: 26px;
-    color: var(--ink-muted);
-    font-size: 15px;
-}
+.news .back { margin-bottom: 26px; }
 
 /* ---------- Rechtstexte ---------- */
 
@@ -1176,11 +1299,37 @@ h3 {
     font-size: 15px;
     line-height: 1.6;
 }
-.legal .back {
-    display: inline-block;
-    margin-bottom: 30px;
+.legal .back { margin-bottom: 30px; }
+
+/* ---------- Der Weg zurueck ----------
+   Steht als gewoehnlicher Link im HTML, mit festem Ziel fuer alle, die
+   direkt hier landen. assets/zurueck.js schreibt Text und Ziel um, wenn
+   erkennbar ist, von welcher Drumbook-Seite jemand kam. */
+
+.back {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
     font-size: 15px;
     color: var(--ink-muted);
+}
+.back::before {
+    content: "\2190";
+    font-size: 16px;
+    line-height: 1;
+    color: var(--ink-faint);
+    transition: transform 0.16s ease;
+}
+.back:hover { color: var(--ink); text-decoration: none; }
+.back:hover::before { transform: translateX(-3px); color: var(--accent); }
+.back u { text-decoration: none; border-bottom: 1px solid var(--line); }
+.back:hover u { border-bottom-color: var(--ink-faint); }
+
+/* Auf den Landeseiten sitzt er ueber der Ueberschrift. */
+.lp .back { margin-bottom: 22px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .back::before { transition: none; }
 }
 
 /* ---------- Kleine Bildschirme ---------- */
@@ -1403,19 +1552,8 @@ h3 {
     .teacher__grid { grid-template-columns: 1fr; }
 }
 
-.teacher__note {
-    max-width: 760px;
-    margin: 42px auto 0;
-    padding: 20px 24px;
-    background: var(--bg-raised);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--ink-faint);
-    border-radius: var(--r-md);
-    font-size: 15.5px;
-    line-height: 1.63;
-    color: var(--ink-muted);
-}
-.teacher__note strong { color: var(--ink); font-weight: 650; }
+/* Der Weg zur Lehrer-Seite, unter der Anmerkung. */
+.teacher__more { max-width: 760px; margin: 18px auto 0; }
 
 /* ---------- Bewegung ----------
    Zwei Dinge, beide vom Metronom geborgt: ein Takt, der durchläuft, und
