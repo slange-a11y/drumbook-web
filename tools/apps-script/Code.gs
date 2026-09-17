@@ -100,7 +100,9 @@ function doPost(e) {
                  ? String(daten.herkunft) : 'seite';
     var zeit = new Date();
 
-    eintragen(zeit, email, name, nachricht, sprache, herkunft);
+    eintragen({ 'Zeitpunkt': zeit, 'E-Mail': email, 'Name': name,
+                'Nachricht': nachricht, 'Sprache': sprache,
+                'Herkunft': herkunft });
     benachrichtigen(zeit, email, name, nachricht, sprache, herkunft);
 
     if (BESTAETIGUNG_SENDEN) {
@@ -136,24 +138,51 @@ function kuerzen(wert, max) {
   return wert.length > max ? wert.slice(0, max) + '…' : wert;
 }
 
-/** Schreibt eine Zeile in die Tabelle und legt sie beim ersten Mal an. */
-function eintragen(zeit, email, name, nachricht, sprache, herkunft) {
+/**
+ * Schreibt eine Zeile in die Tabelle und legt sie beim ersten Mal an.
+ *
+ * Geschrieben wird nach SPALTENNAMEN, nicht nach Position — und das ist kein
+ * Purismus, sondern die Lehre aus dem 17.09.2026: Damals kam „Herkunft" dazu,
+ * die Überschriftenzeile einer schon bestehenden Tabelle blieb aber alt (sie
+ * wird nur beim Anlegen geschrieben). Der Code schrieb sieben Werte in sechs
+ * Spalten, und „seite" landete unter „Benachrichtigt am". Aufgefallen ist es
+ * nur, weil jemand nachgesehen hat.
+ *
+ * Jetzt liest die Funktion die vorhandenen Überschriften, hängt fehlende
+ * hinten an und ordnet jeden Wert seiner Spalte zu. Eine neue Spalte kann
+ * damit nichts mehr verrutschen, und bestehende Daten bleiben, wo sie sind.
+ */
+var SPALTEN = ['Zeitpunkt', 'E-Mail', 'Name', 'Nachricht', 'Sprache',
+               'Herkunft', 'Benachrichtigt am'];
+
+function eintragen(werte) {
   var tabelle = SpreadsheetApp.getActiveSpreadsheet();
   var blatt = tabelle.getSheetByName(BLATT);
 
   if (!blatt) {
     blatt = tabelle.insertSheet(BLATT);
-    blatt.appendRow(['Zeitpunkt', 'E-Mail', 'Name', 'Nachricht', 'Sprache', 'Herkunft', 'Benachrichtigt am']);
-    blatt.getRange(1, 1, 1, 7).setFontWeight('bold');
+    blatt.appendRow(SPALTEN);
+    blatt.getRange(1, 1, 1, SPALTEN.length).setFontWeight('bold');
     blatt.setFrozenRows(1);
     blatt.setColumnWidth(1, 150);
     blatt.setColumnWidth(2, 230);
     blatt.setColumnWidth(4, 380);
   }
 
+  var breite = Math.max(blatt.getLastColumn(), 1);
+  var kopf = blatt.getRange(1, 1, 1, breite).getValues()[0];
+  SPALTEN.forEach(function (name) {
+    if (kopf.indexOf(name) === -1) {
+      kopf.push(name);
+      blatt.getRange(1, kopf.length).setValue(name).setFontWeight('bold');
+    }
+  });
+
   // Doppelte Eintragungen derselben Adresse überschreiben nichts, sondern
   // bekommen eine eigene Zeile — der Zeitpunkt sagt dann, was zuerst kam.
-  blatt.appendRow([zeit, email, name, nachricht, sprache, herkunft, '']);
+  blatt.appendRow(kopf.map(function (name) {
+    return Object.prototype.hasOwnProperty.call(werte, name) ? werte[name] : '';
+  }));
 }
 
 /** Die Nachricht an dich. */
