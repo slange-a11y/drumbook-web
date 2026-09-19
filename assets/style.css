@@ -919,9 +919,20 @@ body::after {
     isolation: isolate;
     /* clip, nicht hidden: hidden macht die Bühne selbst zu einem
        Scroll-Container, und die Scroll-Zeitachse misst dann gegen einen
-       Kasten, in dem sich nie etwas bewegt. Das Bild stünde still. */
+       Kasten, in dem sich nie etwas bewegt. Das Bild stünde still.
+
+       Der Clip-Rand ist der Platz für den Übergang: Das Foto ragt um
+       `--ueberstand` über die Bühne hinaus und blendet dort aus dem
+       schwarzen Grund auf. Ohne ihn säße das Motiv als Kachel mit scharfer
+       Oberkante im Abschnitt - siehe unten bei `.buehne__foto`. */
     overflow: clip;
+    overflow-clip-margin: var(--ueberstand);
     background: var(--bg);
+
+    /* Wie weit das Foto über die Bühne hinausragt, nach oben in den
+       schwarzen Abschnitt davor und nach unten in den danach. Dort liegt
+       der weiche Übergang, und dort hat die Bewegung ihren Weg. */
+    --ueberstand: 104px;
 
     /* Wie weit das Motiv in den Abschnitt hineinreicht. Ein Abschnitt kann
        1900 px hoch werden; ein Querformat darüber zu strecken ergibt einen
@@ -940,16 +951,35 @@ body::after {
 .buehne.band { padding-top: var(--kopfraum); }
 .buehne > .wrap { position: relative; z-index: 2; }
 
+/* Der Rahmen steht still und trägt den Übergang; bewegt wird das Bild darin
+   (siehe `.buehne__foto img`).
+
+   **Warum das so getrennt ist.** Eine Bühne folgt auf einen schwarzen
+   Abschnitt. Beginnt das Motiv an der Bühnenkante, sitzt es dort als Kachel
+   mit scharfer Oberkante - genau das, was eine Bühne nicht sein soll. Der
+   Übergang muss also **vor** der Bühne liegen, im Schwarz darüber, sonst
+   kostet er Bildfläche und verdeckt das Gesicht, das oben im Kopfraum steht.
+   Dafür blendet die Maske das Foto über den Überstand auf und am unteren Ende
+   wieder aus. Und dafür muss die Maske stillstehen: Läge sie auf dem bewegten
+   Element, wanderte der Übergang beim Scrollen mit und schöbe sich in die
+   Bühne hinein. */
 .buehne__foto {
     position: absolute;
     left: 0;
     right: 0;
-    top: -104px;
+    top: calc(-1 * var(--ueberstand));
     bottom: auto;
     /* Reichweite plus Luft für Weg und Zoom, damit nie eine Kante auftaucht. */
     height: calc(var(--bild) + 300px);
     z-index: 0;
     pointer-events: none;
+    -webkit-mask-image: var(--blende);
+            mask-image: var(--blende);
+    --blende: linear-gradient(to bottom,
+        transparent 0,
+        #000 var(--ueberstand),
+        #000 calc(100% - var(--ueberstand)),
+        transparent 100%);
 }
 .buehne__foto img {
     width: 100%;
@@ -977,9 +1007,11 @@ body::after {
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    /* Oben beginnt er bei null: Dort blendet das Foto gerade erst auf, und
+       jede Deckung an dieser Kante wäre als Absatz zu sehen. */
     background: linear-gradient(to bottom,
-        rgba(10, 10, 12, 0.62) 0,
-        rgba(10, 10, 12, 0.28) 70px,
+        rgba(10, 10, 12, 0) 0,
+        rgba(10, 10, 12, 0.26) 40px,
         rgba(10, 10, 12, 0.26) calc(var(--kopfraum) - 110px),
         rgba(10, 10, 12, 0.76) calc(var(--kopfraum) - 20px),
         rgba(10, 10, 12, 0.90) calc(var(--kopfraum) + 90px),
@@ -1015,7 +1047,10 @@ body::after {
 
 @supports (animation-timeline: view()) {
     @media not (prefers-reduced-motion: reduce) {
-        .buehne__foto {
+        /* Das Bild bewegt sich, der Rahmen mit der Maske bleibt stehen. Die
+           Lücken, die dabei am oberen und unteren Rand entstehen, liegen im
+           Überstand und sind ausgeblendet. */
+        .buehne__foto img {
             animation: buehne-tiefe linear both;
             animation-timeline: view();
             animation-range: cover 0% cover 100%;
@@ -1033,6 +1068,14 @@ body::after {
 .buehne--knapp { --bild: 560px; --kopfraum: 260px; }
 .teacher.buehne { --bild: 700px; --kopfraum: 300px; }
 .buehne--kopf { --bild: 440px; --kopfraum: 200px; }
+/* Hier sitzt die Bühne als Erstes unter der Navigation: über ihr ist kein
+   schwarzer Abschnitt, aus dem etwas auftauchen müsste. Oben also kein
+   Übergang, unten der übliche. */
+.buehne--kopf .buehne__foto {
+    --blende: linear-gradient(to bottom,
+        #000 calc(100% - var(--ueberstand)),
+        transparent 100%);
+}
 .buehne--kopf::after {
     background: linear-gradient(to bottom,
         rgba(10, 10, 12, 0.56) 0,
@@ -1065,7 +1108,11 @@ body::after {
 .final {
     --bild: 640px;
     --kopfraum: 260px;
+    --ueberstand: 104px;
     padding-top: calc(var(--kopfraum) + 40px);
+    /* Wie bei jeder Bühne: Platz für den Übergang oberhalb. */
+    overflow: clip;
+    overflow-clip-margin: var(--ueberstand);
 }
 .final::before {
     content: "";
@@ -1074,8 +1121,8 @@ body::after {
     z-index: 1;
     pointer-events: none;
     background: linear-gradient(to bottom,
-        rgba(10, 10, 12, 0.60) 0,
-        rgba(10, 10, 12, 0.26) 80px,
+        rgba(10, 10, 12, 0) 0,
+        rgba(10, 10, 12, 0.24) 40px,
         rgba(10, 10, 12, 0.24) calc(var(--kopfraum) - 70px),
         rgba(10, 10, 12, 0.88) calc(var(--kopfraum) + 60px),
         rgba(10, 10, 12, 0.95) calc(var(--bild) * 0.88),
@@ -1100,7 +1147,9 @@ body::after {
     .teacher.buehne { --bild: 520px; --kopfraum: 190px; }
     .buehne--kopf { --bild: 360px; --kopfraum: 150px; }
     .final { --bild: 470px; --kopfraum: 170px; }
-    .buehne__foto { top: -60px; height: calc(var(--bild) + 220px); }
+    /* Der Überstand bleibt, sonst hat die Bewegung keinen Weg und der
+       Übergang keinen Platz; nur die Reichweite darunter wird knapper. */
+    .buehne__foto { height: calc(var(--bild) + 240px); }
 
     /* Auf einem schmalen Schirm wird nicht mehr oben und unten beschnitten,
        sondern links und rechts - und dabei rutscht das Gesicht schnell aus

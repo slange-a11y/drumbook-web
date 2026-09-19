@@ -79,6 +79,16 @@ eingestellt hat, sieht ein ruhiges Standbild.
 
 Drei Dinge, die dabei teuer gelernt wurden:
 
+0. **Der Übergang gehört über die Bühne, nicht hinein.** Eine Bühne folgt auf
+   einen schwarzen Abschnitt. Beginnt das Motiv an ihrer Kante, sitzt es dort
+   als Kachel mit scharfer Oberkante; blendet man es innerhalb der Bühne auf,
+   kostet das genau die Fläche, auf der das Gesicht steht. Deshalb ragt das
+   Foto um `--ueberstand` (104 px) hinaus, `overflow-clip-margin` gibt ihm
+   dort Platz, und eine Maske blendet es über diesen Streifen auf und am
+   unteren Ende wieder aus. **Die Maske muss stillstehen:** Bewegt würde der
+   Übergang beim Scrollen mitwandern und sich in die Bühne schieben. Deshalb
+   bewegt sich das Bild *im* Rahmen, nicht der Rahmen. Und der Schleier
+   beginnt oben bei null, sonst ist genau dort wieder ein Absatz zu sehen.
 1. **`overflow: clip`, nicht `hidden`.** `hidden` macht den Abschnitt selbst
    zu einem Scroll-Container; die Zeitachse misst dann gegen einen Kasten, in
    dem sich nie etwas bewegt, und das Bild steht still.

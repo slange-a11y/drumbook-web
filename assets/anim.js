@@ -112,7 +112,9 @@
     // Nachbau, nicht der Regelfall.
     var kenntZeitachse = window.CSS && CSS.supports &&
                          CSS.supports('animation-timeline', 'view()');
-    var fotos = document.querySelectorAll('.buehne__foto');
+    // Das Bild bewegt sich, nicht der Rahmen: Der traegt die Maske, die den
+    // Uebergang oben und unten macht, und muss deshalb stillstehen.
+    var fotos = document.querySelectorAll('.buehne__foto img');
 
     if (!kenntZeitachse && fotos.length) {
         var imBild = [];
