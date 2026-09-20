@@ -1084,7 +1084,15 @@ body::after {
 .buehne--kopf { --bild: 440px; --kopfraum: 200px; }
 /* Hier sitzt die Bühne als Erstes unter der Navigation: über ihr ist kein
    schwarzer Abschnitt, aus dem etwas auftauchen müsste. Oben also kein
-   Übergang, unten der übliche. */
+   Übergang, unten der übliche.
+
+   **Und deshalb hier auch kein Clip-Rand.** Der gibt dem Foto Platz
+   *oberhalb* der Bühne - dort, wo der Schleier nicht mehr hinreicht, weil
+   er an der Bühne klebt. Über einer Bühne mitten auf der Seite ist das
+   Schwarz, und die Blende macht daraus einen Übergang. Über dieser hier
+   ist die Navigation: Ohne Blende stünde das Foto dort ungedämpft und
+   läge als heller Streifen unter der Leiste. Also beschneiden wie früher. */
+.buehne--kopf { overflow-clip-margin: 0; }
 .buehne--kopf .buehne__foto {
     --blende: linear-gradient(to bottom,
         #000 calc(var(--ueberstand) + var(--bild) - 140px),
