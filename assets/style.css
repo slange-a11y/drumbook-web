@@ -203,7 +203,10 @@ a:hover { text-decoration: underline; }
     min-height: clamp(560px, 64vh, 780px);
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* clip, nicht hidden - aus demselben Grund wie bei den Bühnen: hidden
+       macht den Hero zu einem Scroll-Container, und die Scroll-Zeitachse
+       misst dann gegen einen Kasten, in dem sich nichts bewegt. */
+    overflow: clip;
 }
 
 .hero::before {
@@ -1942,7 +1945,7 @@ body::after {
     position: absolute;
     inset: 0;
     z-index: 0;
-    overflow: hidden;
+    overflow: clip;
     pointer-events: none;
 }
 /* Das Bild ist breiter als der Hero und links bündig. Der Grund: Es ist ein
@@ -1954,12 +1957,33 @@ body::after {
    Textblock, der nie über 620 px hinausgeht. Das gilt auf jeder
    Fensterbreite, weil beide Zahlen prozentual mitwandern. */
 .hero__foto img {
+    position: absolute;
+    top: calc(-1 * var(--hero-weg));
+    left: 0;
     width: 140%;
     max-width: none;
-    height: 100%;
+    /* Luft oben und unten, damit die Fahrt (siehe unten) nie eine Kante
+       freilegt. */
+    height: calc(100% + 2 * var(--hero-weg));
     object-fit: cover;
     object-position: 0% 20%;
     display: block;
+    --hero-weg: 110px;
+}
+
+/* Dieselbe Kamerafahrt wie unter den Bühnen, nur mit eigenem Takt: Der Hero
+   steht beim Öffnen schon da, seine Fahrt ist also nicht das Hereinkommen,
+   sondern das Hinausgehen. `exit` misst genau das - beim Laden steht das
+   Bild am Anfang der Fahrt, beim Wegscrollen läuft sie ab. */
+@supports (animation-timeline: view()) {
+    @media not (prefers-reduced-motion: reduce) {
+        .hero__foto img {
+            animation: buehne-tiefe linear both;
+            animation-timeline: view();
+            animation-range: exit 0% exit 100%;
+            will-change: transform;
+        }
+    }
 }
 /* Zwei Schleier: einer von links, damit der Text steht; einer von unten,
    damit das Bild in die Seite ausläuft statt abzureißen. */
