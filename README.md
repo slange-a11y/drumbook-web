@@ -87,6 +87,13 @@ eingestellt hat, sieht ein ruhiges Standbild.
 
 Drei Dinge, die dabei teuer gelernt wurden:
 
+0. **Prüfen heißt messen, nicht hinsehen.** `tools/bildpruefung.js` in die
+   Konsole der offenen Seite werfen; es prüft jede Bühne gegen die Regeln
+   unten und nennt die Stelle. Drei Fehler an einem Tag sind nur deshalb
+   nacheinander aufgefallen, weil ich mich auf Screenshots verlassen habe.
+   Zwei Fallen dabei: Lazy geladene Bilder laden im versteckten oder
+   emulierten Fenster gar nicht (das Skript setzt `eager`), und das
+   Stylesheet hängt zehn Minuten im Cache (das Skript hängt `?x=` an).
 0. **Der Übergang gehört über die Bühne, nicht hinein.** Eine Bühne folgt auf
    einen schwarzen Abschnitt. Beginnt das Motiv an ihrer Kante, sitzt es dort
    als Kachel mit scharfer Oberkante; blendet man es innerhalb der Bühne auf,
@@ -97,6 +104,15 @@ Drei Dinge, die dabei teuer gelernt wurden:
    Übergang beim Scrollen mitwandern und sich in die Bühne schieben. Deshalb
    bewegt sich das Bild *im* Rahmen, nicht der Rahmen. Und der Schleier
    beginnt oben bei null, sonst ist genau dort wieder ein Absatz zu sehen.
+   **Der Schleier klebt am Abschnitt, das Foto nicht.** Überall, wo das Foto
+   weiter reicht als der Schleier, muss die Blende es ausgeblendet haben —
+   sonst steht dort ungedämpftes Bild. Zwei Stellen, an denen genau das
+   passiert ist: unten, wo das Motiv bei `--bild` enden muss und nicht erst
+   am Rahmenende; und oben bei den Kopfbühnen der Landeseiten, wo über der
+   Bühne keine Blende nötig ist — dort darf es dann aber auch **keinen**
+   Clip-Rand geben, sonst liegt ein heller Streifen unter der Navigation.
+   Nebenbei: `overflow-clip-margin` nimmt kein nacktes `0`, nur `0px`. Ein
+   `0` wird still verworfen und die Regel bleibt wirkungslos.
 1. **`overflow: clip`, nicht `hidden`.** `hidden` macht den Abschnitt selbst
    zu einem Scroll-Container; die Zeitachse misst dann gegen einen Kasten, in
    dem sich nie etwas bewegt, und das Bild steht still.
