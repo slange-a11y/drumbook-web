@@ -70,6 +70,14 @@ Besucher):
 
 ## Bilder auf der Seite
 
+> **Die Hausregel, von Silvio am 19.09.2026:** „Bilder sorgen für Emotionen und
+> müssen perfekt in der Seite funktionieren, um zu wirken." Ein Motiv, das als
+> Kachel dasitzt, mit scharfer Kante abreißt oder als Fetzen in den nächsten
+> Abschnitt leuchtet, wirkt nicht — es stört. Nach jeder Änderung an Bühnen,
+> Maßen oder Schleiern gehört deshalb der Durchgang unten dazu, und zwar auf
+> **beiden** Breiten und an **beiden** Kanten jedes Motivs, oben wie unten.
+
+
 Ein Foto ist nie eine Kachel zwischen zwei Abschnitten, sondern der Grund,
 auf dem ein Abschnitt steht (`.buehne`). Der Inhalt liegt darauf, das Bild
 läuft beim Scrollen langsamer mit. Die Bewegung macht die Scroll-Zeitachse
@@ -110,6 +118,12 @@ Wo das Gesicht sitzt, ist je Motiv verschieden und steht als
 `.buehne--lachen`, `.buehne--probe`). **Auf schmalen Schirmen gelten eigene
 Werte:** dort wird links und rechts beschnitten statt oben und unten, und das
 Gesicht rutscht sonst aus dem Bild.
+
+**Der Hero hat einen eigenen Takt.** Die Kamerafahrt ist dieselbe wie unter
+den Bühnen, ihre Zeitachse aber nicht: Eine Bühne kommt von unten herein, ihre
+Fahrt ist das Durchfahren (`cover`); der Hero steht beim Öffnen schon da, seine
+Fahrt ist das Hinausgehen (`exit`). Mit `cover` stünde er beim Laden mitten in
+der Bewegung.
 
 **Im Hero steht kein Telefon mehr.** Es stand rechts und hat sich mit dem
 Motiv um dieselbe Fläche gestritten: Textspalte und Telefonspalte teilen sich
