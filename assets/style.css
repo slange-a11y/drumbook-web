@@ -973,13 +973,24 @@ body::after {
     height: calc(var(--bild) + 300px);
     z-index: 0;
     pointer-events: none;
+    /* Der Zoom macht das Bild acht Prozent breiter als den Abschnitt. Ohne
+       diese Zeile schöbe er die Seite seitlich auf: `overflow-clip-margin`
+       an der Bühne gilt **allseitig**, also auch links und rechts, und die
+       Seite bekäme einen waagerechten Scrollbalken. Hier wird der Überschuss
+       beschnitten, oben und unten bleibt der Überstand. */
+    overflow: clip;
     -webkit-mask-image: var(--blende);
             mask-image: var(--blende);
+    /* Die Blende rechnet in Positionen des Abschnitts: bei `--ueberstand`
+       liegt dessen Oberkante. Unten endet das Bild dort, wo der Schleier
+       ohnehin ganz schwarz ist (`--bild`) - und nicht erst am Ende des
+       Rahmens. Sonst leuchtet es bei kurzen Abschnitten in den nächsten
+       hinein, weil der Schleier nur bis zur Abschnittskante reicht. */
     --blende: linear-gradient(to bottom,
         transparent 0,
         #000 var(--ueberstand),
-        #000 calc(100% - var(--ueberstand)),
-        transparent 100%);
+        #000 calc(var(--ueberstand) + var(--bild) - 140px),
+        transparent calc(var(--ueberstand) + var(--bild)));
 }
 .buehne__foto img {
     width: 100%;
@@ -1073,8 +1084,8 @@ body::after {
    Übergang, unten der übliche. */
 .buehne--kopf .buehne__foto {
     --blende: linear-gradient(to bottom,
-        #000 calc(100% - var(--ueberstand)),
-        transparent 100%);
+        #000 calc(var(--ueberstand) + var(--bild) - 140px),
+        transparent calc(var(--ueberstand) + var(--bild)));
 }
 .buehne--kopf::after {
     background: linear-gradient(to bottom,
