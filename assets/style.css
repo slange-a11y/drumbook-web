@@ -1092,7 +1092,9 @@ body::after {
    Schwarz, und die Blende macht daraus einen Übergang. Über dieser hier
    ist die Navigation: Ohne Blende stünde das Foto dort ungedämpft und
    läge als heller Streifen unter der Leiste. Also beschneiden wie früher. */
-.buehne--kopf { overflow-clip-margin: 0; }
+/* `0px`, nicht `0`: Ein nacktes Null verwirft der Browser hier still, die
+   Regel fiele wirkungslos aus (nachgemessen mit `CSS.supports`). */
+.buehne--kopf { overflow-clip-margin: 0px; }
 .buehne--kopf .buehne__foto {
     --blende: linear-gradient(to bottom,
         #000 calc(var(--ueberstand) + var(--bild) - 140px),
