@@ -9,6 +9,7 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
 
     index.html          Startseite (Deutsch): verkauft, erklärt nicht
     so-funktionierts/   Alles im Detail (Deutsch): Technik, Geräte, Daten, Stand
+    en/how-it-works/    Dasselbe auf Englisch
     neuigkeiten.html    Neuigkeiten (Deutsch)
     impressum.html      Impressum
     datenschutz.html    Datenschutzerklärung
@@ -52,8 +53,8 @@ Zwei Stellen gehören zusammen und dürfen nicht auseinanderlaufen:
 1. `neuigkeiten.html`: der vollständige Eintrag.
 2. `en/news.html`: derselbe Eintrag auf Englisch.
 
-Seit dem Umbau vom 25.09.2026 hat die deutsche Startseite keine
-Neuigkeiten-Karten mehr (die englische bis zu ihrem Umbau noch schon).
+Seit dem Umbau vom 25.09.2026 haben die Startseiten keine
+Neuigkeiten-Karten mehr; die Neuigkeiten stehen im Fuß verlinkt.
 
 Wandert etwas aus „Steht noch aus" nach „Läuft und wird benutzt"
 (`so-funktionierts/#stand`), gehört es in beiden Sprachen umgehängt, und wenn es den Datenschutz berührt (wie der
@@ -198,8 +199,9 @@ Lehrer zeigt etwas), Schlussaufruf (`buehne`). So funktioniert's: Kopf
 (`spielen`), „Der Kleinkram" (`lachen`), „Deine Daten" (`probe`), Schluss
 (`buehne`); „Stand der Dinge" steht ohne Bild, damit `spielen` nicht zweimal
 auf derselben Seite vorkommt. Die Lehrer-Seite trägt `zeigen`, die
-Mittesten-Seite `lachen`. `set` liegt bis zum Umbau der englischen Seite nur
-noch dort. Bei den zwei Unterrichtsbildern sind **zwei**
+Mittesten-Seite `lachen`. `set` wird derzeit nirgends benutzt. Die englischen
+Seiten (`en/`, `en/how-it-works/`, `en/teacher/`) tragen dieselben Motive an
+denselben Stellen. Bei den zwei Unterrichtsbildern sind **zwei**
 Gesichter im Bild — der Ausschnitt muss beide fassen, nicht eins davon.
 
 Die Dateien liegen in `assets/foto/` als 1800er und 900er Fassung. Neue Bilder
