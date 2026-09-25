@@ -991,8 +991,15 @@ body::after {
        ohnehin ganz schwarz ist (`--bild`) - und nicht erst am Ende des
        Rahmens. Sonst leuchtet es bei kurzen Abschnitten in den nächsten
        hinein, weil der Schleier nur bis zur Abschnittskante reicht. */
+    /* Oben nicht linear, sondern s-förmig: Eine gerade Rampe zeichnet bei
+       hellen Motiven (Gegenlicht) am Anfang einen sichtbaren Strich, weil
+       das Auge den Knick zwischen Schwarz und erstem Grau sieht. */
     --blende: linear-gradient(to bottom,
         transparent 0,
+        rgba(0, 0, 0, 0.03) calc(var(--ueberstand) * 0.2),
+        rgba(0, 0, 0, 0.14) calc(var(--ueberstand) * 0.4),
+        rgba(0, 0, 0, 0.38) calc(var(--ueberstand) * 0.6),
+        rgba(0, 0, 0, 0.72) calc(var(--ueberstand) * 0.8),
         #000 var(--ueberstand),
         #000 calc(var(--ueberstand) + var(--bild) - 140px),
         transparent calc(var(--ueberstand) + var(--bild)));
@@ -1056,6 +1063,25 @@ body::after {
    Zoom ist der Unterschied zwischen "eine Ebene verschiebt sich" und "da
    bewegt sich etwas": 8 Prozent ueber die ganze Durchfahrt, pro Bildschirm
    also kaum messbar und trotzdem spuerbar. */
+/* Ab Tablet-Breite reicht die Einblendung 60 px in die Bühne hinein. Über
+   nur 104 px wirkte das helle Gegenlicht wie ein Lichtbalken quer über die
+   Seite (gemessen 25.09.2026). Das höchste Gesicht steht 95 px unter der
+   Bühnenkante, die längere Blende berührt also keins. */
+@media (min-width: 621px) {
+    .buehne__foto {
+        --einblendung: calc(var(--ueberstand) + 60px);
+        --blende: linear-gradient(to bottom,
+            transparent 0,
+            rgba(0, 0, 0, 0.03) calc(var(--einblendung) * 0.2),
+            rgba(0, 0, 0, 0.14) calc(var(--einblendung) * 0.4),
+            rgba(0, 0, 0, 0.38) calc(var(--einblendung) * 0.6),
+            rgba(0, 0, 0, 0.72) calc(var(--einblendung) * 0.8),
+            #000 var(--einblendung),
+            #000 calc(var(--ueberstand) + var(--bild) - 140px),
+            transparent calc(var(--ueberstand) + var(--bild)));
+    }
+}
+
 @keyframes buehne-tiefe {
     from { transform: translate3d(0, -88px, 0) scale(1.08); }
     to   { transform: translate3d(0,  88px, 0) scale(1); }
@@ -1072,7 +1098,16 @@ body::after {
             animation-range: cover 0% cover 100%;
             will-change: transform;
         }
+        /* Auf dem Handy halb so weit: Dort ist der Kopfraum knapp, und bei
+           88 px wanderte ein Gesicht im Lesemoment unter die Überschrift. */
+        @media (max-width: 620px) {
+            .buehne__foto img { animation-name: buehne-tiefe-knapp; }
+        }
     }
+}
+@keyframes buehne-tiefe-knapp {
+    from { transform: translate3d(0, -44px, 0) scale(1.05); }
+    to   { transform: translate3d(0,  44px, 0) scale(1); }
 }
 
 /* Auf den Landeseiten traegt die Buehne die Ueberschrift und sitzt direkt
@@ -1084,6 +1119,13 @@ body::after {
 .buehne--knapp { --bild: 560px; --kopfraum: 260px; }
 .teacher.buehne { --bild: 700px; --kopfraum: 300px; }
 .buehne--kopf { --bild: 440px; --kopfraum: 200px; }
+/* Auf „So funktioniert's" steht der Text mittig und damit genau unter dem
+   Gesicht; ab Tablet-Breite deshalb mehr freie Bildzone. */
+@media (min-width: 621px) {
+    /* Mit der Breite wächst das Motiv und damit das Gesicht; bei 2560 px
+       reichte das Kinn sonst bis an den Kicker. */
+    .buehne--kopf.kopf--weit { --kopfraum: clamp(320px, 18vw, 460px); --bild: calc(var(--kopfraum) + 240px); }
+}
 /* Hier sitzt die Bühne als Erstes unter der Navigation: über ihr ist kein
    schwarzer Abschnitt, aus dem etwas auftauchen müsste. Oben also kein
    Übergang, unten der übliche.
@@ -1122,7 +1164,14 @@ body::after {
 /* Hier lacht jemand in die Kamera, und genau das soll man sehen. Also kein
    Weichzeichner mehr: Das Gesicht steht oben im Kopfraum, der Text beginnt
    darunter. Ein Porträt und ein Absatz teilen sich nie dieselbe Fläche. */
-.final .buehne__foto img { object-position: 58% 16%; }
+.final .buehne__foto img { object-position: 58% 80%; }
+/* Ab 1000 px steht das Gesicht neben der Textspalte statt darüber: Das Bild
+   ist breiter als der Rahmen, der Mann mit Brille landet bei rund 78 % der
+   Breite. So bleibt er beim Lesen frei und am Seitenende unter der
+   Navigation sichtbar; mittig über dem Text ging nur eins von beiden. */
+@media (min-width: 1000px) {
+    .final .buehne__foto img { width: 118%; max-width: none; object-position: 58% 40%; }
+}
 
 /* Hier steht ein ganzes Formular auf dem Bild. Das Motiv trägt deshalb nur
    die Überschrift und läuft nach unten ins Schwarz aus: oben Atmosphäre,
@@ -1132,8 +1181,13 @@ body::after {
    er beim Scrollen mit dem Bild mit, und die dunkle Zone liefe dem Text
    davon. */
 .final {
-    --bild: 640px;
-    --kopfraum: 260px;
+    /* Kopfraum 340 statt 260: Mit der Bewegung wanderte das Gesicht sonst im
+       Lesemoment unter die Überschrift (gemessen 25.09.2026). */
+    --bild: 700px;
+    --kopfraum: 340px;
+    /* Nie kürzer als das Motiv, sonst reißt es unten ab (kurze Schlüsse wie
+       auf „So funktioniert's"). */
+    min-height: calc(var(--bild) + 20px);
     --ueberstand: 104px;
     padding-top: calc(var(--kopfraum) + 40px);
     /* Wie bei jeder Bühne: Platz für den Übergang oberhalb. */
@@ -1170,9 +1224,11 @@ body::after {
        Höhe, sonst deckt es den halben Abschnitt. */
     .buehne { --bild: 520px; --kopfraum: 190px; }
     .buehne--knapp { --bild: 440px; --kopfraum: 170px; }
-    .teacher.buehne { --bild: 520px; --kopfraum: 190px; }
+    /* Der Junge sitzt im Motiv tief (38 % der Höhe); bei 190 lag die
+       Überschrift auf seinem Gesicht. */
+    .teacher.buehne { --bild: 560px; --kopfraum: 320px; }
     .buehne--kopf { --bild: 360px; --kopfraum: 150px; }
-    .final { --bild: 470px; --kopfraum: 170px; }
+    .final { --bild: 520px; --kopfraum: 300px; }
     /* Der Überstand bleibt, sonst hat die Bewegung keinen Weg und der
        Übergang keinen Platz; nur die Reichweite darunter wird knapper. */
     .buehne__foto { height: calc(var(--bild) + 240px); }
@@ -1186,8 +1242,11 @@ body::after {
     .buehne--probe      .buehne__foto img { object-position: 46% 20%; }
     .buehne--spielen    .buehne__foto img { object-position: 47% 18%; }
     .buehne--unterricht .buehne__foto img { object-position: 30% 24%; }
-    .buehne--zeigen     .buehne__foto img { object-position: 54% 26%; }
-    .final .buehne__foto img { object-position: 62% 20%; }
+    /* Zwei Gesichter, der Sitzende bei 73 % der Bildbreite: bei 54 % war er
+       auf dem Handy nur halb im Bild. */
+    .buehne--zeigen     .buehne__foto img { object-position: 70% 26%; }
+    /* Das Gesicht mittig: bei 62 % stand es am rechten Rand. */
+    .final .buehne__foto img { object-position: 73% 50%; }
 }
 
 /* ---------- Fußzeile ---------- */
@@ -1617,7 +1676,10 @@ body::after {
     body { font-size: 16.5px; }
     .wrap { padding: 0 20px; }
     .band { padding: 68px 0; }
-    .final { padding: 78px 0; }
+    /* Oben der Kopfraum der Bühne, sonst stünde der Text auf dem Gesicht.
+       Bis zum 25.09.2026 stand hier pauschal 78 px, und damit lag die
+       Überschrift auf dem Handy immer auf dem Motiv. */
+    .final { padding: calc(var(--kopfraum) + 40px) 0 78px; }
     .hero__cta .btn { width: 100%; }
     .foot__links { margin-left: 0; gap: 16px; }
 }
