@@ -7,7 +7,8 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
 
 ## Aufbau
 
-    index.html          Startseite (Deutsch)
+    index.html          Startseite (Deutsch): verkauft, erklärt nicht
+    so-funktionierts/   Alles im Detail (Deutsch): Technik, Geräte, Daten, Stand
     neuigkeiten.html    Neuigkeiten (Deutsch)
     impressum.html      Impressum
     datenschutz.html    Datenschutzerklärung
@@ -46,16 +47,34 @@ Eintrag gekürzt, **auf das, was der Nutzer davon hat, nicht darauf, wie es
 gebaut ist.** Die Testhinweise erklären das Innenleben; die Website tut das
 bewusst nicht.
 
-Vier Stellen gehören zusammen und dürfen nicht auseinanderlaufen:
+Zwei Stellen gehören zusammen und dürfen nicht auseinanderlaufen:
 
 1. `neuigkeiten.html`: der vollständige Eintrag.
 2. `en/news.html`: derselbe Eintrag auf Englisch.
-3. `index.html`, Abschnitt `#neues`: die drei jüngsten als kurze Karte.
-4. `en/index.html`, Abschnitt `#news`: dasselbe auf Englisch.
 
-Wandert etwas aus „Steht noch aus" nach „Läuft und wird benutzt", gehört es in
-beiden Sprachen umgehängt, und wenn es den Datenschutz berührt (wie der
+Seit dem Umbau vom 25.09.2026 hat die deutsche Startseite keine
+Neuigkeiten-Karten mehr (die englische bis zu ihrem Umbau noch schon).
+
+Wandert etwas aus „Steht noch aus" nach „Läuft und wird benutzt"
+(`so-funktionierts/#stand`), gehört es in beiden Sprachen umgehängt, und wenn es den Datenschutz berührt (wie der
 Abgleich über iCloud), auch in `datenschutz.html` und `en/legal.html`.
+
+## Die Startseite verkauft (Umbau 25.09.2026)
+
+Silvios Ansage: „mehr auf Marketing auslegen und weniger die Technik
+erklären; wir wollen User gewinnen, und Lehrer, die unsere App empfehlen."
+Die Startseite hatte 3.108 Wörter in zwölf Abschnitten und erklärte vor allem,
+wie Drumbook gebaut ist. Jetzt rund 1.000 Wörter in dieser Reihenfolge:
+Hero, Problem, vier Nutzen (Heute, Am Set, Zur Musik, Verlauf), Mit
+Unterricht, Wer dahintersteckt, Preis, Fragen, Formular. Alles Technische
+steht unter `so-funktionierts/`. **Neue Funktionen kommen dorthin; auf die
+Startseite nur, wenn sie einen der vier Nutzen ändern.**
+
+Entschieden dabei: Das Formular bleibt (kein öffentlicher TestFlight-Link),
+es hat nur noch ein Pflichtfeld. Der Preis steht als Spanne da (3 bis 5 € im
+Monat, im Test kostenlos). Die Vorstellung „Wer dahintersteckt" ist Text ohne
+Foto. Der Hero trägt jetzt `lachen`, dieselbe Drummerin wie beim Start der
+App; ihr Ausschnitt steht an `.hero--lachen`.
 
 ## Zwei Hausregeln für den Text
 
@@ -173,11 +192,14 @@ derselben Zahl und läuft genau dort in den Seitengrund aus.
 **Der Schleier gehört auf den Abschnitt, nicht auf das Foto.** Läge er auf dem
 Foto, wanderte er beim Scrollen mit und die dunkle Zone liefe dem Text davon.
 
-**Acht Motive, jedes an einer Stelle.** Hero (`set`), „Warum überhaupt"
-(`gegenlicht`), „Der Kleinkram" (`lachen`), „Deine Daten" (`probe`), „Für
-Lehrer" (`unterricht` — Schüler am Set, der Lehrer zeigt etwas), „Stand der
-Dinge" (`spielen`), Schlussaufruf (`buehne`); die Lehrer-Seite trägt `zeigen`,
-die Mittesten-Seite `lachen`. Bei den zwei Unterrichtsbildern sind **zwei**
+**Die Motive und ihre Stellen.** Startseite: Hero (`lachen`), „Warum
+überhaupt" (`gegenlicht`), „Mit Unterricht" (`unterricht`, Schüler am Set, der
+Lehrer zeigt etwas), Schlussaufruf (`buehne`). So funktioniert's: Kopf
+(`spielen`), „Der Kleinkram" (`lachen`), „Deine Daten" (`probe`), Schluss
+(`buehne`); „Stand der Dinge" steht ohne Bild, damit `spielen` nicht zweimal
+auf derselben Seite vorkommt. Die Lehrer-Seite trägt `zeigen`, die
+Mittesten-Seite `lachen`. `set` liegt bis zum Umbau der englischen Seite nur
+noch dort. Bei den zwei Unterrichtsbildern sind **zwei**
 Gesichter im Bild — der Ausschnitt muss beide fassen, nicht eins davon.
 
 Die Dateien liegen in `assets/foto/` als 1800er und 900er Fassung. Neue Bilder

@@ -693,6 +693,8 @@ h3 {
 
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 620px)  { .grid { grid-template-columns: 1fr; } }
+/* Drei Karten nebeneinander oder untereinander, nie zwei plus eine allein. */
+@media (max-width: 900px) { .grid--drei { grid-template-columns: 1fr; } }
 
 /* ---------- Datenschutz-Abschnitt ---------- */
 
@@ -1979,6 +1981,53 @@ body::after {
     object-position: 0% 20%;
     display: block;
     --hero-weg: 110px;
+}
+
+/* Die lachende Drummerin im Hero (seit 25.09.2026, dasselbe Gesicht wie beim
+   Start der App). Ihr Gesicht sitzt im Original bei 37 Prozent der Breite,
+   also dort, wo links der Text steht. Deshalb beginnt das Bild weiter rechts:
+   Die linke Kante liegt unter dem Schleier, der dort ohnehin fast deckend ist,
+   und das Gesicht landet in der hellen rechten Hälfte. Oben bündig, sonst
+   schneidet der Rand ihr die Stirn ab. */
+.hero--lachen { min-height: clamp(640px, 92vh, 930px); }
+.hero--lachen .hero__foto img {
+    left: 16%;
+    width: 160%;
+    object-position: 0% 6%;
+}
+/* Unten dichter als beim alten Motiv: Die Drummerin ist hell angezogen, und
+   ohne dunklen Auslauf stößt ihr Bild hart an das nächste. */
+.hero--lachen .hero__foto::after {
+    background:
+        linear-gradient(to bottom, rgba(10, 10, 12, 0.50) 0%,
+                        rgba(10, 10, 12, 0.10) 24%,
+                        rgba(10, 10, 12, 0.30) 58%,
+                        rgba(10, 10, 12, 0.86) 84%,
+                        var(--bg) 100%),
+        linear-gradient(to right, var(--bg) 0%,
+                        rgba(10, 10, 12, 0.92) 30%,
+                        rgba(10, 10, 12, 0.72) 44%,
+                        rgba(10, 10, 12, 0.26) 58%,
+                        rgba(10, 10, 12, 0.08) 74%,
+                        rgba(10, 10, 12, 0.04) 100%);
+}
+/* Schmal steht das Bild über dem Text; das Gesicht muss unter die
+   Navigation, nicht dahinter. Steht hinter der Regel oben, sonst gewinnt sie. */
+@media (max-width: 900px) {
+    .hero--lachen { min-height: 0; }
+    /* Oben bündig statt 110 px darüber: Sonst sitzt der Kopf hinter der
+       Navigation. Der Spielraum für die Fahrt liegt dann nur unten. */
+    .hero--lachen .hero__foto img {
+        top: 0; left: 0; width: 100%;
+        height: calc(100% + var(--hero-weg));
+        object-position: 30% 0%;
+    }
+    .hero--lachen .hero__foto::after {
+        background: linear-gradient(to bottom, rgba(10, 10, 12, 0.28) 0%,
+                        rgba(10, 10, 12, 0.14) 28%,
+                        rgba(10, 10, 12, 0.46) 48%,
+                        rgba(10, 10, 12, 0.86) 70%, var(--bg) 96%);
+    }
 }
 
 /* Dieselbe Kamerafahrt wie unter den Bühnen, nur mit eigenem Takt: Der Hero
