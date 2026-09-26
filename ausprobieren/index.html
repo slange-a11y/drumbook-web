@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drumbook im Browser ausprobieren</title>
+<meta name="description" content="Drumbook ausprobieren, ohne etwas zu installieren: der erste Start, eine Session mit Klick, das mitlaufende Notenband und der Bericht für den Lehrer, direkt im Browser.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="canonical" href="https://drumbook.de/ausprobieren/">
+<link rel="alternate" hreflang="de" href="https://drumbook.de/ausprobieren/">
+<link rel="alternate" hreflang="en" href="https://drumbook.de/en/try/">
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Drumbook im Browser ausprobieren">
+<meta property="og:description" content="Fünf kurze Stationen, vom ersten Start bis zum Bericht. Mit Klick zum Mitspielen.">
+<meta property="og:image" content="https://drumbook.de/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://drumbook.de/ausprobieren/">
+<meta property="og:site_name" content="Drumbook">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://drumbook.de/assets/og-card.jpg">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/demo.css">
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/icon-180.png" alt="" width="30" height="30">
+      Drumbook
+    </a>
+    <nav class="nav__links" aria-label="Abschnitte">
+      <a href="../so-funktionierts/">So funktioniert's</a>
+      <a href="../lehrer/">Für Lehrer</a>
+      <a href="../index.html#bescheid">Testen</a>
+    </nav>
+    <p class="lang">
+      <a href="index.html" aria-current="page" hreflang="de">DE</a>
+      <span aria-hidden="true">/</span>
+      <a href="../en/try/" hreflang="en">EN</a>
+    </p>
+  </div>
+</header>
+
+<main class="demo" id="inhalt">
+  <div class="wrap">
+    <a class="back" href="../index.html">Zurück zur Startseite</a>
+
+    <div class="demo__head">
+      <p class="demo__kick">Im Browser ausprobieren</p>
+      <h1>Drumbook ausprobieren, ohne etwas zu installieren.</h1>
+      <p class="demo__sub">
+        Fünf kurze Stationen, vom ersten Start bis zum Bericht für den Lehrer.
+        Stell den Ton an: In der Session und beim Notenband läuft der Klick
+        zum Mitspielen.
+      </p>
+    </div>
+
+    <div class="demo__buehne">
+      <div>
+        <div class="handy">
+          <div class="handy__schirm" id="demo-schirm" aria-label="Drumbook auf einem iPhone, zum Antippen">
+            <span class="handy__insel" aria-hidden="true"></span>
+
+            <div class="szene" id="sz-bild">
+              <img class="voll" id="sz-bild-img" src="../assets/demo/de/welcome-frage.webp" alt="" width="603" height="1311">
+            </div>
+
+            <div class="szene" id="sz-session" hidden>
+              <img class="leiste-oben" src="../assets/demo/statusleiste.webp" alt="">
+              <div class="nb">
+                <button class="pille" id="s-verwerfen" type="button">Verwerfen</button>
+                <b>Session</b>
+                <button class="pille fett" id="s-beenden" type="button">Beenden</button>
+              </div>
+              <div class="sess__kopf">
+                <div class="sess__titel">Single Stroke Roll</div>
+                <div class="sess__wie">Abwechselnd rechts, links, rechts, links, gleichmäßig und gleich laut. Langsam anfangen, lieber sauber als schnell.</div>
+                <div class="sess__uhr" id="s-uhr">05:00</div>
+                <div class="sess__balken"><i id="s-balken"></i></div>
+                <div class="sess__plan" id="s-plan">von 5 Min geplant</div>
+                <div class="sess__knoepfe">
+                  <button class="knopf" id="s-mehr" type="button">+2 Min</button>
+                  <button class="pause" id="s-pause" type="button" aria-label="Session anhalten"></button>
+                  <button class="knopf" id="s-weiter" type="button">Weiter</button>
+                </div>
+                <div class="sess__rest" id="s-rest">Rest gesamt 05:00</div>
+              </div>
+              <div class="klick">
+                <button class="rund an" id="k-start" type="button" aria-label="Klick anhalten"></button>
+                <button class="rund" id="k-minus" type="button" aria-label="Langsamer"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/></svg></button>
+                <span class="bpm"><b id="k-bpm">70</b><span>BPM</span></span>
+                <button class="rund" id="k-plus" type="button" aria-label="Schneller"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/><rect x="4.3" y="1.5" width="1.4" height="7" rx=".7" fill="currentColor"/></svg></button>
+                <span class="lichter" id="k-lichter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="ablauf">
+                <h5>Ablauf</h5>
+                <div class="zeile-karte">
+                  <span class="icon" aria-hidden="true">♩</span>
+                  <div class="mitte"><div class="name">Single Stroke Roll</div><div class="mini"><i id="s-mini"></i></div></div>
+                  <div class="zeit"><b id="s-zeit">00:00</b><span id="s-soll">von 05:00</span></div>
+                </div>
+                <div class="hinzu">+&nbsp;&nbsp;Übung hinzufügen</div>
+              </div>
+            </div>
+
+            <div class="szene" id="sz-abschluss" hidden>
+              <img class="leiste-oben" src="../assets/demo/statusleiste.webp" alt="">
+              <div class="nb" style="justify-content:center"><b>Abschluss</b></div>
+              <div class="form">
+                <h5>Diese Session</h5>
+                <div class="gruppe">
+                  <div><span>Geübte Zeit</span><b id="a-zeit">0 Sek</b></div>
+                  <div><span>Übungen</span><span>1</span></div>
+                </div>
+                <h5>Gesamteindruck</h5>
+                <div class="gruppe">
+                  <div><span>Wie lief's?</span>
+                    <span class="sterne" id="a-sterne">
+                      <button class="stern" type="button" aria-label="1 Stern">★</button><button class="stern" type="button" aria-label="2 Sterne">★</button><button class="stern" type="button" aria-label="3 Sterne">★</button><button class="stern" type="button" aria-label="4 Sterne">★</button><button class="stern" type="button" aria-label="5 Sterne">★</button>
+                    </span>
+                  </div>
+                  <div class="leise">Was ist dir aufgefallen?</div>
+                </div>
+              </div>
+              <button class="sichern" id="a-sichern" type="button">Session sichern</button>
+              <div class="gesichert" id="a-gesichert" hidden>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="currentColor"/><path d="m7.2 12.3 3.2 3.2 6.4-6.8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Session gesichert</span>
+              </div>
+            </div>
+
+            <div class="szene" id="sz-erinnerung" hidden>
+              <img class="leiste-oben" src="../assets/demo/statusleiste.webp" alt="">
+              <div class="dunkel"></div>
+              <div class="blatt">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5c-3.3 0-5.8 2.6-5.8 5.9v3.4l-1.7 2.9h15l-1.7-2.9V9.4c0-3.3-2.5-5.9-5.8-5.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.7 19a2.4 2.4 0 0 0 4.6 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="18" cy="5.5" r="2.6" fill="currentColor"/></svg>
+                <h5 id="e-titel">Morgen wieder um 18:30?</h5>
+                <p id="e-text">Deine erste Session hast du um 18:37 angefangen. Drumbook erinnert dich dann jeden Tag um diese Zeit.</p>
+                <button class="ja" id="e-ja" type="button">Ja, erinnere mich</button>
+                <button class="nein" id="e-nein" type="button">Nein, danke</button>
+                <small>Danach fragt iOS, ob Drumbook Mitteilungen schicken darf. Ändern kannst du das jederzeit im Menü unter „Erinnerungen“.</small>
+              </div>
+            </div>
+
+            <div class="szene noten" id="sz-noten" hidden>
+              <img class="noten__kopf" src="../assets/demo/de/noten-kopf.webp" alt="" width="700" height="205">
+              <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Zurück zu „Heute“"></button>
+              <div class="noten__fenster" id="n-fenster">
+                <div class="noten__blatt" id="n-blatt">
+                  <img id="n-img" src="../assets/demo/noten.webp" width="700" height="1317" alt="Ein Notenblatt für Schlagzeug als Band: die Notenzeilen untereinander über die volle Breite, Takt 1 bis 75.">
+                  <div class="noten__zeile" id="n-zeile" hidden></div>
+                </div>
+                <div class="noten__zahl" id="n-zahl" hidden></div>
+              </div>
+              <div class="tipp">
+                <button class="rund aus" id="n-play" type="button" aria-label="Play"></button>
+                <button class="rund" id="n-minus" type="button" aria-label="Langsamer"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/></svg></button>
+                <span class="bpm"><b id="n-bpm">130</b><span>BPM</span></span>
+                <button class="rund" id="n-plus" type="button" aria-label="Schneller"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/><rect x="4.3" y="1.5" width="1.4" height="7" rx=".7" fill="currentColor"/></svg></button>
+                <span class="takt" id="n-takt">Takt 1</span>
+              </div>
+            </div>
+
+            <p class="blase" id="blase" hidden></p>
+          </div>
+        </div>
+        <p class="handy__notiz">Nachgebaut aus echten Bildschirmen der App, mit Beispieldaten.</p>
+      </div>
+
+      <aside class="kapitel" aria-label="Stationen der Demo">
+        <div class="kapitel__jetzt">
+          <p class="kapitel__label">Jetzt</p>
+          <p class="kapitel__text" id="kapitel-text" aria-live="polite">Tippe im Handy auf eine Antwort.</p>
+        </div>
+        <ol id="kapitel-liste">
+          <li data-kapitel="0"><button type="button"><span class="kapitel__nr">1</span><span><span class="kapitel__titel">Der erste Start</span><span class="kapitel__zeile">Eine Frage, dann geht es los.</span></span><span></span></button></li>
+          <li data-kapitel="1"><button type="button"><span class="kapitel__nr">2</span><span><span class="kapitel__titel">Die erste Session</span><span class="kapitel__zeile">Fünf Minuten mit Klick, zum Mitspielen.</span></span><span class="kapitel__ton">Ton</span></button></li>
+          <li data-kapitel="2"><button type="button"><span class="kapitel__nr">3</span><span><span class="kapitel__titel">Heute, drei Wochen später</span><span class="kapitel__zeile">Serie, Pausentage und die Übeliste.</span></span><span></span></button></li>
+          <li data-kapitel="3"><button type="button"><span class="kapitel__nr">4</span><span><span class="kapitel__titel">Das Notenband</span><span class="kapitel__zeile">Das Blatt rollt im Takt mit.</span></span><span class="kapitel__ton">Ton</span></button></li>
+          <li data-kapitel="4"><button type="button"><span class="kapitel__nr">5</span><span><span class="kapitel__titel">Der Bericht</span><span class="kapitel__zeile">Ein PDF für die nächste Stunde.</span></span><span></span></button></li>
+        </ol>
+        <p class="kapitel__fuss">
+          Der Klick entsteht wie in der App direkt auf deinem Gerät. Die Seite
+          lädt dafür nichts nach und speichert nichts.
+          <button id="neu-starten" type="button">Von vorn beginnen</button>
+        </p>
+      </aside>
+    </div>
+
+    <div class="lp__do demo__danach">
+      <h2>Gefällt dir, was du siehst?</h2>
+      <p>
+        Drumbook läuft auf iPhone und iPad. Zurzeit ist es im Test und kostenlos;
+        die Einladung kommt per Mail.
+      </p>
+      <p class="lp__ways">
+        <a class="btn btn--primary" href="../index.html#bescheid">Kostenlos testen</a>
+        <a class="btn btn--ghost" href="../assets/zettel/drumbook-musterbericht.pdf">Musterbericht (PDF)</a>
+        <a class="btn btn--ghost" href="../lehrer/">Ich unterrichte Schlagzeug</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p>Drumbook, ein Übetagebuch fürs Schlagzeug.</p>
+    <p class="foot__links">
+      <a href="../impressum.html">Impressum</a>
+      <a href="../datenschutz.html">Datenschutz</a>
+      <a href="../en/try/" hreflang="en">English</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+window.DEMO = {
+    locale: "de-DE",
+    bilder: "../assets/demo/de/",
+    sek: "Sek", min: "Min", takt: "Takt", ende: "Ende",
+    plan: function (m) { return "von " + m + " Min geplant"; },
+    rest: function (z) { return "Rest gesamt " + z; },
+    von: function (z) { return "von " + z; },
+    morgen: function (z) { return "Morgen wieder um " + z + "?"; },
+    begonnen: function (z) { return "Deine erste Session hast du um " + z + " angefangen. Drumbook erinnert dich dann jeden Tag um diese Zeit."; },
+    namen: {
+        ja: "Ja, ich habe einen Lehrer", nein: "Nein, ich übe allein",
+        fuenf: "5 Minuten üben", umschauen: "Erst umschauen",
+        karte: "Wochenkarte mit Serie", ueben: "Üben starten",
+        setlists: "Setlists", verlauf: "Verlauf",
+        erstellen: "Bericht erstellen", teilen: "Bericht teilen",
+        klickAn: "Klick starten", klickAus: "Klick anhalten",
+        pause: "Session anhalten", weiter: "Session fortsetzen",
+        notenAn: "Play", notenAus: "Stopp"
+    },
+    alt: {
+        frage: "Die Begrüßung beim ersten Start: ein Foto einer lachenden Schlagzeugerin, darunter „Dein Übetagebuch fürs Schlagzeug“ und die Frage „Hast du Unterricht?“ mit zwei Antworten.",
+        angebot: "„Leg gleich los“: Fünf Minuten, eine Übung, der Klick zählt mit. Darunter „5 Minuten üben“ und „Erst umschauen“.",
+        heute: "Der Bildschirm „Heute“ nach drei Wochen: 2 Std 27 Min von 150 Min diese Woche, 8 Tage in Folge, 2 Pausentage genutzt, darunter „Üben starten“ und die Übungen, die anstehen.",
+        auswahl: "Der Bericht: Auswahl des Zeitraums, „Letzte 4 Wochen“ ist gewählt, unten „Bericht erstellen“.",
+        bericht: "Der fertige Bericht in der App: Übebericht mit Kennzahlen, Diagramm, Übekalender und den Übungen mit Tempo."
+    },
+    jetzt: {
+        frage: "Tippe im Handy auf eine Antwort. Beide führen weiter.",
+        angebot: "Tippe auf „5 Minuten üben“. Mach den Ton an, gleich zählt der Klick vor.",
+        session: "Spiel mit! Ein Takt Vorzählen, dann läuft der Klick mit 70 BPM. Mit − und + änderst du das Tempo.",
+        beenden: "Genug geübt? Oben rechts auf „Beenden“.",
+        abschluss: "Wie lief's? Sterne vergeben und „Session sichern“.",
+        erinnerung: "Nach der ersten Session fragt Drumbook einmal, ob es erinnern soll. Wähle, was du möchtest.",
+        heute: "Tippe auf die Karte ganz oben.",
+        heuteDanach: "Weiter zum Notenband: unten auf „Setlists“.",
+        noten: "Tippe auf Play. Nach vier Klicks rollt das Blatt im Takt mit.",
+        notenLaeuft: "Die gespielte Zeile steht oben, die nächste schon darunter. Beide Hände bleiben an den Stöcken.",
+        notenEnde: "Zum Schluss der Bericht: oben links zurück, dann unten auf „Verlauf“.",
+        auswahl: "Tippe auf „Bericht erstellen“.",
+        bericht: "Oben rechts geht der Bericht als PDF an deinen Lehrer.",
+        ende: "Das war der Rundgang. Den ganzen Bericht gibt es unten als Musterbericht, und mit „Von vorn beginnen“ geht es noch einmal los."
+    },
+    blasen: {
+        frage: "Tippe auf eine Antwort. Beide führen weiter.",
+        angebot: "Tippe auf „5 Minuten üben“. Ton an!",
+        session: "Spiel mit! Mit − und + änderst du das Tempo.",
+        beenden: "Genug? Oben rechts auf „Beenden“.",
+        abschluss: "Sterne vergeben, dann „Session sichern“.",
+        heute: "Tippe auf die Karte.",
+        heuteSpaeter: "Drei Wochen später. Tippe auf die Karte.",
+        heuteUmschauen: "So sieht „Heute“ nach drei Wochen aus. Tippe auf die Karte.",
+        karte: "8 Tage in Folge, obwohl zwei Tage frei waren: Zwei Pausentage je Woche halten die Serie. Weiter unten mit „Setlists“.",
+        ueben: "Stellt die Übeliste für heute zusammen: was der Lehrer aufgegeben hat und was liegen blieb, passend zur Zeit.",
+        noten: "Tippe auf Play. Das Blatt rollt im Takt mit.",
+        notenEnde: "Das Blatt kommt aus deinem Scan, die Takte zählt die App selbst. Zurück geht es hier oben.",
+        auswahl: "Tippe auf „Bericht erstellen“.",
+        bericht: "Hier oben geht der Bericht als PDF an deinen Lehrer.",
+        teilen: "Per Mail oder Messenger, als PDF. Das war der Rundgang!"
+    }
+};
+</script>
+<script src="../assets/demo.js" defer></script>
+<script src="../assets/zurueck.js" defer></script>
+</body>
+</html>

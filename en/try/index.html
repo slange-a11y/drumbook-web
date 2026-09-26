@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try Drumbook in your browser</title>
+<meta name="description" content="Try Drumbook without installing anything: the first start, a session with a click, the sheet music that scrolls along, and the report for your teacher, right in your browser.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="canonical" href="https://drumbook.de/en/try/">
+<link rel="alternate" hreflang="de" href="https://drumbook.de/ausprobieren/">
+<link rel="alternate" hreflang="en" href="https://drumbook.de/en/try/">
+<link rel="icon" href="../../assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Try Drumbook in your browser">
+<meta property="og:description" content="Five short stops, from the first start to the report. With a click to play along.">
+<meta property="og:image" content="https://drumbook.de/assets/og-card-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://drumbook.de/en/try/">
+<meta property="og:site_name" content="Drumbook">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://drumbook.de/assets/og-card-en.jpg">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/demo.css">
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="../index.html">
+      <img src="../../assets/icon-180.png" alt="" width="30" height="30">
+      Drumbook
+    </a>
+    <nav class="nav__links" aria-label="Abschnitte">
+      <a href="../how-it-works/">How it works</a>
+      <a href="../teacher/">For teachers</a>
+      <a href="../index.html#notify">Try it free</a>
+    </nav>
+    <p class="lang">
+      <a href="../../ausprobieren/" hreflang="de">DE</a>
+      <span aria-hidden="true">/</span>
+      <a href="index.html" aria-current="page" hreflang="en">EN</a>
+    </p>
+  </div>
+</header>
+
+<main class="demo" id="inhalt">
+  <div class="wrap">
+    <a class="back" href="../index.html">Back to the home page</a>
+
+    <div class="demo__head">
+      <p class="demo__kick">Try it in your browser</p>
+      <h1>Try Drumbook without installing anything.</h1>
+      <p class="demo__sub">
+        Five short stops, from the first start to the report for your teacher.
+        Turn the sound on: in the session and on the sheet music, the click
+        plays so you can play along.
+      </p>
+    </div>
+
+    <div class="demo__buehne">
+      <div>
+        <div class="handy">
+          <div class="handy__schirm" id="demo-schirm" aria-label="Drumbook on an iPhone, tap to try">
+            <span class="handy__insel" aria-hidden="true"></span>
+
+            <div class="szene" id="sz-bild">
+              <img class="voll" id="sz-bild-img" src="../../assets/demo/en/welcome-frage.webp" alt="" width="603" height="1311">
+            </div>
+
+            <div class="szene" id="sz-session" hidden>
+              <img class="leiste-oben" src="../../assets/demo/statusleiste.webp" alt="">
+              <div class="nb">
+                <button class="pille" id="s-verwerfen" type="button">Discard</button>
+                <b>Session</b>
+                <button class="pille fett" id="s-beenden" type="button">Finish</button>
+              </div>
+              <div class="sess__kopf">
+                <div class="sess__titel">Single Stroke Roll</div>
+                <div class="sess__wie">Alternating right, left, right, left, even and equally loud. Start slowly; clean beats fast.</div>
+                <div class="sess__uhr" id="s-uhr">05:00</div>
+                <div class="sess__balken"><i id="s-balken"></i></div>
+                <div class="sess__plan" id="s-plan">of 5 min planned</div>
+                <div class="sess__knoepfe">
+                  <button class="knopf" id="s-mehr" type="button">+2 min</button>
+                  <button class="pause" id="s-pause" type="button" aria-label="Pause session"></button>
+                  <button class="knopf" id="s-weiter" type="button">Next</button>
+                </div>
+                <div class="sess__rest" id="s-rest">Total left 05:00</div>
+              </div>
+              <div class="klick">
+                <button class="rund an" id="k-start" type="button" aria-label="Stop click"></button>
+                <button class="rund" id="k-minus" type="button" aria-label="Slower"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/></svg></button>
+                <span class="bpm"><b id="k-bpm">70</b><span>BPM</span></span>
+                <button class="rund" id="k-plus" type="button" aria-label="Faster"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/><rect x="4.3" y="1.5" width="1.4" height="7" rx=".7" fill="currentColor"/></svg></button>
+                <span class="lichter" id="k-lichter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="ablauf">
+                <h5>Running order</h5>
+                <div class="zeile-karte">
+                  <span class="icon" aria-hidden="true">♩</span>
+                  <div class="mitte"><div class="name">Single Stroke Roll</div><div class="mini"><i id="s-mini"></i></div></div>
+                  <div class="zeit"><b id="s-zeit">00:00</b><span id="s-soll">of 05:00</span></div>
+                </div>
+                <div class="hinzu">+&nbsp;&nbsp;Add exercise</div>
+              </div>
+            </div>
+
+            <div class="szene" id="sz-abschluss" hidden>
+              <img class="leiste-oben" src="../../assets/demo/statusleiste.webp" alt="">
+              <div class="nb" style="justify-content:center"><b>Wrap-up</b></div>
+              <div class="form">
+                <h5>This session</h5>
+                <div class="gruppe">
+                  <div><span>Time practised</span><b id="a-zeit">0 sec</b></div>
+                  <div><span>Exercises</span><span>1</span></div>
+                </div>
+                <h5>Overall impression</h5>
+                <div class="gruppe">
+                  <div><span>How did it go?</span>
+                    <span class="sterne" id="a-sterne">
+                      <button class="stern" type="button" aria-label="1 star">★</button><button class="stern" type="button" aria-label="2 stars">★</button><button class="stern" type="button" aria-label="3 stars">★</button><button class="stern" type="button" aria-label="4 stars">★</button><button class="stern" type="button" aria-label="5 stars">★</button>
+                    </span>
+                  </div>
+                  <div class="leise">What did you notice?</div>
+                </div>
+              </div>
+              <button class="sichern" id="a-sichern" type="button">Save session</button>
+              <div class="gesichert" id="a-gesichert" hidden>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="currentColor"/><path d="m7.2 12.3 3.2 3.2 6.4-6.8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Session saved</span>
+              </div>
+            </div>
+
+            <div class="szene" id="sz-erinnerung" hidden>
+              <img class="leiste-oben" src="../../assets/demo/statusleiste.webp" alt="">
+              <div class="dunkel"></div>
+              <div class="blatt">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5c-3.3 0-5.8 2.6-5.8 5.9v3.4l-1.7 2.9h15l-1.7-2.9V9.4c0-3.3-2.5-5.9-5.8-5.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.7 19a2.4 2.4 0 0 0 4.6 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="18" cy="5.5" r="2.6" fill="currentColor"/></svg>
+                <h5 id="e-titel">Again tomorrow at 18:30?</h5>
+                <p id="e-text">You started your first session at 18:37. Drumbook will then remind you every day at this time.</p>
+                <button class="ja" id="e-ja" type="button">Yes, remind me</button>
+                <button class="nein" id="e-nein" type="button">No, thanks</button>
+                <small>iOS will then ask whether Drumbook may send notifications. You can change this at any time in the menu under “Reminders”.</small>
+              </div>
+            </div>
+
+            <div class="szene noten" id="sz-noten" hidden>
+              <img class="noten__kopf" src="../../assets/demo/en/noten-kopf.webp" alt="" width="700" height="205">
+              <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Back to Today"></button>
+              <div class="noten__fenster" id="n-fenster">
+                <div class="noten__blatt" id="n-blatt">
+                  <img id="n-img" src="../../assets/demo/noten.webp" width="700" height="1317" alt="Drum sheet music as a ribbon: the lines one below the other across the full width, bars 1 to 75.">
+                  <div class="noten__zeile" id="n-zeile" hidden></div>
+                </div>
+                <div class="noten__zahl" id="n-zahl" hidden></div>
+              </div>
+              <div class="tipp">
+                <button class="rund aus" id="n-play" type="button" aria-label="Play"></button>
+                <button class="rund" id="n-minus" type="button" aria-label="Slower"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/></svg></button>
+                <span class="bpm"><b id="n-bpm">130</b><span>BPM</span></span>
+                <button class="rund" id="n-plus" type="button" aria-label="Faster"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="4.3" width="7" height="1.4" rx=".7" fill="currentColor"/><rect x="4.3" y="1.5" width="1.4" height="7" rx=".7" fill="currentColor"/></svg></button>
+                <span class="takt" id="n-takt">Bar 1</span>
+              </div>
+            </div>
+
+            <p class="blase" id="blase" hidden></p>
+          </div>
+        </div>
+        <p class="handy__notiz">Rebuilt from real screens of the app, with sample data.</p>
+      </div>
+
+      <aside class="kapitel" aria-label="Stops of the demo">
+        <div class="kapitel__jetzt">
+          <p class="kapitel__label">Now</p>
+          <p class="kapitel__text" id="kapitel-text" aria-live="polite">Tap an answer on the phone.</p>
+        </div>
+        <ol id="kapitel-liste">
+          <li data-kapitel="0"><button type="button"><span class="kapitel__nr">1</span><span><span class="kapitel__titel">The first start</span><span class="kapitel__zeile">One question, then off you go.</span></span><span></span></button></li>
+          <li data-kapitel="1"><button type="button"><span class="kapitel__nr">2</span><span><span class="kapitel__titel">The first session</span><span class="kapitel__zeile">Five minutes with a click, to play along.</span></span><span class="kapitel__ton">Sound</span></button></li>
+          <li data-kapitel="2"><button type="button"><span class="kapitel__nr">3</span><span><span class="kapitel__titel">Today, three weeks later</span><span class="kapitel__zeile">Streak, rest days and the practice list.</span></span><span></span></button></li>
+          <li data-kapitel="3"><button type="button"><span class="kapitel__nr">4</span><span><span class="kapitel__titel">The sheet music ribbon</span><span class="kapitel__zeile">The sheet scrolls in time.</span></span><span class="kapitel__ton">Sound</span></button></li>
+          <li data-kapitel="4"><button type="button"><span class="kapitel__nr">5</span><span><span class="kapitel__titel">The report</span><span class="kapitel__zeile">A PDF for the next lesson.</span></span><span></span></button></li>
+        </ol>
+        <p class="kapitel__fuss">
+          As in the app, the click is made right on your device. The page
+          loads nothing extra for it and stores nothing.
+          <button id="neu-starten" type="button">Start again</button>
+        </p>
+      </aside>
+    </div>
+
+    <div class="lp__do demo__danach">
+      <h2>Like what you see?</h2>
+      <p>
+        Drumbook runs on iPhone and iPad. It is free while in testing, and the
+        invitation comes by email.
+      </p>
+      <p class="lp__ways">
+        <a class="btn btn--primary" href="../index.html#notify">Try it free</a>
+        <a class="btn btn--ghost" href="../../assets/zettel/drumbook-sample-report.pdf">Sample report (PDF)</a>
+        <a class="btn btn--ghost" href="../teacher/">I teach drums</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p>Drumbook, a practice journal for drums.</p>
+    <p class="foot__links">
+      <a href="../legal.html">Imprint &amp; privacy</a>
+      <a href="../../ausprobieren/" hreflang="de">Deutsch</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+window.DEMO = {
+    locale: "en-GB",
+    bilder: "../../assets/demo/en/",
+    sek: "sec", min: "min", takt: "Bar", ende: "End",
+    plan: function (m) { return "of " + m + " min planned"; },
+    rest: function (z) { return "Total left " + z; },
+    von: function (z) { return "of " + z; },
+    morgen: function (z) { return "Again tomorrow at " + z + "?"; },
+    begonnen: function (z) { return "You started your first session at " + z + ". Drumbook will then remind you every day at this time."; },
+    namen: {
+        ja: "Yes, I have a teacher", nein: "No, I practise on my own",
+        fuenf: "Practise for 5 minutes", umschauen: "Look around first",
+        karte: "Week card with streak", ueben: "Start practising",
+        setlists: "Setlists", verlauf: "History",
+        erstellen: "Create report", teilen: "Share report",
+        klickAn: "Start click", klickAus: "Stop click",
+        pause: "Pause session", weiter: "Resume session",
+        notenAn: "Play", notenAus: "Stop"
+    },
+    alt: {
+        frage: "The welcome at the first start: a photo of a smiling drummer, below it “Your practice diary for drums” and the question “Do you take lessons?” with two answers.",
+        angebot: "“Start right away”: five minutes, one exercise, and the click counts along. Below it “Practise for 5 minutes” and “Look around first”.",
+        heute: "The Today screen after three weeks: 2 h 27 min of 150 min this week, 8 days in a row, 2 rest days used, below it Start practising and the exercises that are up next.",
+        auswahl: "The report: choosing the period, “Last 4 weeks” is selected, at the bottom “Create report”.",
+        bericht: "The finished report in the app: practice report with key figures, chart, practice calendar and the exercises with tempo."
+    },
+    jetzt: {
+        frage: "Tap an answer on the phone. Both lead on.",
+        angebot: "Tap “Practise for 5 minutes”. Turn the sound on; the click counts in shortly.",
+        session: "Play along! One bar of count-in, then the click runs at 70 BPM. Change the tempo with − and +.",
+        beenden: "Practised enough? Tap “Finish” at the top right.",
+        abschluss: "How did it go? Give some stars and tap “Save session”.",
+        erinnerung: "After the first session, Drumbook asks once whether it should remind you. Choose what you like.",
+        heute: "Tap the card at the top.",
+        heuteDanach: "On to the sheet music: tap “Setlists” at the bottom.",
+        noten: "Tap Play. After four clicks, the sheet scrolls in time.",
+        notenLaeuft: "The line you are playing sits at the top, the next one just below. Both hands stay on the sticks.",
+        notenEnde: "Finally the report: back at the top left, then tap “History” at the bottom.",
+        auswahl: "Tap “Create report”.",
+        bericht: "At the top right, the report goes to your teacher as a PDF.",
+        ende: "That was the tour. The whole report is below as a sample report, and “Start again” takes you round once more."
+    },
+    blasen: {
+        frage: "Tap an answer. Both lead on.",
+        angebot: "Tap “Practise for 5 minutes”. Sound on!",
+        session: "Play along! Change the tempo with − and +.",
+        beenden: "Enough? Tap “Finish” at the top right.",
+        abschluss: "Give some stars, then “Save session”.",
+        heute: "Tap the card.",
+        heuteSpaeter: "Three weeks later. Tap the card.",
+        heuteUmschauen: "This is Today after three weeks. Tap the card.",
+        karte: "8 days in a row although two days were off: two rest days a week keep the streak. Carry on with “Setlists” below.",
+        ueben: "Puts together today's practice list: what your teacher set and what was left lying, to fit your time.",
+        noten: "Tap Play. The sheet scrolls in time.",
+        notenEnde: "The sheet comes from your scan; the app counts the bars itself. Back is up here.",
+        auswahl: "Tap “Create report”.",
+        bericht: "Up here the report goes to your teacher as a PDF.",
+        teilen: "By email or messenger, as a PDF. That was the tour!"
+    }
+};
+</script>
+<script src="../../assets/demo.js" defer></script>
+<script src="../../assets/zurueck.js" defer></script>
+</body>
+</html>

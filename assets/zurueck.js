@@ -31,6 +31,8 @@
         "/en/teacher/":        "to the teachers' page",
         "/en/start/":          "to the sign-up page",
         "/en/legal.html":      "to imprint & privacy",
+        "/en/try/":            "to the demo",
+        "/en/how-it-works/":   "to How it works",
         "/":                   "to the German home page"
     } : {
         "/":                   "zur Startseite",
@@ -39,6 +41,8 @@
         "/start/":             "zum Mittesten",
         "/impressum.html":     "zum Impressum",
         "/datenschutz.html":   "zum Datenschutz",
+        "/ausprobieren/":      "zum Ausprobieren",
+        "/so-funktionierts/":  "zu So funktioniert's",
         "/en/":                "to the English page"
     };
 

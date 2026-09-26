@@ -16,10 +16,15 @@ Der Quellcode der App liegt getrennt davon im privaten Repo `slange-a11y/drumboo
     en/index.html       Startseite (Englisch)
     en/news.html        Neuigkeiten (Englisch)
     en/legal.html       Imprint & privacy (Englisch, Übersetzung)
+    ausprobieren/       Drumbook im Browser ausprobieren (Deutsch, #247)
+    en/try/             Dasselbe auf Englisch
     assets/style.css    Das gesamte Aussehen, ein einziges Stylesheet
     assets/form.js      Das Formular für die Warteliste
     assets/zurueck.js   Benennt den Zurück-Link nach der Seite, von der du kamst
     assets/anim.js      Der durchlaufende Takt und die Abschnitte beim Scrollen
+    assets/demo.js      Die Demo: Szenen, Hinweise, Klick, Session, Notenband
+    assets/demo.css     Ihr Aussehen, Handyrahmen und nachgebaute Bildschirme
+    assets/demo/        Aufnahmen für die Demo (WebP, de und en)
     assets/shots/       Bildschirmfotos aus dem Simulator
     assets/foto/        Stimmungsbilder (Adobe Stock, lizenziert)
     tools/apps-script/  Der Empfang für das Formular + Einrichtungsanleitung
@@ -211,6 +216,31 @@ schneidet aus der Mitte).
 
 **Aufzählungen von dem, was es nicht gibt, sparsam.** „Kein Konto, kein
 Passwort, kein Server" sitzt einmal. Dreimal hintereinander klingt es gebaut.
+
+## Die Demo (/ausprobieren/, /en/try/)
+
+Fünf Stationen in einem eigenen, neutralen Handyrahmen (Apples Gerätrahmen
+dürfen nicht klickbar gemacht werden). Erster Start, Heute und Bericht sind
+echte Aufnahmen aus dem Simulator mit unsichtbaren Tippflächen darüber; die
+Session, der Abschluss, die Erinnerungsfrage und das Notenband sind in HTML
+nachgebaut, weil sie sich bewegen und klingen.
+
+- **Der Klick** ist dieselbe Formel wie in der App (`MetronomeEngine.renderClick`:
+  Sinus, 1800 Hz auf der Eins, sonst 1200 Hz, 45 ms, kurzer Anschlag), erzeugt
+  mit Web Audio und auf der Uhr des AudioContext vorausgeplant. Es wird nichts
+  nachgeladen, kein Cookie gesetzt, nichts gespeichert; die Datenschutzerklärung
+  bleibt damit richtig.
+- **Warum kein echter Simulator im Browser** (Appetize u. a.): iOS-Ton wird dort
+  nicht übertragen, der Klick bliebe stumm; dazu Kosten ab 59 $ im Monat und ein
+  Cookie vor jeder Einwilligung. Recherche vom 26.09.2026 in #247.
+- **Neue Aufnahmen** nach sichtbaren Änderungen der App: frische Installation im
+  Simulator (iPhone 17 Pro, `-zeigeBegruessung`), Demo-Daten mit
+  `Tools/demo-daten.sh` bzw. `SPRACHE=en`, Statusleiste mit
+  `simctl status_bar … override --time 9:41`, dann `simctl io … screenshot`
+  und auf 603 Pixel Breite als WebP. Die Tippflächen in `assets/demo.js` sind
+  in Prozent des Bildschirms (402 × 874 Punkt) angegeben.
+- **Das Notenband** kennt die Lage der 15 Zeilen im Bild (`ZEILEN`) und die
+  Takte je Zeile (`TAKTE`). Ein anderes Blatt heißt: beides neu messen.
 
 ## Das Formular
 
