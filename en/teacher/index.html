@@ -59,6 +59,11 @@
 .lp__do > p { color: var(--ink-muted); max-width: 62ch; }
 .lp__do .form { max-width: 520px; margin: 24px 0 0; }
 .lp__ways { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+/* Auf dem Handy lieber umbrechen als über die Karte hinausragen. */
+.lp__ways .btn { white-space: normal; text-align: center; }
+.lp__do .notice { margin: 22px 0 0; max-width: 64ch; }
+.lp__do .notice__body p { margin: 0; color: var(--ink); }
+.lp__do .notice__body p + p { margin-top: .75em; }
 
 @media (max-width: 760px) {
   .lp__split, .lp__cards { grid-template-columns: 1fr; gap: 26px; }
@@ -146,6 +151,11 @@
             shows what was practised, not what was played on the side.
           </span></li>
         </ul>
+        <p class="lp__ways">
+          <a class="btn btn--ghost" href="../../assets/zettel/drumbook-musterbericht.pdf">
+            See a sample report (PDF, German)
+          </a>
+        </p>
       </div>
       <figure>
         <img src="../../assets/shots/en/09-bericht.jpg" width="700" height="1522" loading="lazy"
@@ -197,18 +207,59 @@
     <div class="lp__do" id="material">
       <h2>Material for your lessons.</h2>
       <p>
-        An A5 flyer to print and hand out: what Drumbook is, how the student
-        gets in, and a QR code that leads straight to the invitation. Plus this
-        page as a sheet, in case you want to tell colleagues. Both are in
-        German for now.
+        An A5 flyer to hand out and a poster for the notice board at your music
+        school, both with a QR code to this website. Plus this page as a sheet,
+        in case you want to tell colleagues, and a sample report with made-up
+        data, so you can see what your students will bring you. All of them are
+        in German for now.
       </p>
       <p class="lp__ways">
         <a class="btn btn--primary" href="../../assets/zettel/drumbook-zettel-schueler.pdf">
           Student flyer (PDF, A5)
         </a>
+        <a class="btn btn--ghost" href="../../assets/zettel/drumbook-aushang-a4.pdf">
+          Poster (PDF, A4)
+        </a>
         <a class="btn btn--ghost" href="../../assets/zettel/drumbook-zettel-lehrer.pdf">
           Sheet for teachers (PDF)
         </a>
+        <a class="btn btn--ghost" href="../../assets/zettel/drumbook-musterbericht.pdf">
+          Sample report (PDF)
+        </a>
+      </p>
+    </div>
+
+    <div class="lp__do" id="parents">
+      <h2>A note for parents.</h2>
+      <p>
+        To pass on by email or messenger. Change it to suit your lessons.
+      </p>
+      <div class="notice">
+        <p class="notice__label">Template</p>
+        <div class="notice__body" id="parentnote">
+          <p>Dear parents,</p>
+          <p>
+            For practising at home, I recommend the app Drumbook. It puts
+            together a short practice list every day, sets the tempo with its
+            metronome and keeps track of what was practised and for how long.
+            Before the lesson your child turns that into a report, so I can see
+            what we should work on next.
+          </p>
+          <p>
+            Drumbook runs on iPhone and iPad. It needs no account, and the
+            practice data stays with your child, on their device and in their
+            iCloud. There is a free test at the moment; later the app will be a
+            subscription of 3 to 5 euros a month. There are no ads.
+          </p>
+          <p>You can request an invitation to the test at drumbook.de.</p>
+          <p>Best wishes</p>
+        </div>
+      </div>
+      <p class="lp__ways">
+        <button class="btn btn--ghost" type="button" data-kopiere="parentnote"
+                data-kopiert="Copied" data-markiert="Selected, now copy it">
+          Copy text
+        </button>
       </p>
     </div>
 
@@ -303,5 +354,6 @@
 
 <script src="../../assets/form.js" defer></script>
 <script src="../../assets/zurueck.js" defer></script>
+<script src="../../assets/kopieren.js" defer></script>
 </body>
 </html>

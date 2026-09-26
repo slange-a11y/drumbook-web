@@ -3,12 +3,15 @@ import CoreImage
 
 // ---------------------------------------------------------------- Einstellungen
 //
-// Zwei Zettel, A5, einseitig, Farbe:
+// Zwei Zettel, A5, einseitig, Farbe, und ein Aushang in A4:
 //
 //   drumbook-zettel-schueler.pdf   geht an den Schueler. Bild oben, ein
 //                                  Versprechen, drei Szenen, ein Aufruf.
 //   drumbook-zettel-lehrer.pdf     geht an den Lehrer. Der Bericht ist das
 //                                  Bild — das ist das Einzige, was ihn erreicht.
+//   drumbook-aushang-a4.pdf        haengt in der Musikschule (#241). Dieselbe
+//                                  Seite wie der Schuelerzettel, auf A4
+//                                  hochgesetzt, mit Text fuer Vorbeigehende.
 //
 // Der QR-Code ist 108 pt = 38 mm. Das ist die Mindestkante fuer einen Code,
 // der aus Armlaenge gescannt wird; der alte Zettel hatte 82 pt = 29 mm.
@@ -24,6 +27,7 @@ import CoreImage
 let ZIEL = "https://drumbook.de/"
 
 let A5   = CGSize(width: 419.53, height: 595.28)   // 148 x 210 mm
+let A4   = CGSize(width: 595.28, height: 841.89)   // 210 x 297 mm
 let RAND: CGFloat = 36
 let ORDNER = NSHomeDirectory() + "/Developer/drumbook-web"
 
@@ -76,11 +80,19 @@ func qr(_ text: String, kante: CGFloat) -> NSImage {
     var img = f.outputImage!
     // Immer schwarz auf weiss. Ein eingefaerbter oder invertierter Code wird
     // laengst nicht von jeder Telefonkamera erkannt.
-    let faktor = kante / img.extent.width
+    //
+    // Gerechnet mit vier Pixeln je Punkt und einem ganzzahligen Faktor je
+    // Modul: Bis zum 26.09.2026 waren es 100 Pixel fuer 100 Punkt, also 72 dpi,
+    // und auf dem A4-Aushang waeren die Kanten der Module weich gedruckt.
+    //
+    // Ueber ein echtes Bitmap, nicht ueber NSCIImageRep: Das zeichnet Pixel
+    // gleich Punkt und schneidet ab, was darueber hinausgeht. Mit der
+    // groesseren Aufloesung stand am 26.09.2026 nur noch eine Ecke des Codes
+    // auf dem Zettel.
+    let faktor = (kante * 4 / img.extent.width).rounded(.up)
     img = img.transformed(by: CGAffineTransform(scaleX: faktor, y: faktor))
-    let rep = NSCIImageRep(ciImage: img)
-    let out = NSImage(size: rep.size); out.addRepresentation(rep)
-    return out
+    let cg = CIContext().createCGImage(img, from: img.extent)!
+    return NSImage(cgImage: cg, size: NSSize(width: kante, height: kante))
 }
 
 /// Laedt ein Bild als CGImage. Liefert nil, wenn es fehlt.
@@ -142,12 +154,25 @@ func verlauf(in r: CGRect, ctx: CGContext) {
                                         (0.42, 0.40), (0.56, 0.64),
                                         (0.70, 0.84), (0.80, 0.95),
                                         (0.86, 1), (1, 1)]
-    let farben = stufen.map { P.bg.withAlphaComponent($0.1).cgColor } as CFArray
-    let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
-                       colors: farben, locations: stufen.map { $0.0 })!
-    ctx.saveGState(); ctx.clip(to: r)
-    ctx.drawLinearGradient(g, start: CGPoint(x: 0, y: r.maxY),
-                           end: CGPoint(x: 0, y: r.minY), options: [])
+    //
+    // Gezeichnet als Bildmaske, nicht als Verlauf mit Transparenz. Einen
+    // Verlauf mit Alphawerten schreibt CoreGraphics ins PDF deckend, und zwar
+    // auf der ganzen Hoehe: Das Foto hoerte deshalb seit dem 17.09.2026 mit
+    // einer geraden Kante auf, 64 pt ueber seiner Unterkante. Am 26.09.2026
+    // gemessen, im Aushang und im Schuelerzettel, mit zwei Renderwegen. Eine
+    // Graustufenmaske traegt die Stufen dagegen zuverlaessig (weiss = deckt).
+    let hoehe = 512
+    let m = CGContext(data: nil, width: 4, height: hoehe, bitsPerComponent: 8, bytesPerRow: 0,
+                      space: CGColorSpaceCreateDeviceGray(),
+                      bitmapInfo: CGImageAlphaInfo.none.rawValue)!
+    let grau = stufen.map { CGColor(gray: $0.1, alpha: 1) } as CFArray
+    let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceGray(),
+                       colors: grau, locations: stufen.map { $0.0 })!
+    m.drawLinearGradient(g, start: CGPoint(x: 0, y: hoehe),
+                         end: CGPoint(x: 0, y: 0), options: [])
+    ctx.saveGState()
+    ctx.clip(to: r, mask: m.makeImage()!)
+    ctx.setFillColor(P.bg.cgColor); ctx.fill(r)
     ctx.restoreGState()
 }
 
@@ -333,20 +358,20 @@ let SCHUELER = Inhalt(
     geraetetext: "Eine laufende Übesession: Countdown, Metronom und Ablauf.",
     ziel: ZIEL,
     ctaTitel: "Scannen und heute noch üben",
-    ctaUnterzeile: "Alles über die App — und die Einladung zur Testrunde "
+    ctaUnterzeile: "Alles über die App. Die Einladung zur Testrunde "
                  + "forderst du gleich dort an.",
     ctaAdresse: "drumbook.de",
-    fuss: "Im Test kostenlos, später ein Abo. Kein Konto, keine Werbung — "
+    fuss: "Im Test kostenlos, später ein Abo. Kein Konto, keine Werbung, "
         + "alles bleibt auf deinem Gerät.",
     fussAkzent: "Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt. "
-              + "Schreib mir, was fehlt — oft ist es eine Woche später drin."
+              + "Schreib mir, was fehlt. Oft ist es eine Woche später drin."
 )
 
 let LEHRER = Inhalt(
     name: "lehrer",
     ueberschrift: "Sie üben zu Hause. Sie wissen nur nicht, was.",
     unterzeile: "Die ehrlichste Antwort auf „Und, hast du geübt?“ ist ein "
-              + "Schulterzucken — weil sich nach einer Woche niemand erinnert.",
+              + "Schulterzucken, weil sich nach einer Woche niemand erinnert.",
     punkte: ["Ein PDF mit Datum, Dauer und erreichtem Tempo.",
              "Ihre Ansage bekommt in seiner Übeliste Vorrang.",
              "Kein iPhone nötig, keine Anmeldung, keine Schülerdaten."],
@@ -354,13 +379,37 @@ let LEHRER = Inhalt(
     geraetetext: "Der Bericht: Übesessions mit Datum, Dauer und erreichtem Tempo.",
     ziel: ZIEL,
     ctaTitel: "Ansehen, bevor Sie es weitergeben",
-    ctaUnterzeile: "Alles über Drumbook — samt dem Zettel für Ihre Schüler "
+    ctaUnterzeile: "Alles über Drumbook, samt dem Zettel für Ihre Schüler "
                  + "zum Ausdrucken.",
     ctaAdresse: "drumbook.de",
-    fuss: "Keine Lehrplattform, kein Klassenbuch, keine Schülerverwaltung — "
+    fuss: "Keine Lehrplattform, kein Klassenbuch, keine Schülerverwaltung: "
         + "Drumbook macht einen Schüler zu einem, der weiß, was er geübt hat.",
     fussAkzent: "Gebaut von Silvio Lange, der selbst Schlagzeugunterricht nimmt. "
               + "Noch im Test."
+)
+
+/// Der Aushang fuer die Musikschule (#241). Wer vorbeigeht, kennt Drumbook
+/// nicht und hat keinen Lehrer, der es erklaert: Drei Punkte sagen, was die
+/// App tut, der Fuss sagt, was sie kostet. Dieselbe Ueberschrift wie auf der
+/// Website, aus demselben Grund wie beim Schuelerzettel.
+let AUSHANG = Inhalt(
+    name: "aushang",
+    ueberschrift: "Üben mit Plan statt nach Gefühl.",
+    unterzeile: "Drumbook stellt dir jeden Tag eine Übeliste zusammen, hält "
+              + "das Tempo und merkt sich, was dein Lehrer gesagt hat.",
+    punkte: ["Die Übeliste für heute steht, bevor du die Stöcke hast.",
+             "Der Klick läuft weiter, wenn beide Hände am Stock sind.",
+             "Dein Lehrer bekommt einen Bericht statt eines Schulterzuckens."],
+    geraetebild: "07-session",
+    geraetetext: "Eine laufende Übesession: Countdown, Metronom und Ablauf.",
+    ziel: ZIEL,
+    ctaTitel: "Scannen und heute noch üben",
+    ctaUnterzeile: "Alles über die App, und die Einladung zur Testrunde "
+                 + "forderst du dort an.",
+    ctaAdresse: "drumbook.de",
+    fuss: "Für iPhone und iPad. Im Test kostenlos, später ein Abo für 3 bis "
+        + "5 € im Monat. Deine Daten bleiben auf deinem Gerät.",
+    fussAkzent: "Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt."
 )
 
 // ---------------------------------------------------------------- Ausgabe
@@ -383,6 +432,25 @@ for inhalt in [SCHUELER, LEHRER] {
     var box = CGRect(origin: .zero, size: A5)
     let ctx = CGContext(URL(fileURLWithPath: pfad) as CFURL, mediaBox: &box, nil)!
     ctx.beginPDFPage(nil); zeichne(inhalt, in: ctx); ctx.endPDFPage(); ctx.closePDF()
+    print("geschrieben:", pfad)
+}
+
+// Der Aushang ist dieselbe Seite, hochgesetzt. A5 und A4 sind nicht ganz
+// deckungsgleich (148 mm mal Wurzel zwei sind 209,3 mm, nicht 210): Gesetzt
+// wird nach der Breite, damit das Foto bis an den Rand reicht, und oben
+// buendig. Unten fallen dadurch knapp 3 pt vom Seitenrand weg, der Inhalt
+// bleibt 48 pt ueber der Kante.
+do {
+    let pfad = "\(ziel)/drumbook-aushang-a4.pdf"
+    var box = CGRect(origin: .zero, size: A4)
+    let ctx = CGContext(URL(fileURLWithPath: pfad) as CFURL, mediaBox: &box, nil)!
+    ctx.beginPDFPage(nil)
+    ctx.setFillColor(P.bg.cgColor); ctx.fill(box)
+    let faktor = A4.width / A5.width
+    ctx.translateBy(x: 0, y: A4.height - A5.height * faktor)
+    ctx.scaleBy(x: faktor, y: faktor)
+    zeichne(AUSHANG, in: ctx)
+    ctx.endPDFPage(); ctx.closePDF()
     print("geschrieben:", pfad)
 }
 

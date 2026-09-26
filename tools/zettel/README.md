@@ -1,10 +1,18 @@
-# Die zwei Zettel
+# Die Zettel und der Aushang
 
-Erzeugt zwei A5-Seiten als PDF nach `assets/zettel/` — von dort lädt die
-Website sie herunter, `lehrer/index.html` verlinkt den Schülerzettel:
+Erzeugt zwei A5-Seiten und einen A4-Aushang als PDF nach `assets/zettel/`.
+Von dort lädt die Website sie herunter, `lehrer/index.html` verlinkt alle drei:
 
     drumbook-zettel-schueler.pdf   für den Schüler, der ihn vom Lehrer bekommt
     drumbook-zettel-lehrer.pdf     für den Lehrer, bevor er ihn weitergibt
+    drumbook-aushang-a4.pdf        für das Brett in der Musikschule (#241)
+
+Der Aushang ist dieselbe Seite wie der Schülerzettel, auf A4 hochgesetzt, mit
+eigenem Text. Eine Änderung am Aufbau wirkt deshalb auf alle drei.
+
+Der Musterbericht im selben Ordner (`drumbook-musterbericht.pdf`) kommt nicht
+von hier, sondern aus dem App-Repo: `Tools/musterbericht.sh` rechnet den echten
+Bericht aus den Demo-Daten und stempelt jede Seite als Beispiel.
 
     swiftc -O zettel.swift -o zettel && ./zettel
 
@@ -53,7 +61,7 @@ Versuch war er einmal abgeschnitten, und nur das ist aufgefallen:
     sips -s format png --resampleWidth 900 ../../assets/zettel/drumbook-zettel-schueler.pdf --out p.png
     swiftc -O lies-qr.swift -o lies-qr && ./lies-qr p.png
 
-Erwartet: `https://drumbook.de/start/` bzw. `https://drumbook.de/lehrer/`.
+Erwartet, für alle drei: `https://drumbook.de/`.
 
 ## Festlegungen, die nicht zufällig sind
 
@@ -61,12 +69,17 @@ Erwartet: `https://drumbook.de/start/` bzw. `https://drumbook.de/lehrer/`.
   eingefärbter oder invertierter Code wird längst nicht von jeder Kamera
   erkannt. Kantenlänge 100 pt = 35 mm; aus Armlänge gescannt gilt 25 mm als
   Untergrenze, der alte Zettel hatte 29 mm.
-- **Die Codes zeigen auf eigene Landeseiten**, nicht auf die Startseite:
-  `/start/` und `/lehrer/`. Wer vom Papier kommt, will eintragen, nicht lesen —
-  ein Code, der auf einer langen Startseite landet, verliert einen großen Teil
-  der Scans, bevor überhaupt etwas eingetragen ist. Die Adresse steht zusätzlich
+- **Die Codes zeigen auf die Startseite** (Silvios Entscheidung vom
+  17.09.2026). Eine eigene Landeseite brächte mehr Eintragungen, zeigt aber nur
+  einen Ausschnitt, und wer vom Papier kommt, soll sehen, was die App alles
+  kann. `/start/` und `/lehrer/` bleiben bestehen. Die Adresse steht zusätzlich
   getippt darunter: Code **und** Adresse bringen mehr Rücklauf als die Adresse
   allein.
+- **Der Übergang vom Foto ins Schwarz ist eine Bildmaske**, kein Verlauf mit
+  Transparenz. Einen solchen Verlauf schreibt CoreGraphics ins PDF deckend;
+  das Foto hörte deshalb bis zum 26.09.2026 mit einer geraden Kante auf.
+- **Der QR-Code ist ein Bitmap mit vier Pixeln je Punkt.** Vorher waren es
+  72 dpi, auf dem Aushang wären die Kanten der Module weich gedruckt.
 - **Die Wortmarke steht unten links im Foto**, nicht oben. Oben ist das Gesicht;
   ein dunkler Balken darüber lag genau quer darin.
 - **Der QR-Kasten wächst mit dem Text.** Feste Höhe war ein Fehler: Auf dem

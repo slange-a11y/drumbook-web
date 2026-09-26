@@ -59,6 +59,13 @@
 .lp__do > p { color: var(--ink-muted); max-width: 62ch; }
 .lp__do .form { max-width: 520px; margin: 24px 0 0; }
 .lp__ways { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+/* Die Vorlage für die Eltern (#241): dasselbe Formblatt wie „Gut zu wissen",
+   hier links bündig und in voller Schriftfarbe, weil es zum Weitergeben ist. */
+/* Auf dem Handy lieber umbrechen als über die Karte hinausragen. */
+.lp__ways .btn { white-space: normal; text-align: center; }
+.lp__do .notice { margin: 22px 0 0; max-width: 64ch; }
+.lp__do .notice__body p { margin: 0; color: var(--ink); }
+.lp__do .notice__body p + p { margin-top: .75em; }
 
 @media (max-width: 760px) {
   .lp__split, .lp__cards { grid-template-columns: 1fr; gap: 26px; }
@@ -146,6 +153,11 @@
             geübt wurde, nicht, was nebenbei lief.
           </span></li>
         </ul>
+        <p class="lp__ways">
+          <a class="btn btn--ghost" href="../assets/zettel/drumbook-musterbericht.pdf">
+            Musterbericht ansehen (PDF)
+          </a>
+        </p>
       </div>
       <figure>
         <img src="../assets/shots/09-bericht.jpg" width="700" height="1522" loading="lazy"
@@ -197,17 +209,60 @@
     <div class="lp__do" id="paket">
       <h2>Material für Ihren Unterricht.</h2>
       <p>
-        Ein A5-Zettel zum Ausdrucken und Mitgeben: was Drumbook ist, wie der
-        Schüler hineinkommt, und ein QR-Code, der direkt zur Einladung führt.
-        Dazu diese Seite als Blatt, falls Sie Kollegen davon erzählen wollen.
+        Ein A5-Zettel zum Mitgeben und ein Aushang für das Brett in der
+        Musikschule, beide mit einem QR-Code zu dieser Website. Dazu diese Seite
+        als Blatt, falls Sie Kollegen davon erzählen wollen, und ein
+        Musterbericht mit erfundenen Daten, damit Sie sehen, was Ihre Schüler
+        Ihnen mitbringen.
       </p>
       <p class="lp__ways">
         <a class="btn btn--primary" href="../assets/zettel/drumbook-zettel-schueler.pdf">
           Zettel für Schüler (PDF, A5)
         </a>
+        <a class="btn btn--ghost" href="../assets/zettel/drumbook-aushang-a4.pdf">
+          Aushang (PDF, A4)
+        </a>
         <a class="btn btn--ghost" href="../assets/zettel/drumbook-zettel-lehrer.pdf">
           Blatt für Lehrer (PDF)
         </a>
+        <a class="btn btn--ghost" href="../assets/zettel/drumbook-musterbericht.pdf">
+          Musterbericht (PDF)
+        </a>
+      </p>
+    </div>
+
+    <div class="lp__do" id="eltern">
+      <h2>Ein Text für die Eltern.</h2>
+      <p>
+        Zum Weitergeben per Mail oder Messenger. Ändern Sie ihn, wie es zu
+        Ihrem Unterricht passt.
+      </p>
+      <div class="notice">
+        <p class="notice__label">Vorlage</p>
+        <div class="notice__body" id="elterntext">
+          <p>Liebe Eltern,</p>
+          <p>
+            für das Üben zu Hause empfehle ich die App Drumbook. Sie stellt
+            jeden Tag eine kurze Übeliste zusammen, gibt mit dem Metronom das
+            Tempo vor und hält fest, was und wie lange geübt wurde. Vor der
+            Stunde erzeugt Ihr Kind daraus einen Bericht, so sehe ich, woran
+            wir weiterarbeiten.
+          </p>
+          <p>
+            Drumbook läuft auf iPhone und iPad. Ein Konto braucht es nicht, die
+            Übedaten bleiben bei Ihrem Kind, auf seinem Gerät und in seiner
+            iCloud. Zurzeit läuft ein kostenloser Test, später kostet die App
+            als Abo 3 bis 5 € im Monat. Werbung gibt es nicht.
+          </p>
+          <p>Die Einladung zum Test fordern Sie auf drumbook.de an.</p>
+          <p>Viele Grüße</p>
+        </div>
+      </div>
+      <p class="lp__ways">
+        <button class="btn btn--ghost" type="button" data-kopiere="elterntext"
+                data-kopiert="Kopiert" data-markiert="Markiert, jetzt kopieren">
+          Text kopieren
+        </button>
       </p>
     </div>
 
@@ -304,5 +359,6 @@
 
 <script src="../assets/form.js" defer></script>
 <script src="../assets/zurueck.js" defer></script>
+<script src="../assets/kopieren.js" defer></script>
 </body>
 </html>
