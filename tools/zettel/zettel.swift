@@ -25,6 +25,9 @@ import CoreImage
 // Entscheidung vom 17.09.2026. /start/ und /lehrer/ bleiben bestehen und
 // sind von der Startseite aus erreichbar.
 let ZIEL = "https://drumbook.de/"
+/// Die englischen Fassungen (#243) zeigen nach derselben Regel auf die
+/// englische Startseite.
+let ZIEL_EN = "https://drumbook.de/en/"
 
 let A5   = CGSize(width: 419.53, height: 595.28)   // 148 x 210 mm
 let A4   = CGSize(width: 595.28, height: 841.89)   // 210 x 297 mm
@@ -227,14 +230,15 @@ func qrBlock(y: CGFloat, ziel: String, titel: String, unterzeile: String,
     return block.minY
 }
 
-func kopf(y: CGFloat, ueber: Bool, ctx: CGContext) {
+func kopf(y: CGFloat, ueber: Bool, englisch: Bool = false, ctx: CGContext) {
     // Wortmarke. Ueber dem Foto steht sie hell, sonst im Seitenton.
     if let logo = NSImage(contentsOfFile: ORDNER + "/assets/icon-512.png") {
         logo.draw(in: CGRect(x: RAND, y: y - 26, width: 26, height: 26))
     }
     schreib(attr("Drumbook", font(15, .bold), ueber ? hex("ffffff") : P.ink, sperrung: -0.2),
             x: RAND + 34, y: y - 3, breite: 200)
-    schreib(attr("ÜBETAGEBUCH FÜRS SCHLAGZEUG", font(6.8, .semibold),
+    schreib(attr(englisch ? "PRACTICE JOURNAL FOR DRUMS" : "ÜBETAGEBUCH FÜRS SCHLAGZEUG",
+                 font(6.8, .semibold),
                  ueber ? hex("ffd9b8") : P.accent, sperrung: 1.2),
             x: RAND + 34, y: y - 21, breite: 220)
 }
@@ -260,6 +264,11 @@ struct Inhalt {
     let ctaAdresse: String
     let fuss: String
     let fussAkzent: String
+    /// Englische Fassung (#243): englische Wortmarke und englisches
+    /// Bildschirmfoto aus `assets/shots/en/`.
+    var englisch = false
+    /// Dateiname ohne Endung. Ohne Angabe `drumbook-zettel-<name>`.
+    var datei: String? = nil
 }
 
 func zeichne(_ i: Inhalt, in ctx: CGContext) {
@@ -288,7 +297,7 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
     verlauf(in: CGRect(x: 0, y: fotoRect.minY - 3, width: A5.width, height: 67),
             ctx: ctx)
     // Die Wortmarke steht unten links im Bild, nicht oben: oben ist das Gesicht.
-    kopf(y: fotoRect.minY + 36, ueber: true, ctx: ctx)
+    kopf(y: fotoRect.minY + 36, ueber: true, englisch: i.englisch, ctx: ctx)
 
     // Ein Geraet, halb im Foto, halb im dunklen Grund. Es kostet keine
     // Bauhoehe und beweist trotzdem, dass es die App gibt.
@@ -302,7 +311,7 @@ func zeichne(_ i: Inhalt, in ctx: CGContext) {
                         cornerWidth: 11, cornerHeight: 11, transform: nil)
     ctx.addPath(rahmen); ctx.setFillColor(hex("1c1c22").cgColor); ctx.fillPath()
     ctx.restoreGState()
-    if let cg = bild(ORDNER + "/assets/shots/\(i.geraetebild).jpg") {
+    if let cg = bild(ORDNER + "/assets/shots/\(i.englisch ? "en/" : "")\(i.geraetebild).jpg") {
         fuelle(cg, in: tr, ctx: ctx, radius: 9)
     } else {
         warne("Bildschirmfoto fehlt: \(i.geraetebild).jpg")
@@ -412,6 +421,80 @@ let AUSHANG = Inhalt(
     fussAkzent: "Gebaut von Silvio, der selbst Schlagzeugunterricht nimmt."
 )
 
+// ---------------------------------------------------------------- Englisch
+//
+// Britisches Englisch wie auf drumbook.de/en/. Dieselbe Ueberschrift wie dort,
+// aus demselben Grund wie auf Deutsch. Ohne Pronomen fuer Silvio: Die englische
+// Seite sagt „built by someone who is learning too".
+
+let SCHUELER_EN = Inhalt(
+    name: "student",
+    ueberschrift: "Practise with a plan, not a hunch.",
+    unterzeile: "Drumbook puts together today's practice list, keeps the tempo "
+              + "and remembers what your teacher said. At the end of the week "
+              + "you have a record, not just a feeling.",
+    punkte: ["The click keeps going when both hands are on the sticks. And your "
+           + "teacher gets a PDF instead of a shrug."],
+    geraetebild: "07-session",
+    geraetetext: "A running practice session: countdown, metronome and plan.",
+    ziel: ZIEL_EN,
+    ctaTitel: "Scan and practise today",
+    ctaUnterzeile: "Everything about the app, and you can ask for an "
+                 + "invitation to the test right there.",
+    ctaAdresse: "drumbook.de/en",
+    fuss: "Free while in testing, a subscription later. Your data stays on "
+        + "your device, and there are no ads.",
+    fussAkzent: "Built by Silvio, who is learning the drums too. Tell me what "
+              + "is missing. It is often there a week later.",
+    englisch: true,
+    datei: "drumbook-flyer-student"
+)
+
+let LEHRER_EN = Inhalt(
+    name: "teacher",
+    ueberschrift: "They practise at home. You just don't know what.",
+    unterzeile: "The most honest answer to “So, did you practise?” is a "
+              + "shrug, because after a week nobody remembers.",
+    punkte: ["A PDF with date, length and tempo reached.",
+             "Your instructions come first in their practice list.",
+             "No iPhone or account needed, and no student data on your side."],
+    geraetebild: "09-bericht",
+    geraetetext: "The report: sessions with date, length and tempo reached.",
+    ziel: ZIEL_EN,
+    ctaTitel: "Take a look before you pass it on",
+    ctaUnterzeile: "Everything about Drumbook, including the student flyer "
+                 + "to print.",
+    ctaAdresse: "drumbook.de/en",
+    fuss: "Drumbook is not a teaching platform. It turns a student into one "
+        + "who knows what they practised.",
+    fussAkzent: "Built by Silvio Lange, who is learning the drums too. "
+              + "Still in testing.",
+    englisch: true,
+    datei: "drumbook-flyer-teacher"
+)
+
+let AUSHANG_EN = Inhalt(
+    name: "poster",
+    ueberschrift: "Practise with a plan, not a hunch.",
+    unterzeile: "Drumbook puts together a practice list for you every day, "
+              + "keeps the tempo and remembers what your teacher said.",
+    punkte: ["Today's practice list is ready before you pick up the sticks.",
+             "The click keeps going when both hands are on the sticks.",
+             "Your teacher gets a report instead of a shrug."],
+    geraetebild: "07-session",
+    geraetetext: "A running practice session: countdown, metronome and plan.",
+    ziel: ZIEL_EN,
+    ctaTitel: "Scan and practise today",
+    ctaUnterzeile: "Everything about the app, and you can ask for an "
+                 + "invitation to the test there.",
+    ctaAdresse: "drumbook.de/en",
+    fuss: "For iPhone and iPad. Free while in testing, later a subscription "
+        + "of €3 to €5 a month. Your data stays on your device.",
+    fussAkzent: "Built by Silvio, who is learning the drums too.",
+    englisch: true,
+    datei: "drumbook-poster-a4"
+)
+
 // ---------------------------------------------------------------- Ausgabe
 func melde(_ name: String, unten y: CGFloat) {
     let text = "  \(name): unterer Rand bei y = " + String(format: "%.1f", y)
@@ -427,8 +510,8 @@ let ziel = CommandLine.arguments.count > 1 ? CommandLine.arguments[1]
 try? FileManager.default.createDirectory(atPath: ziel,
         withIntermediateDirectories: true)
 
-for inhalt in [SCHUELER, LEHRER] {
-    let pfad = "\(ziel)/drumbook-zettel-\(inhalt.name).pdf"
+for inhalt in [SCHUELER, LEHRER, SCHUELER_EN, LEHRER_EN] {
+    let pfad = "\(ziel)/\(inhalt.datei ?? "drumbook-zettel-\(inhalt.name)").pdf"
     var box = CGRect(origin: .zero, size: A5)
     let ctx = CGContext(URL(fileURLWithPath: pfad) as CFURL, mediaBox: &box, nil)!
     ctx.beginPDFPage(nil); zeichne(inhalt, in: ctx); ctx.endPDFPage(); ctx.closePDF()
@@ -440,8 +523,8 @@ for inhalt in [SCHUELER, LEHRER] {
 // wird nach der Breite, damit das Foto bis an den Rand reicht, und oben
 // buendig. Unten fallen dadurch knapp 3 pt vom Seitenrand weg, der Inhalt
 // bleibt 48 pt ueber der Kante.
-do {
-    let pfad = "\(ziel)/drumbook-aushang-a4.pdf"
+for aushang in [AUSHANG, AUSHANG_EN] {
+    let pfad = "\(ziel)/\(aushang.datei ?? "drumbook-aushang-a4").pdf"
     var box = CGRect(origin: .zero, size: A4)
     let ctx = CGContext(URL(fileURLWithPath: pfad) as CFURL, mediaBox: &box, nil)!
     ctx.beginPDFPage(nil)
@@ -449,7 +532,7 @@ do {
     let faktor = A4.width / A5.width
     ctx.translateBy(x: 0, y: A4.height - A5.height * faktor)
     ctx.scaleBy(x: faktor, y: faktor)
-    zeichne(AUSHANG, in: ctx)
+    zeichne(aushang, in: ctx)
     ctx.endPDFPage(); ctx.closePDF()
     print("geschrieben:", pfad)
 }

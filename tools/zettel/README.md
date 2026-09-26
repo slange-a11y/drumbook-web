@@ -7,12 +7,20 @@ Von dort lädt die Website sie herunter, `lehrer/index.html` verlinkt alle drei:
     drumbook-zettel-lehrer.pdf     für den Lehrer, bevor er ihn weitergibt
     drumbook-aushang-a4.pdf        für das Brett in der Musikschule (#241)
 
+Dieselben drei auf Englisch (#243), mit englischer Wortmarke, englischen
+Bildschirmfotos aus `assets/shots/en/` und dem Code auf `https://drumbook.de/en/`:
+
+    drumbook-flyer-student.pdf
+    drumbook-flyer-teacher.pdf
+    drumbook-poster-a4.pdf
+
 Der Aushang ist dieselbe Seite wie der Schülerzettel, auf A4 hochgesetzt, mit
 eigenem Text. Eine Änderung am Aufbau wirkt deshalb auf alle drei.
 
-Der Musterbericht im selben Ordner (`drumbook-musterbericht.pdf`) kommt nicht
-von hier, sondern aus dem App-Repo: `Tools/musterbericht.sh` rechnet den echten
-Bericht aus den Demo-Daten und stempelt jede Seite als Beispiel.
+Der Musterbericht im selben Ordner (`drumbook-musterbericht.pdf`, englisch
+`drumbook-sample-report.pdf`) kommt nicht von hier, sondern aus dem App-Repo:
+`Tools/musterbericht.sh` bzw. `SPRACHE=en Tools/musterbericht.sh` rechnet den
+echten Bericht aus den Demo-Daten und stempelt jede Seite als Beispiel.
 
     swiftc -O zettel.swift -o zettel && ./zettel
 
@@ -61,7 +69,8 @@ Versuch war er einmal abgeschnitten, und nur das ist aufgefallen:
     sips -s format png --resampleWidth 900 ../../assets/zettel/drumbook-zettel-schueler.pdf --out p.png
     swiftc -O lies-qr.swift -o lies-qr && ./lies-qr p.png
 
-Erwartet, für alle drei: `https://drumbook.de/`.
+Erwartet: `https://drumbook.de/` für die deutschen, `https://drumbook.de/en/`
+für die englischen.
 
 ## Festlegungen, die nicht zufällig sind
 
