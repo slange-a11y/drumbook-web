@@ -239,8 +239,16 @@ nachgebaut, weil sie sich bewegen und klingen.
   `simctl status_bar … override --time 9:41`, dann `simctl io … screenshot`
   und auf 603 Pixel Breite als WebP. Die Tippflächen in `assets/demo.js` sind
   in Prozent des Bildschirms (402 × 874 Punkt) angegeben.
-- **Das Notenband** kennt die Lage der 15 Zeilen im Bild (`ZEILEN`) und die
-  Takte je Zeile (`TAKTE`). Ein anderes Blatt heißt: beides neu messen.
+- **Das Notenband** zeigt bewusst nur ein Drittel des Blatts: 5 von 15 Zeilen,
+  Takt 1 bis 24 (Silvio, 27.09.2026). Es kennt die Lage der Zeilen im Bild
+  (`ZEILEN`) und die Takte je Zeile (`TAKTE`); ein anderes Blatt heißt: beides
+  neu messen. Anhalten bleibt an der Stelle, ein Tipper auf eine Zeile springt
+  dorthin, wie in der App.
+- **Wege durch die Demo:** die Tippflächen im Handy, die Leiste „Zurück /
+  Station n von 5 / Weiter" unter dem Handy (auf dem Handy der einzige sichtbare
+  Weg, die Liste der Stationen steht dort weiter unten) und die Liste selbst.
+  „Heute" merkt sich, was schon besucht ist, und zeigt nach dem Notenband auf
+  „Verlauf". Bis 27.09.2026 führte es zurück ins Notenband, eine Schleife.
 
 ## Das Formular
 

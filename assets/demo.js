@@ -66,6 +66,16 @@
         takt.timer = setInterval(planen, 25);
         planen();
         requestAnimationFrame(taktSchleife);
+        // Gibt der Browser den Ton nicht frei, steht die Uhr des AudioContext
+        // still: Der Knopf zeigte „Anhalten", aber nichts bewegte sich. Dann
+        // lieber anhalten und sagen, was zu tun ist.
+        var start = ctx.currentTime;
+        setTimeout(function () {
+            if (takt.laeuft && ctx.currentTime === start) {
+                taktStopp();
+                if (window.DEMO_TON_GESPERRT) window.DEMO_TON_GESPERRT();
+            }
+        }, 900);
         return true;
     }
 
@@ -135,7 +145,7 @@
     var kapitelVon = { frage: 0, angebot: 0, session: 1, abschluss: 1, erinnerung: 1,
                        heute: 2, noten: 3, auswahl: 4, bericht: 4 };
     var ersteSzene = ["frage", "session", "heute", "noten", "auswahl"];
-    var aktuell = null, fertig = {};
+    var aktuell = null, fertig = {}, besucht = {};
 
     function zeige(name) { for (var k in szenen) szenen[k].hidden = (k !== name); }
 
@@ -146,7 +156,9 @@
         blase(null);
         if (aktuell && kapitelVon[name] > kapitelVon[aktuell]) fertig[kapitelVon[aktuell]] = true;
         aktuell = name;
+        besucht[name] = true;
         var k = kapitelVon[name];
+        steuerung(k);
         Array.prototype.forEach.call(document.querySelectorAll("#kapitel-liste li"), function (li) {
             var n = +li.getAttribute("data-kapitel");
             if (n === k) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
@@ -186,7 +198,12 @@
                 { x: 4, y: 39.8, w: 92, h: 4.6, name: D.namen.ueben,
                   blase: { text: D.blasen.ueben, oben: 45, pfeil: 30 } },
                 { id: "setlists", x: 24, y: 91.6, w: 15, h: 6.6, name: D.namen.setlists, zu: "noten" },
-                { id: "verlauf", x: 77, y: 91.6, w: 16, h: 6.6, name: D.namen.verlauf, zu: "auswahl" }
+                { id: "verlauf", x: 77, y: 91.6, w: 16, h: 6.6, name: D.namen.verlauf, zu: "auswahl" },
+                // Die uebrigen Reiter gibt es in der Demo nicht. Ohne Antwort
+                // saehe ein Tipper darauf aus, als haenge die Seite.
+                { x: 6, y: 91.6, w: 16, h: 6.6, name: D.namen.heuteReiter, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } },
+                { x: 41, y: 91.6, w: 16, h: 6.6, name: D.namen.bibliothek, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } },
+                { x: 59, y: 91.6, w: 16, h: 6.6, name: D.namen.unterricht, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } }
             ],
             blase: { oben: 35.5, pfeil: 50 }
         },
@@ -235,9 +252,19 @@
             if (f.id) knoepfe[f.id] = b;
             szenen.bild.appendChild(b);
         });
-        var text = D.blasen[name];
+        var text = D.blasen[name], ort = cfg.blase;
         if (name === "heute" && zusatz) text = D.blasen[zusatz === "umschauen" ? "heuteUmschauen" : "heuteSpaeter"];
-        blase(text, cfg.blase, cfg.blase.pfeil);
+        // War das Notenband schon dran, geht es von hier zum Bericht weiter.
+        // Bis 27.09.2026 fing „Heute" nach der Rueckkehr wieder bei der Karte
+        // an, und die fuehrte zurueck ins Notenband: eine Schleife.
+        if (name === "heute" && besucht.noten && !besucht.auswahl) {
+            Array.prototype.forEach.call(szenen.bild.querySelectorAll(".flaeche"), function (x) { x.classList.remove("zeigen"); });
+            knoepfe.verlauf.classList.add("zeigen");
+            text = D.blasen.heuteNachNoten;
+            ort = { unten: 90, pfeil: 85 };
+            jetzt(D.jetzt.heuteNachNoten);
+        }
+        blase(text, ort, ort.pfeil);
     }
 
     // ------------------------------------------------------------ Session
@@ -428,17 +455,24 @@
 
     // ------------------------------------------------------------ Notenband
 
-    /* Lage der Notenzeilen im Bild (700 Pixel breit, 1317 hoch), gemessen an
+    /* Lage der Notenzeilen im Bild (700 Pixel breit, 430 hoch), gemessen an
        den grauen Streifen zwischen den Zeilen, und die Takte je Zeile. Das ist
-       die Karte ab Werk, wie die App sie an den Taktstrichen zaehlt. */
-    var ZEILEN = [0, 84, 177, 266, 356, 447, 532, 628, 714, 809, 892, 979, 1060, 1150, 1238];
-    var TAKTE = [8, 4, 4, 4, 4, 4, 8, 8, 4, 4, 3, 4, 4, 8, 4];
-    var BILDHOEHE = 1317, BILDBREITE = 700;
+       die Karte ab Werk, wie die App sie an den Taktstrichen zaehlt.
+       Bewusst nur die ersten fuenf von fuenfzehn Zeilen (Silvio, 27.09.2026:
+       „1/3 reicht doch zur Veranschaulichung"). */
+    var ZEILEN = [0, 84, 177, 266, 356];
+    var TAKTE = [8, 4, 4, 4, 4];
+    var BILDHOEHE = 430, BILDBREITE = 700;
     var ersterTakt = [], summe = 0;
     TAKTE.forEach(function (t) { ersterTakt.push(summe + 1); summe += t; });
     var ALLE_TAKTE = summe;
 
-    var noten = { bpm: 130, zeile: -1 };
+    /* basis: welcher Takt auf den ersten Schlag nach dem Vorzaehler faellt.
+       Beim Anhalten bleibt die Stelle stehen, Play spielt ab dem Anfang der
+       Zeile weiter; ein Tipper auf eine Zeile setzt basis neu. Bis 27.09.2026
+       sprang Stopp auf Takt 1 zurueck, und wer weiter wollte, musste das
+       ganze Stueck abwarten. */
+    var noten = { bpm: 130, zeile: 0, basis: 1, letzterNr: 0, hinweis: false, amEnde: false };
 
     function zeileVonTakt(t) {
         for (var i = ersterTakt.length - 1; i >= 0; i--) if (t >= ersterTakt[i]) return i;
@@ -457,18 +491,11 @@
         // sie gilt bis zur letzten Zeile: Das Blatt rollt dafuer ueber sein
         // Ende hinaus, darunter bleibt Weiss. Auf Handybreite passt dieser
         // Ausschnitt sonst ganz ins Fenster, und es rollte gar nichts.
-        var ziel = Math.max(0, oben - fenster.clientHeight * 0.06);
+        var ziel = i === 0 ? 0 : Math.max(0, oben - fenster.clientHeight * 0.06);
         $("n-blatt").style.transform = "translateY(" + (-ziel) + "px)";
     }
 
-    function notenZuruecksetzen() {
-        noten.zeile = -1;
-        $("n-zeile").hidden = true;
-        $("n-zahl").hidden = true;
-        $("n-blatt").style.transform = "translateY(0)";
-        $("n-takt").textContent = D.takt + " 1";
-        playKnopf(false);
-    }
+    function zeigeTakt(t) { $("n-takt").textContent = D.takt + " " + t; }
 
     function playKnopf(an) {
         var k = $("n-play");
@@ -476,40 +503,121 @@
         k.setAttribute("aria-label", an ? D.namen.notenAus : D.namen.notenAn);
     }
 
+    function notenAnhalten() {
+        taktStopp();
+        $("n-zahl").hidden = true;
+        playKnopf(false);
+    }
+
     function notenSchlag(nr) {
         if (nr < 0) { $("n-zahl").textContent = -nr; $("n-zahl").hidden = false; return; }
         $("n-zahl").hidden = true;
-        var t = Math.floor(nr / 4) + 1;
+        noten.letzterNr = nr;
+        var t = noten.basis + Math.floor(nr / 4);
         if (t > ALLE_TAKTE) {
-            taktStopp(); playKnopf(false);
+            notenAnhalten();
+            noten.basis = 1;
+            noten.amEnde = true;
             $("n-takt").textContent = D.ende;
             blase(D.blasen.notenEnde, { oben: 14.5 }, 9);
             jetzt(D.jetzt.notenEnde);
             return;
         }
-        $("n-takt").textContent = D.takt + " " + t;
+        zeigeTakt(t);
         var z = zeileVonTakt(t);
-        if (z !== noten.zeile) setzeZeile(z);
+        if (z !== noten.zeile) {
+            setzeZeile(z);
+            // Nach der ersten Zeile einmal zeigen, dass man springen und
+            // jederzeit weitergehen kann, statt das Stueck abzuwarten.
+            if (!noten.hinweis && z >= 1) {
+                noten.hinweis = true;
+                blase(D.blasen.notenSprung, { unten: 88 }, null);
+                jetzt(D.jetzt.notenLaeuft);
+                spaeter(function () { if (aktuell === "noten") blase(null); }, 7000);
+            }
+        }
     }
 
     function notenBetreten() {
         zeige("noten");
-        notenZuruecksetzen();
+        notenAnhalten();
+        noten.basis = 1; noten.hinweis = false; noten.amEnde = false;
+        setzeZeile(0);
+        $("n-zeile").hidden = true;
+        zeigeTakt(1);
         $("n-bpm").textContent = noten.bpm;
         blase(D.blasen.noten, { unten: 88 }, 12);
     }
 
     $("n-play").addEventListener("click", function () {
-        if (takt.laeuft) { taktStopp(); notenZuruecksetzen(); return; }
+        if (takt.laeuft) { notenAnhalten(); return; }
         blase(null);
-        notenZuruecksetzen();
-        if (taktStart(noten.bpm, 4, notenSchlag)) { playKnopf(true); setzeZeile(0); }
+        // Weiter ab dem Anfang der Zeile, bei der angehalten wurde; nach dem
+        // Ende des Stuecks wieder von vorn.
+        if (noten.amEnde) { noten.zeile = 0; noten.amEnde = false; }
+        noten.basis = ersterTakt[noten.zeile];
+        setzeZeile(noten.zeile);
+        zeigeTakt(noten.basis);
+        if (taktStart(noten.bpm, 4, notenSchlag)) playKnopf(true);
         jetzt(D.jetzt.notenLaeuft);
     });
+
+    // „Stimmt die Zeile nicht, tippe die an, die du gerade spielst": dieselbe
+    // Geste wie in der App. Hier dient sie zugleich zum Springen.
+    $("n-fenster").addEventListener("click", function (e) {
+        var fenster = $("n-fenster"), mass = fenster.clientWidth / BILDBREITE;
+        var blattOben = $("n-blatt").getBoundingClientRect().top;
+        var y = (e.clientY - blattOben) / mass;
+        var i = 0;
+        for (var k = ZEILEN.length - 1; k >= 0; k--) if (y >= ZEILEN[k]) { i = k; break; }
+        if (y > BILDHOEHE) return;
+        if (takt.laeuft) {
+            // Der laufende Schlag gehoert ab sofort zum ersten Takt dieser Zeile.
+            noten.basis = ersterTakt[i] - (takt.nr > 0 ? Math.floor(noten.letzterNr / 4) : 0);
+        } else {
+            noten.basis = ersterTakt[i];
+        }
+        noten.amEnde = false;
+        setzeZeile(i);
+        zeigeTakt(ersterTakt[i]);
+    });
+
     $("n-minus").addEventListener("click", function () { noten.bpm = Math.max(40, noten.bpm - 2); takt.bpm = noten.bpm; $("n-bpm").textContent = noten.bpm; });
     $("n-plus").addEventListener("click", function () { noten.bpm = Math.min(220, noten.bpm + 2); takt.bpm = noten.bpm; $("n-bpm").textContent = noten.bpm; });
     $("n-zurueck").addEventListener("click", function () { gehe("heute"); });
     window.addEventListener("resize", function () { if (aktuell === "noten" && noten.zeile >= 0) setzeZeile(noten.zeile); });
+
+    window.DEMO_TON_GESPERRT = function () {
+        if (aktuell === "session") { klickKnopf(false); zeigeLichter(); }
+        if (aktuell === "noten") { playKnopf(false); $("n-zahl").hidden = true; }
+        blase(D.blasen.tonGesperrt, { oben: 40 }, null);
+    };
+
+    // ------------------------------------------------------------ Leiste unter dem Handy
+
+    /* Zurueck: an den Anfang der Station, und von dort zur vorigen, wie die
+       Zurueck-Taste eines Musikspielers. Weiter: zur naechsten Station. Auf
+       dem Handy steht die Liste der Stationen unter der Buehne, ausser Sicht;
+       ohne diese Leiste kam man aus einer Station nur ueber ihren eigenen Weg
+       wieder heraus (gemeldet 27.09.2026). */
+    function steuerung(k) {
+        $("st-stand").textContent = D.station(k + 1, ersteSzene.length);
+        $("st-zurueck").disabled = (k === 0 && aktuell === ersteSzene[0]);
+        var letzte = k === ersteSzene.length - 1;
+        $("st-weiter").textContent = letzte ? D.namen.vonVorn : D.namen.weiterStation;
+    }
+
+    $("st-zurueck").addEventListener("click", function () {
+        var k = kapitelVon[aktuell];
+        if (aktuell !== ersteSzene[k]) gehe(ersteSzene[k]);
+        else if (k > 0) gehe(ersteSzene[k - 1]);
+    });
+    $("st-weiter").addEventListener("click", function () {
+        var k = kapitelVon[aktuell];
+        if (k === ersteSzene.length - 1) { fertig = {}; besucht = {}; aktuell = null; gehe("frage"); return; }
+        fertig[k] = true;
+        gehe(ersteSzene[k + 1]);
+    });
 
     // ------------------------------------------------------------ Rahmen
 
@@ -518,7 +626,7 @@
     document.addEventListener("visibilitychange", function () {
         if (!document.hidden || !takt.laeuft) return;
         if (aktuell === "session") { klickAnhalten(); }
-        else if (aktuell === "noten") { taktStopp(); notenZuruecksetzen(); }
+        else if (aktuell === "noten") { notenAnhalten(); }
     });
 
     Array.prototype.forEach.call(document.querySelectorAll("#kapitel-liste li"), function (li) {
@@ -526,7 +634,7 @@
             gehe(ersteSzene[+li.getAttribute("data-kapitel")]);
         });
     });
-    $("neu-starten").addEventListener("click", function () { fertig = {}; aktuell = null; gehe("frage"); });
+    $("neu-starten").addEventListener("click", function () { fertig = {}; besucht = {}; aktuell = null; gehe("frage"); });
 
     // Alle Aufnahmen vorab laden, damit beim Tippen nichts nachlaedt.
     ["welcome-frage", "welcome-angebot", "heute", "bericht-auswahl", "bericht"].forEach(function (n) {

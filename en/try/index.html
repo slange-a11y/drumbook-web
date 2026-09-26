@@ -154,7 +154,8 @@
               <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Back to Today"></button>
               <div class="noten__fenster" id="n-fenster">
                 <div class="noten__blatt" id="n-blatt">
-                  <img id="n-img" src="../../assets/demo/noten.webp" width="700" height="1317" alt="Drum sheet music as a ribbon: the lines one below the other across the full width, bars 1 to 75.">
+                  <img id="n-img" src="../../assets/demo/noten.webp" width="700" height="430" alt="Drum sheet music as a ribbon: five lines one below the other across the full width, bars 1 to 24.">
+                  <p class="noten__ende">End of the excerpt</p>
                   <div class="noten__zeile" id="n-zeile" hidden></div>
                 </div>
                 <div class="noten__zahl" id="n-zahl" hidden></div>
@@ -171,6 +172,11 @@
             <p class="blase" id="blase" hidden></p>
           </div>
         </div>
+        <nav class="steuer" aria-label="Change stop">
+          <button class="btn btn--ghost btn--sm" id="st-zurueck" type="button">‹&nbsp;Back</button>
+          <span class="steuer__stand" id="st-stand">Stop 1 of 5</span>
+          <button class="btn btn--primary btn--sm" id="st-weiter" type="button">Next&nbsp;›</button>
+        </nav>
         <p class="handy__notiz">Rebuilt from real screens of the app, with sample data.</p>
       </div>
 
@@ -227,6 +233,7 @@ window.DEMO = {
     plan: function (m) { return "of " + m + " min planned"; },
     rest: function (z) { return "Total left " + z; },
     von: function (z) { return "of " + z; },
+    station: function (n, alle) { return "Stop " + n + " of " + alle; },
     morgen: function (z) { return "Again tomorrow at " + z + "?"; },
     begonnen: function (z) { return "You started your first session at " + z + ". Drumbook will then remind you every day at this time."; },
     namen: {
@@ -237,7 +244,9 @@ window.DEMO = {
         erstellen: "Create report", teilen: "Share report",
         klickAn: "Start click", klickAus: "Stop click",
         pause: "Pause session", weiter: "Resume session",
-        notenAn: "Play", notenAus: "Stop"
+        notenAn: "Play", notenAus: "Pause",
+        weiterStation: "Next ›", vonVorn: "Start again ↺",
+        heuteReiter: "Today", bibliothek: "Library", unterricht: "Lessons"
     },
     alt: {
         frage: "The welcome at the first start: a photo of a smiling drummer, below it “Your practice diary for drums” and the question “Do you take lessons?” with two answers.",
@@ -255,14 +264,16 @@ window.DEMO = {
         erinnerung: "After the first session, Drumbook asks once whether it should remind you. Choose what you like.",
         heute: "Tap the card at the top.",
         heuteDanach: "On to the sheet music: tap “Setlists” at the bottom.",
+        heuteNachNoten: "Finally the report: tap “History” at the bottom. Or “Next” below the phone.",
         noten: "Tap Play. After four clicks, the sheet scrolls in time.",
-        notenLaeuft: "The line you are playing sits at the top, the next one just below. Both hands stay on the sticks.",
-        notenEnde: "Finally the report: back at the top left, then tap “History” at the bottom.",
+        notenLaeuft: "The line you are playing sits at the top, the next one just below. Tap a line and the ribbon jumps there. You can move on to the report at any time with “Next” below the phone.",
+        notenEnde: "That was the excerpt. Finally the report: “Next” below the phone, or back at the top left and then “History”.",
         auswahl: "Tap “Create report”.",
         bericht: "At the top right, the report goes to your teacher as a PDF.",
         ende: "That was the tour. The whole report is below as a sample report, and “Start again” takes you round once more."
     },
     blasen: {
+        tonGesperrt: "Your browser has not allowed sound yet. Tap Play once more.",
         frage: "Tap an answer. Both lead on.",
         angebot: "Tap “Practise for 5 minutes”. Sound on!",
         session: "Play along! Change the tempo with − and +.",
@@ -272,9 +283,12 @@ window.DEMO = {
         heuteSpaeter: "Three weeks later. Tap the card.",
         heuteUmschauen: "This is Today after three weeks. Tap the card.",
         karte: "8 days in a row although two days were off: two rest days a week keep the streak. Carry on with “Setlists” below.",
+        heuteNachNoten: "Finally the report: tap “History” below.",
+        reiter: "In the demo, “Setlists” leads to the sheet music and “History” to the report.",
+        notenSprung: "Tap a line to jump there, as in the app. You can move on at any time below the phone.",
         ueben: "Puts together today's practice list: what your teacher set and what was left lying, to fit your time.",
         noten: "Tap Play. The sheet scrolls in time.",
-        notenEnde: "The sheet comes from your scan; the app counts the bars itself. Back is up here.",
+        notenEnde: "End of the excerpt. The sheet comes from your scan; the app counts the bars itself.",
         auswahl: "Tap “Create report”.",
         bericht: "Up here the report goes to your teacher as a PDF.",
         teilen: "By email or messenger, as a PDF. That was the tour!"

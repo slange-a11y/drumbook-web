@@ -154,7 +154,8 @@
               <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Zurück zu „Heute“"></button>
               <div class="noten__fenster" id="n-fenster">
                 <div class="noten__blatt" id="n-blatt">
-                  <img id="n-img" src="../assets/demo/noten.webp" width="700" height="1317" alt="Ein Notenblatt für Schlagzeug als Band: die Notenzeilen untereinander über die volle Breite, Takt 1 bis 75.">
+                  <img id="n-img" src="../assets/demo/noten.webp" width="700" height="430" alt="Ein Notenblatt für Schlagzeug als Band: fünf Notenzeilen untereinander über die volle Breite, Takt 1 bis 24.">
+                  <p class="noten__ende">Ende des Ausschnitts</p>
                   <div class="noten__zeile" id="n-zeile" hidden></div>
                 </div>
                 <div class="noten__zahl" id="n-zahl" hidden></div>
@@ -171,6 +172,11 @@
             <p class="blase" id="blase" hidden></p>
           </div>
         </div>
+        <nav class="steuer" aria-label="Stationen wechseln">
+          <button class="btn btn--ghost btn--sm" id="st-zurueck" type="button">‹&nbsp;Zurück</button>
+          <span class="steuer__stand" id="st-stand">Station 1 von 5</span>
+          <button class="btn btn--primary btn--sm" id="st-weiter" type="button">Weiter&nbsp;›</button>
+        </nav>
         <p class="handy__notiz">Nachgebaut aus echten Bildschirmen der App, mit Beispieldaten.</p>
       </div>
 
@@ -228,6 +234,7 @@ window.DEMO = {
     plan: function (m) { return "von " + m + " Min geplant"; },
     rest: function (z) { return "Rest gesamt " + z; },
     von: function (z) { return "von " + z; },
+    station: function (n, alle) { return "Station " + n + " von " + alle; },
     morgen: function (z) { return "Morgen wieder um " + z + "?"; },
     begonnen: function (z) { return "Deine erste Session hast du um " + z + " angefangen. Drumbook erinnert dich dann jeden Tag um diese Zeit."; },
     namen: {
@@ -238,7 +245,9 @@ window.DEMO = {
         erstellen: "Bericht erstellen", teilen: "Bericht teilen",
         klickAn: "Klick starten", klickAus: "Klick anhalten",
         pause: "Session anhalten", weiter: "Session fortsetzen",
-        notenAn: "Play", notenAus: "Stopp"
+        notenAn: "Play", notenAus: "Anhalten",
+        weiterStation: "Weiter ›", vonVorn: "Von vorn ↺",
+        heuteReiter: "Heute", bibliothek: "Bibliothek", unterricht: "Unterricht"
     },
     alt: {
         frage: "Die Begrüßung beim ersten Start: ein Foto einer lachenden Schlagzeugerin, darunter „Dein Übetagebuch fürs Schlagzeug“ und die Frage „Hast du Unterricht?“ mit zwei Antworten.",
@@ -256,14 +265,16 @@ window.DEMO = {
         erinnerung: "Nach der ersten Session fragt Drumbook einmal, ob es erinnern soll. Wähle, was du möchtest.",
         heute: "Tippe auf die Karte ganz oben.",
         heuteDanach: "Weiter zum Notenband: unten auf „Setlists“.",
+        heuteNachNoten: "Zum Schluss der Bericht: Tippe unten auf „Verlauf“. Oder unter dem Handy auf „Weiter“.",
         noten: "Tippe auf Play. Nach vier Klicks rollt das Blatt im Takt mit.",
-        notenLaeuft: "Die gespielte Zeile steht oben, die nächste schon darunter. Beide Hände bleiben an den Stöcken.",
-        notenEnde: "Zum Schluss der Bericht: oben links zurück, dann unten auf „Verlauf“.",
+        notenLaeuft: "Die gespielte Zeile steht oben, die nächste schon darunter. Tippe eine Zeile an, dann springt das Band dorthin. Weiter zum Bericht geht es jederzeit mit „Weiter“ unter dem Handy.",
+        notenEnde: "Das war der Ausschnitt. Zum Schluss der Bericht: „Weiter“ unter dem Handy, oder oben links zurück und dann „Verlauf“.",
         auswahl: "Tippe auf „Bericht erstellen“.",
         bericht: "Oben rechts geht der Bericht als PDF an deinen Lehrer.",
         ende: "Das war der Rundgang. Den ganzen Bericht gibt es unten als Musterbericht, und mit „Von vorn beginnen“ geht es noch einmal los."
     },
     blasen: {
+        tonGesperrt: "Der Browser hat den Ton noch nicht freigegeben. Tippe noch einmal auf Play.",
         frage: "Tippe auf eine Antwort. Beide führen weiter.",
         angebot: "Tippe auf „5 Minuten üben“. Ton an!",
         session: "Spiel mit! Mit − und + änderst du das Tempo.",
@@ -273,9 +284,12 @@ window.DEMO = {
         heuteSpaeter: "Drei Wochen später. Tippe auf die Karte.",
         heuteUmschauen: "So sieht „Heute“ nach drei Wochen aus. Tippe auf die Karte.",
         karte: "8 Tage in Folge, obwohl zwei Tage frei waren: Zwei Pausentage je Woche halten die Serie. Weiter unten mit „Setlists“.",
+        heuteNachNoten: "Zum Schluss der Bericht: unten auf „Verlauf“.",
+        reiter: "In der Demo führt „Setlists“ zum Notenband und „Verlauf“ zum Bericht.",
+        notenSprung: "Tipp auf eine Zeile springt dorthin, wie in der App. Weiter geht es jederzeit unter dem Handy.",
         ueben: "Stellt die Übeliste für heute zusammen: was der Lehrer aufgegeben hat und was liegen blieb, passend zur Zeit.",
         noten: "Tippe auf Play. Das Blatt rollt im Takt mit.",
-        notenEnde: "Das Blatt kommt aus deinem Scan, die Takte zählt die App selbst. Zurück geht es hier oben.",
+        notenEnde: "Ende des Ausschnitts. Das Blatt kommt aus deinem Scan, die Takte zählt die App selbst.",
         auswahl: "Tippe auf „Bericht erstellen“.",
         bericht: "Hier oben geht der Bericht als PDF an deinen Lehrer.",
         teilen: "Per Mail oder Messenger, als PDF. Das war der Rundgang!"

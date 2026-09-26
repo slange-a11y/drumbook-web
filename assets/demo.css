@@ -65,6 +65,13 @@
   width: calc(100cqw / 402 * 124); height: calc(100cqw / 402 * 36); border-radius: 999px; background: #000;
   pointer-events: none;
 }
+/* Die Leiste unter dem Handy: Zurueck, wo man steht, Weiter. Auf dem Handy
+   ist sie der einzige sichtbare Weg zwischen den Stationen. */
+.steuer { width: min(320px, 84vw); margin: 22px auto 0; display: grid; grid-template-columns: auto 1fr auto;
+          align-items: center; gap: 10px; }
+.steuer__stand { text-align: center; font-size: 13px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.steuer .btn { white-space: nowrap; }
+.steuer .btn:disabled { opacity: .35; cursor: default; transform: none; }
 .handy__notiz { font-size: 13px; color: var(--ink-faint); text-align: center; max-width: min(320px, 84vw);
                 margin: 18px auto 0; line-height: 1.5; }
 
@@ -211,6 +218,8 @@
   .noten__blatt { transition: transform .55s cubic-bezier(.2,.7,.2,1); }
 }
 .noten__blatt img { width: 100%; display: block; }
+.noten__ende { margin: calc(var(--u) * 18) 0 0; text-align: center; font-size: calc(var(--u) * 13);
+               color: #8a8a8e; letter-spacing: .02em; }
 .noten__zeile { position: absolute; left: 0; right: 0; background: rgba(249,129,44,.09);
                 box-shadow: inset calc(var(--u) * 4) 0 0 #f9812c; pointer-events: none; }
 .noten__zeile[hidden] { display: none !important; }
