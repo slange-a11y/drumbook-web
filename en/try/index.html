@@ -62,11 +62,14 @@
       </p>
     </div>
 
+    <p class="geraete" role="group" aria-label="Choose a device"><button type="button" data-geraet="iphone" aria-pressed="true">iPhone</button><button type="button" data-geraet="ipad" aria-pressed="false">iPad landscape</button></p>
+
     <div class="demo__buehne">
       <div>
         <div class="handy">
           <div class="handy__schirm" id="demo-schirm" aria-label="Drumbook on an iPhone, tap to try">
             <span class="handy__insel" aria-hidden="true"></span>
+            <div class="ipad-status" aria-hidden="true"><b>09:41<span>Sun 27 Sep</span></b><svg viewBox="0 0 46 14" aria-hidden="true"><path d="M2 5.2a8 8 0 0 1 11 0M4.2 7.6a4.8 4.8 0 0 1 6.6 0M7.5 10.6l1.3-1.3a1.8 1.8 0 0 0-2.6 0z" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"/><rect x="20" y="2.5" width="21" height="10" rx="3" fill="none" stroke="#111" stroke-opacity=".45"/><rect x="21.8" y="4.3" width="17.4" height="6.4" rx="1.6" fill="#34c759"/><rect x="42.2" y="5.7" width="1.8" height="3.6" rx=".9" fill="#111" fill-opacity=".45"/></svg></div>
 
             <div class="szene" id="sz-bild">
               <img class="voll" id="sz-bild-img" src="../../assets/demo/en/welcome-frage.webp" alt="" width="603" height="1311">
@@ -150,7 +153,7 @@
             </div>
 
             <div class="szene noten" id="sz-noten" hidden>
-              <img class="noten__kopf" src="../../assets/demo/en/noten-kopf.webp" alt="" width="700" height="205">
+              <img class="noten__kopf" id="n-kopf" src="../../assets/demo/en/noten-kopf.webp" alt="" width="700" height="205">
               <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Back to Today"></button>
               <div class="noten__fenster" id="n-fenster">
                 <div class="noten__blatt" id="n-blatt">
@@ -229,6 +232,30 @@
 window.DEMO = {
     locale: "en-GB",
     bilder: "../../assets/demo/en/",
+    bilderBasis: "../../assets/demo/",
+    schirmName: { iphone: "Drumbook on an iPhone, tap to try", ipad: "Drumbook on an iPad in landscape, tap to try" },
+    // Tabs at the top on the iPad: [left, width] in per cent, measured on the capture.
+    ipadReiter: { heute: [33.9, 5.9], setlists: [40.0, 5.9], bibliothek: [46.2, 6.4], unterricht: [52.9, 6.3], verlauf: [59.6, 6.5] },
+    // What differs on the iPad. Everything else applies to both.
+    ipad: {
+        alt: {
+            heute: "The Today screen on the iPad after three weeks: 3 h 7 min of 150 min this week, 8 days in a row, 2 rest days used, below it Start practising and the exercises that are up next."
+        },
+        jetzt: {
+            frage: "Tap an answer on the iPad. Both lead on.",
+            heuteDanach: "On to the sheet music: tap “Setlists” at the top.",
+            heuteNachNoten: "Finally the report: tap “History” at the top. Or “Next” below the iPad.",
+            noten: "Tap Play. After four clicks, the sheet scrolls in time. On the iPad in landscape, each line of music runs across the full width.",
+            notenLaeuft: "The line you are playing sits at the top, the next one just below. Tap a line and the ribbon jumps there. You can move on to the report at any time with “Next” below the iPad.",
+            notenEnde: "That was the excerpt. Finally the report: “Next” below the iPad, or back at the top left and then “History”."
+        },
+        blasen: {
+            karte: "8 days in a row although two days were off: two rest days a week keep the streak. Carry on with “Setlists” at the top.",
+            heuteNachNoten: "Finally the report: tap “History” at the top.",
+            noten: "Tap Play. Each line runs across the full width and scrolls in time.",
+            notenSprung: "Tap a line to jump there, as in the app. You can move on at any time below the iPad."
+        }
+    },
     sek: "sec", min: "min", takt: "Bar", ende: "End",
     plan: function (m) { return "of " + m + " min planned"; },
     rest: function (z) { return "Total left " + z; },

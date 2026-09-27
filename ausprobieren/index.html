@@ -62,11 +62,14 @@
       </p>
     </div>
 
+    <p class="geraete" role="group" aria-label="Gerät wählen"><button type="button" data-geraet="iphone" aria-pressed="true">iPhone</button><button type="button" data-geraet="ipad" aria-pressed="false">iPad quer</button></p>
+
     <div class="demo__buehne">
       <div>
         <div class="handy">
           <div class="handy__schirm" id="demo-schirm" aria-label="Drumbook auf einem iPhone, zum Antippen">
             <span class="handy__insel" aria-hidden="true"></span>
+            <div class="ipad-status" aria-hidden="true"><b>09:41<span>Sonntag 27. Sept.</span></b><svg viewBox="0 0 46 14" aria-hidden="true"><path d="M2 5.2a8 8 0 0 1 11 0M4.2 7.6a4.8 4.8 0 0 1 6.6 0M7.5 10.6l1.3-1.3a1.8 1.8 0 0 0-2.6 0z" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"/><rect x="20" y="2.5" width="21" height="10" rx="3" fill="none" stroke="#111" stroke-opacity=".45"/><rect x="21.8" y="4.3" width="17.4" height="6.4" rx="1.6" fill="#34c759"/><rect x="42.2" y="5.7" width="1.8" height="3.6" rx=".9" fill="#111" fill-opacity=".45"/></svg></div>
 
             <div class="szene" id="sz-bild">
               <img class="voll" id="sz-bild-img" src="../assets/demo/de/welcome-frage.webp" alt="" width="603" height="1311">
@@ -150,7 +153,7 @@
             </div>
 
             <div class="szene noten" id="sz-noten" hidden>
-              <img class="noten__kopf" src="../assets/demo/de/noten-kopf.webp" alt="" width="700" height="205">
+              <img class="noten__kopf" id="n-kopf" src="../assets/demo/de/noten-kopf.webp" alt="" width="700" height="205">
               <button class="zurueck-flaeche" id="n-zurueck" type="button" aria-label="Zurück zu „Heute“"></button>
               <div class="noten__fenster" id="n-fenster">
                 <div class="noten__blatt" id="n-blatt">
@@ -230,6 +233,30 @@
 window.DEMO = {
     locale: "de-DE",
     bilder: "../assets/demo/de/",
+    bilderBasis: "../assets/demo/",
+    schirmName: { iphone: "Drumbook auf einem iPhone, zum Antippen", ipad: "Drumbook auf einem iPad im Querformat, zum Antippen" },
+    // Reiter oben auf dem iPad: [links, Breite] in Prozent, gemessen an der Aufnahme.
+    ipadReiter: { heute: [32.8, 5.5], setlists: [38.7, 6.0], bibliothek: [45.0, 7.8], unterricht: [53.1, 7.7], verlauf: [61.1, 6.1] },
+    // Was auf dem iPad anders heißt oder anders liegt. Alles andere gilt für beide.
+    ipad: {
+        alt: {
+            heute: "Der Bildschirm „Heute“ auf dem iPad nach drei Wochen: 3 Std 7 Min von 150 Min diese Woche, 8 Tage in Folge, 2 Pausentage genutzt, darunter „Üben starten“ und die Übungen, die anstehen."
+        },
+        jetzt: {
+            frage: "Tippe auf dem iPad auf eine Antwort. Beide führen weiter.",
+            heuteDanach: "Weiter zum Notenband: oben auf „Setlists“.",
+            heuteNachNoten: "Zum Schluss der Bericht: Tippe oben auf „Verlauf“. Oder unter dem iPad auf „Weiter“.",
+            noten: "Tippe auf Play. Nach vier Klicks rollt das Blatt im Takt mit. Quer auf dem iPad steht jede Notenzeile über die ganze Breite.",
+            notenLaeuft: "Die gespielte Zeile steht oben, die nächste schon darunter. Tippe eine Zeile an, dann springt das Band dorthin. Weiter zum Bericht geht es jederzeit mit „Weiter“ unter dem iPad.",
+            notenEnde: "Das war der Ausschnitt. Zum Schluss der Bericht: „Weiter“ unter dem iPad, oder oben links zurück und dann „Verlauf“."
+        },
+        blasen: {
+            karte: "8 Tage in Folge, obwohl zwei Tage frei waren: Zwei Pausentage je Woche halten die Serie. Weiter geht es oben mit „Setlists“.",
+            heuteNachNoten: "Zum Schluss der Bericht: oben auf „Verlauf“.",
+            noten: "Tippe auf Play. Jede Notenzeile steht über die ganze Breite und rollt im Takt mit.",
+            notenSprung: "Tipp auf eine Zeile springt dorthin, wie in der App. Weiter geht es jederzeit unter dem iPad."
+        }
+    },
     sek: "Sek", min: "Min", takt: "Takt", ende: "Ende",
     plan: function (m) { return "von " + m + " Min geplant"; },
     rest: function (z) { return "Rest gesamt " + z; },

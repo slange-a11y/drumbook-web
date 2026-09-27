@@ -249,6 +249,21 @@ nachgebaut, weil sie sich bewegen und klingen.
   Weg, die Liste der Stationen steht dort weiter unten) und die Liste selbst.
   „Heute" merkt sich, was schon besucht ist, und zeigt nach dem Notenband auf
   „Verlauf". Bis 27.09.2026 führte es zurück ins Notenband, eine Schleife.
+- **iPhone oder iPad quer** (#248): Umschalter über dem Gerät, auf breiten
+  Bildschirmen ist das iPad vorgewählt, unter 700 Pixel gibt es nur das
+  iPhone. Die Wahl merkt sich der Browser (`localStorage`, nur für diesen
+  Besucher). iPad-Aufnahmen in `assets/demo/{de,en}/ipad/` und
+  `assets/demo/noten-ipad.webp`, 1600 Pixel breit, Tippflächen in Prozent von
+  1376 × 1032 Punkt. Die Reiter stehen auf dem iPad oben und sind je Sprache
+  verschieden breit, deshalb stehen ihre Stellen in `DEMO.ipadReiter` auf der
+  Seite; Texte, die auf dem iPad anders lauten, in `DEMO.ipad`.
+- **iPad-Aufnahmen im Querformat:** Ohne Simulator-Fenster lässt sich das
+  Gerät nicht drehen, und iPadOS 26 lehnt das Drehen aus der App ab
+  („Fenstermodus erlaubt keine programmatischen Änderungen"), auch mit
+  „Apps im Vollbildmodus". Es geht mit einem eigenen Aufnahme-Build, der
+  Vollbild verlangt: `xcodebuild … INFOPLIST_KEY_UIRequiresFullScreen=YES`,
+  dann mit `-querformat` starten. Die Aufnahmen kommen dann schon quer an
+  (2752 × 2064), nichts drehen.
 
 ## Das Formular
 

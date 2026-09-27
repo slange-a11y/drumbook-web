@@ -22,6 +22,18 @@
     if (!D) return;
     var $ = function (id) { return document.getElementById(id); };
 
+    /* iPhone oder iPad im Querformat (#248). Beide zeigen dieselben fuenf
+       Stationen; das iPad hat eigene Aufnahmen (1376 x 1032 Punkt), eigene
+       Tippflaechen und eigene Stellen fuer die Hinweise. Die nachgebauten
+       Bildschirme sind dieselben, nur in der 760 Punkt breiten Spalte, die
+       die App auf dem iPad benutzt (ReadableWidth). */
+    var ipad = false;
+    function T(gruppe, name) {
+        var ueber = ipad && D.ipad && D.ipad[gruppe];
+        return (ueber && ueber[name] != null) ? ueber[name] : D[gruppe][name];
+    }
+    function G(iphone, ipadWert) { return ipad ? ipadWert : iphone; }
+
     // ------------------------------------------------------------ Ton
 
     var ctx = null, puffer = {};
@@ -127,14 +139,24 @@
         blaseEl.className = "blase";
         blaseEl.style.top = ort.oben != null ? ort.oben + "%" : "auto";
         blaseEl.style.bottom = ort.unten != null ? (100 - ort.unten) + "%" : "auto";
+        // Auf dem iPhone steht die Blase ueber fast die ganze Breite (7 bis
+        // 93 Prozent). Auf dem iPad waere das eine Zeile quer ueber den
+        // Bildschirm; dort ist sie ein Drittel breit und steht bei ort.mitte.
+        var breite = ipad ? 34 : 86;
+        var links = ipad ? Math.max(1.5, Math.min(98.5 - breite, (ort.mitte != null ? ort.mitte : 50) - breite / 2)) : 7;
+        blaseEl.style.left = links + "%";
+        blaseEl.style.right = "auto";
+        blaseEl.style.width = breite + "%";
         if (pfeil != null) {
             blaseEl.classList.add(ort.oben != null ? "oben" : "unten");
-            blaseEl.style.setProperty("--pfeil", ((pfeil - 7) / 86 * 100) + "%");
+            var anteil = Math.max(6, Math.min(94, (pfeil - links) / breite * 100));
+            blaseEl.style.setProperty("--pfeil", anteil + "%");
         }
         blaseEl.hidden = false;
     }
 
     function jetzt(text) { $("kapitel-text").textContent = text; }
+    function jetztText(name) { jetzt(T("jetzt", name)); }
 
     // ------------------------------------------------------------ Szenen
 
@@ -147,7 +169,12 @@
     var ersteSzene = ["frage", "session", "heute", "noten", "auswahl"];
     var aktuell = null, fertig = {}, besucht = {};
 
-    function zeige(name) { for (var k in szenen) szenen[k].hidden = (k !== name); }
+    function zeige(name) {
+        for (var k in szenen) szenen[k].hidden = (k !== name);
+        // Die nachgebauten Bildschirme haben keine eigene Statusleiste; auf
+        // dem iPad kommt sie ueber das CSS dazu (siehe .ipad-status).
+        schirm.setAttribute("data-szene", name);
+    }
 
     function gehe(name, zusatz) {
         aufraeumen();
@@ -164,8 +191,8 @@
             if (n === k) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
             li.classList.toggle("fertig", !!fertig[n] && n !== k);
         });
-        jetzt(D.jetzt[name]);
-        if (bilder[name]) bildSzene(name, zusatz);
+        jetzt(T("jetzt", name));
+        if (BILDSZENEN[name]) bildSzene(name, zusatz);
         else if (name === "session") sessionBetreten();
         else if (name === "abschluss") abschlussBetreten();
         else if (name === "erinnerung") erinnerungBetreten();
@@ -174,62 +201,131 @@
 
     // ------------------------------------------------------------ Aufnahmen
 
-    /* Flaechen in Prozent des Bildschirms (402 x 874 Punkt), gemessen an den
-       Aufnahmen aus dem Simulator. */
-    var bilder = {
-        frage: {
+    /* Flaechen in Prozent des Bildschirms, gemessen an den Aufnahmen aus dem
+       Simulator: iPhone 402 x 874 Punkt, iPad quer 1376 x 1032. Als Funktion,
+       weil Texte und Stellen vom Geraet abhaengen, das gerade gewaehlt ist. */
+    var BILDSZENEN = { frage: 1, angebot: 1, heute: 1, auswahl: 1, bericht: 1 };
+
+    function bilderFuer(name) {
+        return ipad ? bilderIpad(name) : bilderIphone(name);
+    }
+
+    function bilderIphone(name) {
+        switch (name) {
+        case "frage": return {
             flaechen: [
                 { x: 6, y: 78.3, w: 88, h: 5.8, name: D.namen.ja, zu: "angebot" },
                 { x: 6, y: 85.3, w: 88, h: 5.8, name: D.namen.nein, zu: "angebot", zeigen: true }
             ],
             blase: { oben: 11 }
-        },
-        angebot: {
+        };
+        case "angebot": return {
             flaechen: [
                 { x: 6, y: 78.3, w: 88, h: 5.8, name: D.namen.fuenf, zu: "session", zeigen: true },
                 { x: 6, y: 85.3, w: 88, h: 5.8, name: D.namen.umschauen, zu: "heute", zusatz: "umschauen" }
             ],
             blase: { oben: 11 }
-        },
-        heute: {
+        };
+        case "heute": return {
             flaechen: [
                 { x: 4, y: 19.2, w: 92, h: 15.3, name: D.namen.karte, zeigen: true,
-                  blase: { text: D.blasen.karte, oben: 35.5, pfeil: 50 }, danach: "setlists" },
+                  blase: { text: T("blasen", "karte"), oben: 35.5, pfeil: 50 }, danach: "setlists" },
                 { x: 4, y: 39.8, w: 92, h: 4.6, name: D.namen.ueben,
-                  blase: { text: D.blasen.ueben, oben: 45, pfeil: 30 } },
+                  blase: { text: T("blasen", "ueben"), oben: 45, pfeil: 30 } },
                 { id: "setlists", x: 24, y: 91.6, w: 15, h: 6.6, name: D.namen.setlists, zu: "noten" },
                 { id: "verlauf", x: 77, y: 91.6, w: 16, h: 6.6, name: D.namen.verlauf, zu: "auswahl" },
                 // Die uebrigen Reiter gibt es in der Demo nicht. Ohne Antwort
                 // saehe ein Tipper darauf aus, als haenge die Seite.
-                { x: 6, y: 91.6, w: 16, h: 6.6, name: D.namen.heuteReiter, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } },
-                { x: 41, y: 91.6, w: 16, h: 6.6, name: D.namen.bibliothek, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } },
-                { x: 59, y: 91.6, w: 16, h: 6.6, name: D.namen.unterricht, blase: { text: D.blasen.reiter, unten: 90, pfeil: 50 } }
+                { x: 6, y: 91.6, w: 16, h: 6.6, name: D.namen.heuteReiter, blase: { text: T("blasen", "reiter"), unten: 90, pfeil: 50 } },
+                { x: 41, y: 91.6, w: 16, h: 6.6, name: D.namen.bibliothek, blase: { text: T("blasen", "reiter"), unten: 90, pfeil: 50 } },
+                { x: 59, y: 91.6, w: 16, h: 6.6, name: D.namen.unterricht, blase: { text: T("blasen", "reiter"), unten: 90, pfeil: 50 } }
             ],
-            blase: { oben: 35.5, pfeil: 50 }
-        },
-        auswahl: {
+            blase: { oben: 35.5, pfeil: 50 },
+            nachNoten: { unten: 90, pfeil: 85 }
+        };
+        case "auswahl": return {
             flaechen: [
                 { x: 5, y: 88.9, w: 90, h: 6.4, name: D.namen.erstellen, zu: "bericht", zeigen: true }
             ],
             blase: { unten: 87.5, pfeil: 50 }
-        },
-        bericht: {
+        };
+        case "bericht": return {
             flaechen: [
                 { x: 82.5, y: 8.9, w: 15, h: 7.4, name: D.namen.teilen, zeigen: true,
-                  blase: { text: D.blasen.teilen, oben: 18, pfeil: 90 }, ende: true }
+                  blase: { text: T("blasen", "teilen"), oben: 18, pfeil: 90 }, ende: true }
             ],
             blase: { oben: 18, pfeil: 90 }
+        };
         }
-    };
+    }
+
+    /* iPad quer. Die Reiter stehen oben in der Mitte, und ihre Breite haengt
+       an der Sprache; deshalb stehen ihre Stellen in D.ipadReiter auf der
+       jeweiligen Seite ([links, Breite] in Prozent). */
+    function bilderIpad(name) {
+        var R = D.ipadReiter;
+        function reiter(k, extra) {
+            var f = { x: R[k][0], y: 3.2, w: R[k][1], h: 4.2 };
+            for (var e in extra) f[e] = extra[e];
+            return f;
+        }
+        function mitteVon(k) { return R[k][0] + R[k][1] / 2; }
+        function reiterBlase(k) { return { text: T("blasen", "reiter"), oben: 9, pfeil: mitteVon(k), mitte: mitteVon(k) }; }
+        switch (name) {
+        case "frage": return {
+            flaechen: [
+                { x: 34.5, y: 82, w: 31, h: 5, name: D.namen.ja, zu: "angebot" },
+                { x: 34.5, y: 88.2, w: 31, h: 5, name: D.namen.nein, zu: "angebot", zeigen: true }
+            ],
+            // Rechts neben dem Gesicht, ueber dem Fenster im Hintergrund.
+            blase: { oben: 30, mitte: 78 }
+        };
+        case "angebot": return {
+            flaechen: [
+                { x: 34.5, y: 82, w: 31, h: 5, name: D.namen.fuenf, zu: "session", zeigen: true },
+                { x: 34.5, y: 88.2, w: 31, h: 5, name: D.namen.umschauen, zu: "heute", zusatz: "umschauen" }
+            ],
+            blase: { oben: 30, mitte: 78 }
+        };
+        case "heute": return {
+            flaechen: [
+                { x: 23.9, y: 13.4, w: 52.2, h: 14, name: D.namen.karte, zeigen: true,
+                  blase: { text: T("blasen", "karte"), oben: 29, pfeil: 50, mitte: 50 }, danach: "setlists" },
+                { x: 23.9, y: 30.6, w: 52.2, h: 5.2, name: D.namen.ueben,
+                  blase: { text: T("blasen", "ueben"), oben: 37, pfeil: 32, mitte: 42 } },
+                reiter("setlists", { id: "setlists", name: D.namen.setlists, zu: "noten" }),
+                reiter("verlauf", { id: "verlauf", name: D.namen.verlauf, zu: "auswahl" }),
+                reiter("heute", { name: D.namen.heuteReiter, blase: reiterBlase("heute") }),
+                reiter("bibliothek", { name: D.namen.bibliothek, blase: reiterBlase("bibliothek") }),
+                reiter("unterricht", { name: D.namen.unterricht, blase: reiterBlase("unterricht") })
+            ],
+            blase: { oben: 29, pfeil: 50, mitte: 50 },
+            nachNoten: { oben: 9, pfeil: mitteVon("verlauf"), mitte: mitteVon("verlauf") }
+        };
+        case "auswahl": return {
+            flaechen: [
+                { x: 30.4, y: 75.3, w: 39.2, h: 4.5, name: D.namen.erstellen, zu: "bericht", zeigen: true }
+            ],
+            blase: { unten: 73.5, pfeil: 50, mitte: 50 }
+        };
+        case "bericht": return {
+            flaechen: [
+                { x: 66.3, y: 19.4, w: 4.8, h: 5.2, name: D.namen.teilen, zeigen: true,
+                  blase: { text: T("blasen", "teilen"), oben: 26.5, pfeil: 68.7, mitte: 62 }, ende: true }
+            ],
+            blase: { oben: 26.5, pfeil: 68.7, mitte: 62 }
+        };
+        }
+    }
 
     var bildEl = $("sz-bild-img");
 
     function bildSzene(name, zusatz) {
-        var cfg = bilder[name];
+        var cfg = bilderFuer(name);
         zeige("bild");
-        bildEl.src = D.bilder + (name === "frage" ? "welcome-frage" : name === "angebot" ? "welcome-angebot"
+        bildEl.src = D.bilder + (ipad ? "ipad/" : "") + (name === "frage" ? "welcome-frage" : name === "angebot" ? "welcome-angebot"
                                  : name === "auswahl" ? "bericht-auswahl" : name) + ".webp";
-        bildEl.alt = D.alt[name];
+        bildEl.alt = T("alt", name);
         Array.prototype.forEach.call(szenen.bild.querySelectorAll(".flaeche"), function (f) { f.remove(); });
         var knoepfe = {};
         cfg.flaechen.forEach(function (f) {
@@ -245,24 +341,24 @@
                 if (f.danach && knoepfe[f.danach]) {
                     Array.prototype.forEach.call(szenen.bild.querySelectorAll(".flaeche"), function (x) { x.classList.remove("zeigen"); });
                     knoepfe[f.danach].classList.add("zeigen");
-                    jetzt(D.jetzt.heuteDanach);
+                    jetztText("heuteDanach");
                 }
-                if (f.ende) { fertig[4] = true; jetzt(D.jetzt.ende); }
+                if (f.ende) { fertig[4] = true; jetztText("ende"); }
             });
             if (f.id) knoepfe[f.id] = b;
             szenen.bild.appendChild(b);
         });
-        var text = D.blasen[name], ort = cfg.blase;
-        if (name === "heute" && zusatz) text = D.blasen[zusatz === "umschauen" ? "heuteUmschauen" : "heuteSpaeter"];
+        var text = T("blasen", name), ort = cfg.blase;
+        if (name === "heute" && zusatz) text = T("blasen", zusatz === "umschauen" ? "heuteUmschauen" : "heuteSpaeter");
         // War das Notenband schon dran, geht es von hier zum Bericht weiter.
         // Bis 27.09.2026 fing „Heute" nach der Rueckkehr wieder bei der Karte
         // an, und die fuehrte zurueck ins Notenband: eine Schleife.
         if (name === "heute" && besucht.noten && !besucht.auswahl) {
             Array.prototype.forEach.call(szenen.bild.querySelectorAll(".flaeche"), function (x) { x.classList.remove("zeigen"); });
             knoepfe.verlauf.classList.add("zeigen");
-            text = D.blasen.heuteNachNoten;
-            ort = { unten: 90, pfeil: 85 };
-            jetzt(D.jetzt.heuteNachNoten);
+            text = T("blasen", "heuteNachNoten");
+            ort = cfg.nachNoten;
+            jetztText("heuteNachNoten");
         }
         blase(text, ort, ort.pfeil);
     }
@@ -362,14 +458,14 @@
         $("s-pause").setAttribute("aria-label", D.namen.pause);
         zeichneSession();
         klickStarten();
-        blase(D.blasen.session, { oben: 56 }, 31);
+        blase(T("blasen", "session"), G({ oben: 56 }, { oben: 49, mitte: 36 }), G(31, 28.3));
         spaeter(beendenZeigen, 24000);
     }
 
     function beendenZeigen() {
         if (aktuell !== "session") return;
-        blase(D.blasen.beenden, { oben: 13.5 }, 87);
-        jetzt(D.jetzt.beenden);
+        blase(T("blasen", "beenden"), G({ oben: 13.5 }, { oben: 9.5, mitte: 66 }), G(87, 73.4));
+        jetztText("beenden");
     }
 
     function tempo(delta) {
@@ -426,7 +522,7 @@
         $("a-zeit").textContent = dauer(sess.geuebt);
         $("a-gesichert").hidden = true;
         sterne(0);
-        blase(D.blasen.abschluss, { unten: 87 }, 50);
+        blase(T("blasen", "abschluss"), G({ unten: 87 }, { unten: 89.5, mitte: 50 }), 50);
     }
 
     var sternKnoepfe = Array.prototype.slice.call(document.querySelectorAll("#a-sterne .stern"));
@@ -460,12 +556,27 @@
        die Karte ab Werk, wie die App sie an den Taktstrichen zaehlt.
        Bewusst nur die ersten fuenf von fuenfzehn Zeilen (Silvio, 27.09.2026:
        „1/3 reicht doch zur Veranschaulichung"). */
-    var ZEILEN = [0, 84, 177, 266, 356];
+    var BAND = {
+        iphone: { bild: "noten.webp", zeilen: [0, 84, 177, 266, 356], hoehe: 430, breite: 700 },
+        // Dasselbe Blatt aus dem iPad-Simulator quer (1376 Punkt breit),
+        // gemessen an denselben grauen Streifen.
+        ipad: { bild: "noten-ipad.webp", zeilen: [0, 155, 338, 516, 693], hoehe: 861, breite: 1600 }
+    };
+    var ZEILEN = BAND.iphone.zeilen;
     var TAKTE = [8, 4, 4, 4, 4];
-    var BILDHOEHE = 430, BILDBREITE = 700;
+    var BILDHOEHE = BAND.iphone.hoehe, BILDBREITE = BAND.iphone.breite;
     var ersterTakt = [], summe = 0;
     TAKTE.forEach(function (t) { ersterTakt.push(summe + 1); summe += t; });
     var ALLE_TAKTE = summe;
+
+    function bandFuerGeraet() {
+        var b = ipad ? BAND.ipad : BAND.iphone;
+        ZEILEN = b.zeilen; BILDHOEHE = b.hoehe; BILDBREITE = b.breite;
+        var img = $("n-img");
+        img.src = D.bilderBasis + b.bild;
+        img.width = b.breite; img.height = b.hoehe;
+        $("n-kopf").src = D.bilder + (ipad ? "ipad/" : "") + "noten-kopf.webp";
+    }
 
     /* basis: welcher Takt auf den ersten Schlag nach dem Vorzaehler faellt.
        Beim Anhalten bleibt die Stelle stehen, Play spielt ab dem Anfang der
@@ -519,8 +630,8 @@
             noten.basis = 1;
             noten.amEnde = true;
             $("n-takt").textContent = D.ende;
-            blase(D.blasen.notenEnde, { oben: 14.5 }, 9);
-            jetzt(D.jetzt.notenEnde);
+            blase(T("blasen", "notenEnde"), G({ oben: 14.5 }, { oben: 10.5, mitte: 18 }), G(9, 2.3));
+            jetztText("notenEnde");
             return;
         }
         zeigeTakt(t);
@@ -531,8 +642,8 @@
             // jederzeit weitergehen kann, statt das Stueck abzuwarten.
             if (!noten.hinweis && z >= 1) {
                 noten.hinweis = true;
-                blase(D.blasen.notenSprung, { unten: 88 }, null);
-                jetzt(D.jetzt.notenLaeuft);
+                blase(T("blasen", "notenSprung"), G({ unten: 88 }, { unten: 90.5, mitte: 50 }), null);
+                jetztText("notenLaeuft");
                 spaeter(function () { if (aktuell === "noten") blase(null); }, 7000);
             }
         }
@@ -546,7 +657,7 @@
         $("n-zeile").hidden = true;
         zeigeTakt(1);
         $("n-bpm").textContent = noten.bpm;
-        blase(D.blasen.noten, { unten: 88 }, 12);
+        blase(T("blasen", "noten"), G({ unten: 88 }, { unten: 90.5, mitte: 42 }), G(12, 35.5));
     }
 
     $("n-play").addEventListener("click", function () {
@@ -559,7 +670,7 @@
         setzeZeile(noten.zeile);
         zeigeTakt(noten.basis);
         if (taktStart(noten.bpm, 4, notenSchlag)) playKnopf(true);
-        jetzt(D.jetzt.notenLaeuft);
+        jetztText("notenLaeuft");
     });
 
     // „Stimmt die Zeile nicht, tippe die an, die du gerade spielst": dieselbe
@@ -590,7 +701,7 @@
     window.DEMO_TON_GESPERRT = function () {
         if (aktuell === "session") { klickKnopf(false); zeigeLichter(); }
         if (aktuell === "noten") { playKnopf(false); $("n-zahl").hidden = true; }
-        blase(D.blasen.tonGesperrt, { oben: 40 }, null);
+        blase(T("blasen", "tonGesperrt"), { oben: 40, mitte: 50 }, null);
     };
 
     // ------------------------------------------------------------ Leiste unter dem Handy
@@ -636,10 +747,54 @@
     });
     $("neu-starten").addEventListener("click", function () { fertig = {}; besucht = {}; aktuell = null; gehe("frage"); });
 
-    // Alle Aufnahmen vorab laden, damit beim Tippen nichts nachlaedt.
-    ["welcome-frage", "welcome-angebot", "heute", "bericht-auswahl", "bericht"].forEach(function (n) {
-        var i = new Image(); i.src = D.bilder + n + ".webp";
+    // ------------------------------------------------------------ iPhone oder iPad
+
+    // Alle Aufnahmen des gewaehlten Geraets vorab laden, damit beim Tippen
+    // nichts nachlaedt. Die des anderen erst, wenn es gewaehlt wird.
+    var geladen = {};
+    function vorladen() {
+        var pfad = D.bilder + (ipad ? "ipad/" : "");
+        if (geladen[pfad]) return;
+        geladen[pfad] = true;
+        ["welcome-frage", "welcome-angebot", "heute", "bericht-auswahl", "bericht"].forEach(function (n) {
+            var i = new Image(); i.src = pfad + n + ".webp";
+        });
+    }
+
+    /* Unter 700 Pixel Breite waere das iPad zu klein zum Lesen; dort gibt es
+       nur das iPhone, und der Umschalter ist ausgeblendet (CSS). */
+    var schmal = window.matchMedia("(max-width: 699px)");
+    var rahmen = document.querySelector(".handy");
+    var buehneEl = document.querySelector(".demo__buehne");
+
+    function waehleGeraet(welches, merken) {
+        var neu = welches === "ipad" && !schmal.matches;
+        var wechsel = neu !== ipad;
+        ipad = neu;
+        rahmen.classList.toggle("ipad", ipad);
+        buehneEl.classList.toggle("ipad", ipad);
+        schirm.setAttribute("aria-label", D.schirmName[ipad ? "ipad" : "iphone"]);
+        Array.prototype.forEach.call(document.querySelectorAll("[data-geraet]"), function (k) {
+            k.setAttribute("aria-pressed", k.getAttribute("data-geraet") === (ipad ? "ipad" : "iphone"));
+        });
+        bandFuerGeraet();
+        vorladen();
+        if (merken) { try { localStorage.setItem("demo.geraet", ipad ? "ipad" : "iphone"); } catch (e) {} }
+        // Die Station beginnt auf dem anderen Geraet von vorn: Blasen und
+        // Tippflaechen gehoeren zu den Aufnahmen des jeweiligen Geraets.
+        if (wechsel && aktuell) gehe(ersteSzene[kapitelVon[aktuell]]);
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-geraet]"), function (k) {
+        k.addEventListener("click", function () { waehleGeraet(k.getAttribute("data-geraet"), true); });
     });
+    var anfang = null;
+    try { anfang = localStorage.getItem("demo.geraet"); } catch (e) {}
+    // Ohne fruehere Wahl: auf breiten Bildschirmen das iPad, sonst das iPhone.
+    if (!anfang) anfang = window.matchMedia("(min-width: 1024px)").matches ? "ipad" : "iphone";
+    waehleGeraet(anfang, false);
+    var aufSchmal = function () { if (schmal.matches && ipad) waehleGeraet("iphone", false); };
+    if (schmal.addEventListener) schmal.addEventListener("change", aufSchmal); else if (schmal.addListener) schmal.addListener(aufSchmal);
 
     gehe("frage");
 })();
