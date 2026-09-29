@@ -44,7 +44,7 @@
             fehler:  'Das hat gerade nicht geklappt. Schreib mir stattdessen an ' +
                      '<a href="mailto:silvio@drumbook.de">silvio@drumbook.de</a>.',
             danke:   'Danke, du stehst auf der Liste.',
-            zusatz:  'Du hörst wieder von mir, wenn Drumbook zum Ausprobieren bereitsteht.'
+            zusatz:  'Gleich kommt eine kurze Bestätigung. Die Einladung schickt dir Apple.'
         },
         en: {
             laeuft:  'Sending …',
@@ -54,7 +54,7 @@
             fehler:  'That did not work just now. Write to ' +
                      '<a href="mailto:silvio@drumbook.de">silvio@drumbook.de</a> instead.',
             danke:   'Thanks, you are on the list.',
-            zusatz:  'You will hear from me when Drumbook is ready to try.'
+            zusatz:  'A short confirmation is on its way. The invitation comes from Apple.'
         }
     }[sprache];
 

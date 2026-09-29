@@ -36,7 +36,7 @@ var ABSENDERNAME = 'Drumbook';
 var BLATT = 'Warteliste';
 
 /** Woher eine Eintragung kommen darf. Alles andere wird zu 'seite'. */
-var HERKUENFTE = ['seite', 'zettel-schueler', 'zettel-lehrer'];
+var HERKUENFTE = ['seite', 'start-schluss', 'zettel-schueler', 'zettel-lehrer'];
 
 /** Obergrenzen, damit niemand die Tabelle vollschreibt. */
 var MAX_LAENGE_NACHRICHT = 2000;
@@ -94,7 +94,8 @@ function doPost(e) {
     var name = kuerzen(String(daten.name || '').trim(), MAX_LAENGE_NAME);
     var nachricht = kuerzen(String(daten.nachricht || '').trim(), MAX_LAENGE_NACHRICHT);
     var sprache = daten.sprache === 'en' ? 'en' : 'de';
-    // Woher die Eintragung kam: 'seite', 'zettel-schueler', 'zettel-lehrer'.
+    // Woher die Eintragung kam: 'seite', 'start-schluss', 'zettel-schueler',
+    // 'zettel-lehrer'.
     // Nur bekannte Werte, damit hier nichts Fremdes in die Tabelle wandert.
     var herkunft = HERKUENFTE.indexOf(String(daten.herkunft || '')) >= 0
                  ? String(daten.herkunft) : 'seite';
@@ -110,8 +111,8 @@ function doPost(e) {
     }
 
     return antwort(true, sprache === 'en'
-        ? 'Thanks — you are on the list.'
-        : 'Danke — du stehst auf der Liste.');
+        ? 'Thanks, you are on the list.'
+        : 'Danke, du stehst auf der Liste.');
 
   } catch (fehler) {
     // Nie den echten Fehlertext nach draußen geben.
@@ -223,23 +224,26 @@ function bestaetigen(email, name, sprache) {
   var text = sprache === 'en' ? [
     anrede + ',',
     '',
-    'you are on the list for Drumbook. You will hear from me exactly once —',
-    'when the app is ready to try. No newsletter, nothing in between.',
+    'you are on the list for Drumbook. The invitation to test the app',
+    'comes from Apple (TestFlight) as a separate email; TestFlight also',
+    'tells you about new test versions. From me you will only hear when',
+    'there is news about Drumbook, now and then, not regularly.',
     '',
-    'If this was not you, simply ignore this message. Nothing else will',
-    'arrive, and you can ask to be removed at any time by replying here.',
+    'To unsubscribe, simply reply to this email. If this was not you,',
+    'reply as well and I will delete the address straight away.',
     '',
     'Silvio'
   ] : [
     anrede + ',',
     '',
-    'du stehst auf der Liste für Drumbook. Du hörst genau einmal wieder',
-    'etwas von mir — wenn die App zum Ausprobieren bereitsteht. Kein',
-    'Rundbrief, nichts dazwischen.',
+    'du stehst auf der Liste für Drumbook. Die Einladung zum Testen',
+    'schickt dir Apple (TestFlight) mit einer eigenen Mail; neue',
+    'Testfassungen meldet dir TestFlight ebenfalls. Von mir hörst du nur,',
+    'wenn es bei Drumbook etwas Neues gibt, ab und zu, nicht regelmäßig.',
     '',
-    'Warst du das nicht, ignoriere die Nachricht einfach. Es kommt sonst',
-    'nichts, und du kannst jederzeit mit einer Antwort auf diese Mail',
-    'verlangen, dass die Adresse gelöscht wird.',
+    'Abmelden kannst du dich jederzeit mit einer Antwort auf diese Mail.',
+    'Warst du das nicht, antworte ebenfalls, dann lösche ich die Adresse',
+    'sofort.',
     '',
     'Viele Grüße',
     'Silvio'
